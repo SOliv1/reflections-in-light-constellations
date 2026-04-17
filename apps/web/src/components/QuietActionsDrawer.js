@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { toRgbChannels } from "../utils/color";
 
 export default function QuietActionsDrawer({ orbColor, onClose }) {
   const [items, setItems] = useState([]);
   const [text, setText] = useState("");
 
-  const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
+  const orbRGB = toRgbChannels(orbColor);
 
   // Load saved items
   useEffect(() => {

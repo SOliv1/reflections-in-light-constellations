@@ -122,7 +122,7 @@ const FALLBACK_PATTERN = [
   { id: "fallback-5", top: 33, left: 82, label: "Evening glint" },
 ];
 
-export function getPatternForMoodAndSeason(season = "spring", mood = "sunny") {
+export function getPatternForSeasonAndMood(season = "spring", mood = "sunny") {
   const seasonPatterns = CONSTELLATION_PATTERNS[season] || CONSTELLATION_PATTERNS.spring;
   return seasonPatterns[mood] || seasonPatterns.sunny || FALLBACK_PATTERN;
 }

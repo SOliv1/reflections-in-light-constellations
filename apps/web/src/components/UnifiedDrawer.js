@@ -11,10 +11,15 @@ export default function UnifiedDrawer({
   onTabChange,
   persistKey = "unifiedDrawerActiveTab",
 }) {
+  const isControlled = activeTab !== undefined;
   const [localActiveTab, setLocalActiveTab] = useState(() => {
-    if (typeof window === "undefined") return tabs[0]?.id || "";
-    const stored = window.localStorage.getItem(persistKey);
-    return stored || tabs[0]?.id || "";
+    if (isControlled || typeof window === "undefined" || !persistKey) return tabs[0]?.id || "";
+    try {
+      const stored = window.localStorage.getItem(persistKey);
+      return stored || tabs[0]?.id || "";
+    } catch {
+      return tabs[0]?.id || "";
+    }
   });
 
   const hasTabs = tabs.length > 0;
@@ -28,9 +33,13 @@ export default function UnifiedDrawer({
   }, [currentTab, hasTabs, tabs]);
 
   useEffect(() => {
-    if (!hasTabs || !currentTab || typeof window === "undefined") return;
-    window.localStorage.setItem(persistKey, currentTab);
-  }, [currentTab, hasTabs, persistKey]);
+    if (isControlled || !hasTabs || !currentTab || typeof window === "undefined" || !persistKey) return;
+    try {
+      window.localStorage.setItem(persistKey, currentTab);
+    } catch {
+      // Ignore persistence errors in restricted environments.
+    }
+  }, [currentTab, hasTabs, isControlled, persistKey]);
 
   const activePanel = useMemo(() => {
     if (!hasTabs) return null;
@@ -62,8 +71,10 @@ export default function UnifiedDrawer({
                   key={tab.id}
                   type="button"
                   role="tab"
+                  id={`drawer-tab-${tab.id}`}
                   className={`unified-drawer-tab ${currentTab === tab.id ? "active" : ""}`}
                   aria-selected={currentTab === tab.id}
+                  aria-controls={`drawer-tabpanel-${tab.id}`}
                   onClick={() => handleTabChange(tab.id)}
                 >
                   {tab.label}
@@ -72,6 +83,9 @@ export default function UnifiedDrawer({
             </div>
             <div
               key={activePanel?.id}
+              id={activePanel?.id ? `drawer-tabpanel-${activePanel.id}` : undefined}
+              role="tabpanel"
+              aria-labelledby={activePanel?.id ? `drawer-tab-${activePanel.id}` : undefined}
               className={`unified-drawer-panel-body panel-transition ${activePanel?.id ? `panel-${activePanel.id}` : ""}`}
             >
               {activePanel?.content}

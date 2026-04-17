@@ -1,17 +1,16 @@
 import React, { useMemo, useState } from "react";
 import "./Constellation.css";
-import { getPatternForMoodAndSeason } from "../data/constellationPatterns";
+import { getPatternForSeasonAndMood } from "../data/constellationPatterns";
 //import Portal from "./portal/Portal";
 
 
-// Determine season for moon phase
-function getSeasonFromDate() {
+// Determine current season for moon phase defaults
+function getCurrentSeason() {
   const month = new Date().getMonth();
   if (month === 11 || month === 0 || month === 1) return "winter";
   if (month >= 2 && month <= 4) return "spring";
   if (month >= 5 && month <= 7) return "summer";
-  if (month >= 8 && month <= 10) return "autumn";
-  return "spring";
+  return "autumn";
 }
 
 function Constellation({
@@ -23,9 +22,9 @@ function Constellation({
   orbColor = "#8ab4f8",
   drawerOpen = false,
 }) {
-  const season = seasonProp || getSeasonFromDate();
+  const season = seasonProp || getCurrentSeason();
   const [activeStarId, setActiveStarId] = useState(null);
-  const pattern = useMemo(() => getPatternForMoodAndSeason(season, weatherMood), [season, weatherMood]);
+  const pattern = useMemo(() => getPatternForSeasonAndMood(season, weatherMood), [season, weatherMood]);
 
   // Determine moon phase by season
   const moonPhase = {
@@ -76,8 +75,6 @@ function Constellation({
               left: `${star.left}%`,
               animationDelay: `${index * 0.24}s`,
             }}
-            title={star.label}
-            aria-label={star.label}
             onMouseEnter={() => setActiveStarId(star.id)}
             onMouseLeave={() => setActiveStarId(null)}
             onFocus={() => setActiveStarId(star.id)}
@@ -159,7 +156,7 @@ function Constellation({
 
             <div className="planet-orbital"></div>
 
-            <div className="tiny-rocket birthday-enhanced">
+            <div className={`tiny-rocket ${birthdayMode ? "birthday-enhanced" : ""}`}>
               <span className="rocket-window"></span>
               <span className="rocket-flame"></span>
             </div>
