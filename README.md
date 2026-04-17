@@ -1,4 +1,5 @@
 # Reflections In Light Constellations
+[![CodeQL](https://github.com/SOliv1/reflections-in-light/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/SOliv1/reflections-in-light/actions/workflows/github-code-scanning/codeql)
 
 A standalone `Insp-Home-Cinematic` app built from the Reflections in Light family, now evolving as its own experience.
 
