@@ -1,0 +1,80 @@
+.mini-mood-orb {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  isolation: isolate;
+  transition: transform 200ms ease, filter 220ms ease, box-shadow 220ms ease;
+}
+
+.mini-mood-orb__core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 28%,
+    rgba(255, 255, 255, 0.95),
+    color-mix(in srgb, var(--mini-orb-color, #8ab4f8) 74%, #ffffff) 42%,
+    color-mix(in srgb, var(--mini-orb-color, #8ab4f8) 62%, #10142f) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.42),
+    0 0 10px color-mix(in srgb, var(--mini-orb-color, #8ab4f8) 44%, transparent);
+  animation: miniOrbPulse 3.4s ease-in-out infinite;
+}
+
+.mini-mood-orb__ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  opacity: 0.48;
+  transform: scale(1);
+  animation: miniOrbRing 3.4s ease-in-out infinite;
+}
+
+.mini-mood-orb__ring--storm { border-color: rgba(187, 196, 255, 0.8); }
+.mini-mood-orb__ring--rain { border-color: rgba(137, 192, 255, 0.82); }
+.mini-mood-orb__ring--snow { border-color: rgba(235, 242, 255, 0.86); }
+.mini-mood-orb__ring--sunny,
+.mini-mood-orb__ring--clear { border-color: rgba(255, 234, 182, 0.85); }
+.mini-mood-orb__ring--cloudy,
+.mini-mood-orb__ring--mist { border-color: rgba(223, 232, 255, 0.72); }
+
+.mini-mood-orb:hover,
+.mini-mood-orb:focus-visible {
+  transform: scale(1.08);
+  filter: brightness(1.05);
+}
+
+.mini-mood-orb:active {
+  transform: scale(0.96);
+}
+
+.mini-mood-orb.is-highlighted .mini-mood-orb__core {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.8),
+    0 0 14px color-mix(in srgb, var(--mini-orb-color, #8ab4f8) 65%, white);
+}
+
+.mini-mood-orb--winter { filter: hue-rotate(-8deg) saturate(1.04); }
+.mini-mood-orb--spring { filter: hue-rotate(18deg) saturate(1.08); }
+.mini-mood-orb--summer { filter: hue-rotate(36deg) saturate(1.12); }
+.mini-mood-orb--autumn { filter: hue-rotate(-24deg) saturate(1.08); }
+
+.mini-mood-orb--night { opacity: 0.95; }
+.mini-mood-orb--day { opacity: 0.88; }
+
+@keyframes miniOrbPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+@keyframes miniOrbRing {
+  0%, 100% { transform: scale(1); opacity: 0.28; }
+  50% { transform: scale(1.15); opacity: 0.62; }
+}
