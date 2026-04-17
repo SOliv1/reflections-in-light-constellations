@@ -9,3 +9,9 @@ coverage
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.env.production
+.env.development
+.env.local
+.env.test
+.build
+dist

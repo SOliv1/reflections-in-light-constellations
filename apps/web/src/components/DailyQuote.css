@@ -230,11 +230,11 @@
 
 /* -----------------------------------------------------------
    FIX 2 — Eyebrow readability + correct placement
-   ----------------------------------------------------------- 
+   -----------------------------------------------------------
 
 .quote-eyebrow {
   position: relative;
-  z-index: 50; /* above quote panel but below header/orb 
+  z-index: 50; /* above quote panel but below header/orb
   opacity: 0.92;
   color: rgba(255, 255, 255, 0.92);
   text-shadow:
@@ -244,14 +244,18 @@
 
 /* -----------------------------------------------------------
    FIX 3 — Soften quote panel tint
-   ----------------------------------------------------------- 
+   -----------------------------------------------------------
 
 .daily-quote.whisper {
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.12), transparent 56%),
-    color-mix(in srgb, var(--orbColor) 6%, var(--quote-glass));
-}
-*/
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+  margin: 0 auto; /* centres it
+  pointer-events: auto;  allows interaction if needed
+}*/
+
+
 
 .top-ui-row {
   display: flex;

@@ -30,7 +30,7 @@ export default function DailyQuote({
   return (
     <div className={`daily-quote-stage ${veilClassName}`}>
       <div className={`daily-quote-track ${veilClassName} mood-${weatherMood || "neutral"}`}>
-        <p className="quote-eyebrow">Quote of the day</p>
+
         <figure
           className={`daily-quote whisper ${veilClassName} mood-${weatherMood || "neutral"}`}
           aria-label="Daily quote"
