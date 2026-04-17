@@ -1,19 +1,31 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import "./Constellation.css";
+import { getPatternForMoodAndSeason } from "../data/constellationPatterns";
 //import Portal from "./portal/Portal";
 
 
 // Determine season for moon phase
-function getSeason() {
+function getSeasonFromDate() {
   const month = new Date().getMonth();
   if (month === 11 || month === 0 || month === 1) return "winter";
   if (month >= 2 && month <= 4) return "spring";
   if (month >= 5 && month <= 7) return "summer";
   if (month >= 8 && month <= 10) return "autumn";
+  return "spring";
 }
 
-function Constellation({ veilMode, birthdayMode }) {
-  const season = getSeason();
+function Constellation({
+  veilMode,
+  birthdayMode,
+  weatherMood = "neutral",
+  season: seasonProp,
+  timeOfDay = "day",
+  orbColor = "#8ab4f8",
+  drawerOpen = false,
+}) {
+  const season = seasonProp || getSeasonFromDate();
+  const [activeStarId, setActiveStarId] = useState(null);
+  const pattern = useMemo(() => getPatternForMoodAndSeason(season, weatherMood), [season, weatherMood]);
 
   // Determine moon phase by season
   const moonPhase = {
@@ -23,11 +35,16 @@ function Constellation({ veilMode, birthdayMode }) {
     autumn: "waning",
   }[season];
 
+  const brightnessClass = `time-${timeOfDay}`;
+
   return (
     <div
-      className={`constellation-wrapper interactive active season-${season} veil-${veilMode || "off"} ${
+      className={`constellation-wrapper interactive active season-${season} mood-${weatherMood} ${brightnessClass} drawer-${
+        drawerOpen ? "open" : "closed"
+      } veil-${veilMode || "off"} ${
         birthdayMode ? "birthday-mode" : ""
       }`}
+      style={{ "--constellation-orb-color": orbColor }}
     >
       <div className="constellation-skywash"></div>
       {/* Moon */}
@@ -49,6 +66,27 @@ function Constellation({ veilMode, birthdayMode }) {
 
       {/* Stars */}
       <div className="constellation-container">
+        {pattern.map((star, index) => (
+          <button
+            key={star.id}
+            type="button"
+            className={`star constellation-interactive-star ${activeStarId === star.id ? "is-active" : ""}`}
+            style={{
+              top: `${star.top}%`,
+              left: `${star.left}%`,
+              animationDelay: `${index * 0.24}s`,
+            }}
+            title={star.label}
+            aria-label={star.label}
+            onMouseEnter={() => setActiveStarId(star.id)}
+            onMouseLeave={() => setActiveStarId(null)}
+            onFocus={() => setActiveStarId(star.id)}
+            onBlur={() => setActiveStarId(null)}
+            onClick={() => setActiveStarId((current) => (current === star.id ? null : star.id))}
+          >
+            <span className="constellation-star-tooltip">{star.label}</span>
+          </button>
+        ))}
         <div className="star" style={{ top: "16%", left: "12%" }}></div>
         <div className="star" style={{ top: "18%", left: "28%" }}></div>
         <div className="star" style={{ top: "17%", left: "45%" }}></div>
@@ -121,7 +159,7 @@ function Constellation({ veilMode, birthdayMode }) {
 
             <div className="planet-orbital"></div>
 
-            <div className="tiny-rocket">
+            <div className="tiny-rocket birthday-enhanced">
               <span className="rocket-window"></span>
               <span className="rocket-flame"></span>
             </div>

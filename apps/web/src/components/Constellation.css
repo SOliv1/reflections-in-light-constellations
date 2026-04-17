@@ -859,3 +859,95 @@ body {
 .star-15 {
   animation-duration: 4.8s;
 }
+
+.constellation-interactive-star {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.constellation-star-tooltip {
+  position: absolute;
+  top: -1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 0.58rem;
+  color: rgba(244, 246, 255, 0.9);
+  background: rgba(10, 16, 34, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 0.15rem 0.4rem;
+  transition: opacity 160ms ease, transform 160ms ease;
+  pointer-events: none;
+}
+
+.constellation-interactive-star:hover .constellation-star-tooltip,
+.constellation-interactive-star:focus-visible .constellation-star-tooltip,
+.constellation-interactive-star.is-active .constellation-star-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.constellation-wrapper.drawer-open .constellation-container::after {
+  opacity: 0.95;
+}
+
+.constellation-wrapper.mood-rain .star,
+.constellation-wrapper.mood-storm .star {
+  box-shadow:
+    0 0 8px rgba(179, 220, 255, 0.88),
+    0 0 16px rgba(167, 201, 255, 0.7),
+    0 0 28px rgba(117, 167, 241, 0.46);
+}
+
+.constellation-wrapper.mood-sunny .star,
+.constellation-wrapper.mood-clear .star {
+  box-shadow:
+    0 0 10px rgba(255, 252, 221, 0.95),
+    0 0 18px rgba(255, 218, 165, 0.65),
+    0 0 32px rgba(255, 198, 134, 0.42);
+}
+
+.constellation-wrapper.veil-on .constellation-container {
+  opacity: 0.82;
+}
+
+.constellation-wrapper.veil-lift .constellation-container {
+  opacity: 0.95;
+}
+
+.constellation-wrapper.time-day .star {
+  opacity: 0.62;
+}
+
+.constellation-wrapper.time-evening .star {
+  opacity: 0.84;
+}
+
+.constellation-wrapper.time-night .star {
+  opacity: 1;
+}
+
+.constellation-wrapper .moon {
+  box-shadow:
+    0 0 48px color-mix(in srgb, var(--constellation-orb-color, #8ab4f8) 32%, rgba(230, 200, 255, 0.8)),
+    0 0 110px rgba(190, 150, 255, 0.4),
+    0 0 180px rgba(150, 100, 220, 0.24);
+}
+
+.constellation-wrapper.mood-storm .moon {
+  animation-duration: 13s;
+}
+
+.constellation-wrapper.mood-sunny .moon,
+.constellation-wrapper.mood-clear .moon {
+  animation-duration: 20s;
+}
+
+.birthday-enhanced {
+  animation-duration: 5.8s;
+  filter: drop-shadow(0 0 8px rgba(255, 223, 198, 0.45));
+}
