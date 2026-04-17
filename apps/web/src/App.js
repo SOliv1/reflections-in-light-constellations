@@ -100,7 +100,7 @@ function AppShell() {
   const veilOn = () => setVeilMode("on");
   const liftVeil = () => setVeilMode("lift");
   const veilOff = () => setVeilMode("off");
-  
+
 
   const cycleMode = () => {
     const currentIndex = modes.indexOf(mode);
@@ -357,17 +357,19 @@ function AppShell() {
         orbColor={orbColor}
         drawerOpen={isUnifiedDrawerOpen}
       />
-      <MiniMoodOrb
-        className="mini-mood-orb-anchor"
-        orbColor={orbColor}
-        weatherMood={weatherMood}
-        season={season}
-        timeOfDay={timeOfDay}
-        veilMode={veilMode}
-        mode={mode}
-        highlighted={isUnifiedDrawerOpen}
-        onClick={() => openUnifiedDrawer("reflections")}
-      />
+      <div className="mini-orb-wrapper">
+        <MiniMoodOrb
+          className="mini-mood-orb-anchor"
+          orbColor={orbColor}
+          weatherMood={weatherMood}
+          season={season}
+          timeOfDay={timeOfDay}
+          veilMode={veilMode}
+          mode={mode}
+          highlighted={isUnifiedDrawerOpen}
+          onClick={() => openUnifiedDrawer("reflections")}
+        />
+      </div>
       <Portal
         type="mood"
         dayIndex={1}
@@ -418,19 +420,17 @@ function AppShell() {
               <button className="inspo-btn" onClick={() => openUnifiedDrawer("reflections")}>
                 Reflections
               </button>
-
-              <button className="inspo-btn" onClick={() => openUnifiedDrawer("quote")}>
-                Quote of the Day
-              </button>
             </div>
           </div>
 
-          <DailyQuote
-            veilMode={veilMode}
-            weatherMood={weatherMood}
-            onQuoteReady={setCurrentQuote}
-          />
         </div>
+      </div>
+      <div className="daily-quote-container">
+        <DailyQuote
+          veilMode={veilMode}
+          weatherMood={weatherMood}
+          onQuoteReady={setCurrentQuote}
+        />
       </div>
 
       {/* Seasonal Header */}
