@@ -1217,3 +1217,18 @@ button:hover {
   position: relative;
   z-index: 20023;
 }
+
+.mini-mood-orb-anchor {
+  position: fixed;
+  top: 92px;
+  right: 22px;
+  z-index: 20024;
+  pointer-events: auto;
+}
+
+.mini-mood-orb-weather {
+  position: fixed;
+  bottom: 104px;
+  right: 38px;
+  z-index: 20024;
+}

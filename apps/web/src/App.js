@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BrowserRouter as Router, Link, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 //import logo from "./assets/logo.png";
@@ -19,6 +19,7 @@ import ShortReflectionsDrawer from "./components/ShortReflectionsDrawer";
 import UnifiedDrawer from "./components/UnifiedDrawer";
 import QuoteDrawer from "./components/QuoteDrawer";
 import LightNotesDrawer from "./components/LightNotesDrawer";
+import MiniMoodOrb from "./components/MiniMoodOrb";
 
 
 function normalizeWeatherClass(condition = "unknown") {
@@ -268,22 +269,22 @@ function AppShell() {
   // App.js or HomePage.js
   const [orbColor, setOrbColor] = useState('#8ab4f8'); // example default
 
-  const [isReflectionsOpen, setReflectionsOpen] = useState(false);
-  const [isQuoteOpen, setQuoteOpen] = useState(false);
-
-  const openReflections = () => setReflectionsOpen(true);
-  const closeReflections = () => setReflectionsOpen(false);
-
-  const openQuoteDrawer = () => setQuoteOpen(true);
-  const closeQuoteDrawer = () => setQuoteOpen(false);
+  const [isUnifiedDrawerOpen, setUnifiedDrawerOpen] = useState(false);
+  const [activeDrawerTab, setActiveDrawerTab] = useState(() => {
+    if (typeof window === "undefined") return "reflections";
+    return window.localStorage.getItem("unifiedDrawerActiveTab") || "reflections";
+  });
+  const openUnifiedDrawer = (tabId = "reflections") => {
+    setActiveDrawerTab(tabId);
+    setUnifiedDrawerOpen(true);
+  };
+  const closeUnifiedDrawer = () => setUnifiedDrawerOpen(false);
   const [currentQuote, setCurrentQuote] = useState(null);
-  const [isActionsOpen, setActionsOpen] = useState(false);
-  const openActionsDrawer = () => setActionsOpen(true);
-  const closeActionsDrawer = () => setActionsOpen(false);
 
-  const [isNotesOpen, setNotesOpen] = useState(false);
-  const openNotesDrawer = () => setNotesOpen(true);
-  const closeNotesDrawer = () => setNotesOpen(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("unifiedDrawerActiveTab", activeDrawerTab);
+  }, [activeDrawerTab]);
 
   // When mode changes:
   useEffect(() => {
@@ -293,10 +294,80 @@ function AppShell() {
   }, [mode]);
 
 
+  const drawerTabs = useMemo(
+    () => [
+      {
+        id: "reflections",
+        label: "Reflections",
+        content: (
+          <ShortReflectionsDrawer
+            orbColor={orbColor}
+            weatherMood={weatherMood}
+            season={season}
+            onOpenActions={() => setActiveDrawerTab("actions")}
+            onOpenNotes={() => setActiveDrawerTab("notes")}
+            onClose={closeUnifiedDrawer}
+          />
+        ),
+      },
+      {
+        id: "actions",
+        label: "Actions",
+        content: (
+          <QuietActionsDrawer
+            orbColor={orbColor}
+            onClose={closeUnifiedDrawer}
+          />
+        ),
+      },
+      {
+        id: "notes",
+        label: "Notes",
+        content: (
+          <LightNotesDrawer
+            orbColor={orbColor}
+            onClose={closeUnifiedDrawer}
+          />
+        ),
+      },
+      {
+        id: "quote",
+        label: "Quote",
+        content: (
+          <QuoteDrawer
+            quote={currentQuote}
+            orbColor={orbColor}
+            onClose={closeUnifiedDrawer}
+          />
+        ),
+      },
+    ],
+    [orbColor, weatherMood, season, currentQuote]
+  );
+
   return (
   <>
     <div className="sky-wrapper">
-      <Constellation veilMode={veilMode} birthdayMode={isBirthdayScene} />
+      <Constellation
+        veilMode={veilMode}
+        birthdayMode={isBirthdayScene}
+        weatherMood={weatherMood}
+        season={season}
+        timeOfDay={timeOfDay}
+        orbColor={orbColor}
+        drawerOpen={isUnifiedDrawerOpen}
+      />
+      <MiniMoodOrb
+        className="mini-mood-orb-anchor"
+        orbColor={orbColor}
+        weatherMood={weatherMood}
+        season={season}
+        timeOfDay={timeOfDay}
+        veilMode={veilMode}
+        mode={mode}
+        highlighted={isUnifiedDrawerOpen}
+        onClick={() => openUnifiedDrawer("reflections")}
+      />
       <Portal
         type="mood"
         dayIndex={1}
@@ -307,7 +378,7 @@ function AppShell() {
       />
     </div>
 
-    <div className={`App mode-${mode} time-${timeOfDay}`}>
+    <div className={`App mode-${mode} time-${timeOfDay} season-${season}`}>
       <Link to="/" className="app-home-logo" aria-label="Return home">
         {/*<img src={logo} className="App-logo" alt="My Reflections Glow logo" /> */}
       </Link>
@@ -344,11 +415,11 @@ function AppShell() {
         <div className="top-ui-row">
           <div className="reflections-trigger">
             <div className="inspiration-panel">
-              <button className="inspo-btn" onClick={openReflections}>
+              <button className="inspo-btn" onClick={() => openUnifiedDrawer("reflections")}>
                 Reflections
               </button>
 
-              <button className="inspo-btn" onClick={openQuoteDrawer}>
+              <button className="inspo-btn" onClick={() => openUnifiedDrawer("quote")}>
                 Quote of the Day
               </button>
             </div>
@@ -369,37 +440,13 @@ function AppShell() {
       </div>
 
       {/* Drawers */}
-      <UnifiedDrawer isOpen={isReflectionsOpen} onClose={closeReflections}>
-        <ShortReflectionsDrawer
-          orbColor={orbColor}
-          weatherMood={weatherMood}
-          season={season}
-          onOpenActions={openActionsDrawer}
-          onOpenNotes={openNotesDrawer}
-          onClose={closeReflections}
-        />
-      </UnifiedDrawer>
-
-      <UnifiedDrawer isOpen={isQuoteOpen} onClose={closeQuoteDrawer}>
-        <QuoteDrawer
-          quote={currentQuote}
-          orbColor={orbColor}
-          onClose={closeQuoteDrawer}
-        />
-      </UnifiedDrawer>
-
-      <UnifiedDrawer isOpen={isActionsOpen} onClose={closeActionsDrawer}>
-        <QuietActionsDrawer
-          orbColor={orbColor}
-          onClose={closeActionsDrawer}
-        />
-      </UnifiedDrawer>
-
-      <UnifiedDrawer isOpen={isNotesOpen} onClose={closeNotesDrawer}>
-        <LightNotesDrawer
-          orbColor={orbColor}
-          onClose={closeNotesDrawer}
-        />
+      <UnifiedDrawer
+        isOpen={isUnifiedDrawerOpen}
+        onClose={closeUnifiedDrawer}
+        tabs={drawerTabs}
+        activeTab={activeDrawerTab}
+        onTabChange={setActiveDrawerTab}
+      >
       </UnifiedDrawer>
 
       {/* Mode Buttons */}
@@ -435,15 +482,28 @@ function AppShell() {
 
       {/* Weather Glyph */}
       {isHomePage && (
-        <WeatherGlyph
-          condition={weatherCondition}
-          temperature={temperature}
-          location={weatherLocation}
-          timestamp={new Date().toISOString()}
-          weatherMood={weatherMood}
-          isNight={isNight}
-          weatherDescription={weatherDescription}
-        />
+        <>
+          <MiniMoodOrb
+            className="mini-mood-orb-weather"
+            orbColor={orbColor}
+            weatherMood={weatherMood}
+            season={season}
+            timeOfDay={timeOfDay}
+            veilMode={veilMode}
+            mode={mode}
+            highlighted={isUnifiedDrawerOpen && activeDrawerTab === "quote"}
+            onClick={() => openUnifiedDrawer("quote")}
+          />
+          <WeatherGlyph
+            condition={weatherCondition}
+            temperature={temperature}
+            location={weatherLocation}
+            timestamp={new Date().toISOString()}
+            weatherMood={weatherMood}
+            isNight={isNight}
+            weatherDescription={weatherDescription}
+          />
+        </>
       )}
 
       {/* Routes */}
