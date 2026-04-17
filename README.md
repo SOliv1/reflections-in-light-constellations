@@ -2,6 +2,8 @@
 
 A standalone `Insp-Home-Cinematic` app built from the Reflections in Light family, now evolving as its own experience.
 
+C:\Users\soliv\OneDrive\Documents\GitHub\reflections-in-light-constellations
+
 ## Structure
 
 - `apps/web` contains the React frontend
