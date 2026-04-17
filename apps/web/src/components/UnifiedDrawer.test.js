@@ -2,6 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import UnifiedDrawer from "./UnifiedDrawer";
 
 describe("UnifiedDrawer", () => {
+  afterEach(() => {
+    window.localStorage.removeItem("unifiedDrawerActiveTab");
+  });
+
   it("renders tabs and calls tab change callback", () => {
     const onTabChange = jest.fn();
     render(

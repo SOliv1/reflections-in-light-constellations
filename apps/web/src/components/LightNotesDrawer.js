@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { toRgbChannels } from "../utils/color";
 
 export default function LightNotesDrawer({ orbColor, onClose }) {
   const [notes, setNotes] = useState([]);
   const [text, setText] = useState("");
 
-  const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
+  const orbRGB = toRgbChannels(orbColor);
 
   // Load saved notes
   useEffect(() => {
@@ -69,5 +70,4 @@ export default function LightNotesDrawer({ orbColor, onClose }) {
     </div>
   );
 }
-
 

@@ -1,6 +1,8 @@
 
-export default function QuoteDrawer({ quote, orbColor, onClose, children }) {
-  const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
+import { toRgbChannels } from "../utils/color";
+
+export default function QuoteDrawer({ quote, orbColor, onClose = () => {}, children }) {
+  const orbRGB = toRgbChannels(orbColor);
 
   return (
     <div className="quote-drawer-content">
@@ -12,7 +14,6 @@ export default function QuoteDrawer({ quote, orbColor, onClose, children }) {
         }}
       >
         <button className="drawer-close-btn" onClick={onClose}>×</button>
-        <button className="drawer-close-text" onClick={onClose}>Close</button>
         {children}
 
         <h3 className="drawer-eyebrow">Quote of the Day</h3>
