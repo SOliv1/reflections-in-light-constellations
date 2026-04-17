@@ -1,0 +1,11 @@
+node_modules
+apps/*/node_modules
+apps/web/build
+apps/web/.build
+coverage
+.DS_Store
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
