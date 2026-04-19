@@ -1,3 +1,102 @@
+/* ----------------------------------------------------------
+   VEIL — deep velvet backdrop layer
+   Sits at z-index 1, BEHIND sky-wrapper (z:3000).
+   Stars, planets, moon and constellations float ABOVE the veil.
+   NO backdrop-filter — that bleeds visually onto elements above it.
+   Pure gradient creates the "jewels on velvet" depth effect.
+   Controlled by the MiniOrbMenu veil toggle: off → on → lift → off
+---------------------------------------------------------- */
+#veil {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  /* Must stay below sky-wrapper (3000), sky content is always above */
+  z-index: 1;
+  will-change: opacity;
+  transition: opacity 1.2s ease;
+}
+
+.twilight-overlay {
+  position: absolute;
+  inset: 0;
+  transition: background 1.2s ease, opacity 1.2s ease;
+  /* No backdrop-filter — it creates a stacking context that dims elements above */
+}
+
+/* ── VEIL OFF — fully invisible ─────────────────────────── */
+#veil.veil-none .twilight-overlay {
+  background: transparent;
+  opacity: 0;
+}
+
+/* ── VEIL ON — deep space velvet, stars shine through ────── */
+/* Rich, near-black indigo gradient that evokes an ink-dark sky.
+   Kept well below 30% opacity so every star and planet can shimmer. */
+#veil.veil-default .twilight-overlay {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(14, 8, 42, 0.42) 0%, transparent 72%),
+    linear-gradient(180deg,
+      rgba(4, 2, 18, 0.38) 0%,
+      rgba(8, 4, 28, 0.28) 35%,
+      rgba(10, 6, 32, 0.12) 65%,
+      transparent 100%
+    );
+  opacity: 1;
+}
+
+/* ── VEIL LIFT — gossamer haze, barely-there depth ──────── */
+#veil.veil-lift .twilight-overlay {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(18, 10, 50, 0.18) 0%, transparent 62%),
+    linear-gradient(180deg,
+      rgba(8, 4, 24, 0.14) 0%,
+      rgba(12, 6, 32, 0.07) 50%,
+      transparent 100%
+    );
+  opacity: 1;
+}
+
+/* ── MOOD TINTS on the gradient itself (no filter on overlay) */
+#veil.veil-default.mood-rain .twilight-overlay {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(8, 16, 48, 0.42) 0%, transparent 72%),
+    linear-gradient(180deg, rgba(4, 8, 28, 0.38) 0%, rgba(6, 10, 32, 0.14) 60%, transparent 100%);
+}
+#veil.veil-default.mood-storm .twilight-overlay {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(10, 8, 36, 0.52) 0%, transparent 68%),
+    linear-gradient(180deg, rgba(4, 4, 20, 0.44) 0%, rgba(8, 6, 28, 0.16) 58%, transparent 100%);
+}
+#veil.veil-default.mood-sunny .twilight-overlay {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(18, 10, 42, 0.30) 0%, transparent 72%),
+    linear-gradient(180deg, rgba(8, 6, 22, 0.24) 0%, rgba(10, 8, 26, 0.08) 60%, transparent 100%);
+}
+
+/* ── VEIL TOGGLE BUTTON — active state indicators ─────── */
+.veil-toggle.veil-state-on {
+  background: rgba(18, 10, 44, 0.52) !important;
+  border-color: rgba(160, 130, 255, 0.45) !important;
+  color: rgba(220, 200, 255, 0.92) !important;
+  box-shadow:
+    0 0 10px rgba(140, 100, 255, 0.28),
+    inset 0 0 6px rgba(140, 100, 255, 0.18) !important;
+}
+
+.veil-toggle.veil-state-lift {
+  background: rgba(28, 16, 58, 0.28) !important;
+  border-color: rgba(190, 160, 255, 0.28) !important;
+  color: rgba(200, 185, 255, 0.72) !important;
+}
+
+.veil-toggle.veil-state-off {
+  /* inherits default mini-orb-menu button styles */
+}
+
+
+/* ----------------------------------------------------------
+   APP SHELL
+---------------------------------------------------------- */
 .App {
   background: transparent;
   transition: background 0.6s ease,
@@ -6,8 +105,8 @@
   position: relative;
   z-index: 15;
   overflow: visible;
-
 }
+
 .app-background {
   position: fixed;
   inset: 0;
@@ -29,22 +128,73 @@ a:hover {
   opacity: 0.85;
 }
 
-
 body {
   margin: 0;
   width: 100%;
   overflow-x: hidden;
-  background: transparent; /* important */
+  background: transparent;
+  /* important */
   z-index: 1;
 }
 
-.App-logo {
+/* Orb container */
+
+
+.app-home-logo:hover {
+  transform: scale(1.04);
+}
+
+/* Orb base */
+.orb-base {
   position: relative;
-  height: 48px;
   width: 48px;
-  object-fit: cover;
+  height: 48px;
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+/* Seasonal tint / test tint */
+.orb-tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  opacity: 0.9;
+  filter: none;
+}
+
+/* Reflections mark */
+.orb-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* When behind */
+.orb-mark.behind {
+  z-index: 1;
+}
+
+/* When hidden */
+.orb-mark.hidden {
+  display: none !important;
+}
+
+.orb-veil {
+  position: absolute;
+  z-index: 4;
+  /* soft veil above everything */
+  backdrop-filter: none;
+  opacity: 0.4;
 }
 
 .App-logo {
@@ -56,7 +206,7 @@ body {
 }
 
 .app-home-logo {
-  position: fixed;
+  position: absolute;
   top: 16px;
   left: 16px;
   z-index: 20002;
@@ -84,12 +234,22 @@ body {
   position: relative;
 }
 
+.app-logo {
+  position: relative;
+  height: 48px;
+  width: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+
 .sky-wrapper {
   position: relative;
   min-height: clamp(180px, 28vh, 320px);
   overflow: hidden;
-  z-index: 6;
-  pointer-events: none;
+  z-index: 3000;
+  pointer-events: auto;
 }
 
 .crescent-portal {
@@ -199,7 +359,7 @@ body {
   transition: background 0.45s ease, opacity 0.45s ease;
 }
 
-.birthday-stage > * {
+.birthday-stage>* {
   position: relative;
   z-index: 1;
 }
@@ -467,8 +627,6 @@ body {
 .accent-line {
   border-color: var(--mode-accent);
 }
-
-
 
 button {
   padding: 10px 18px;
@@ -878,6 +1036,7 @@ button:hover {
 /* ==== MOBILE FIRST ==== */
 
 @media (max-width: 600px) {
+
   .photo-gallery img,
   .photo-gallery * img,
   .photo-grid img,
@@ -1002,7 +1161,8 @@ button:hover {
   }
 }
 
-@media (max-width: 380px), (max-height: 700px) {
+@media (max-width: 380px),
+(max-height: 700px) {
   .weather-orb {
     transform: scale(0.82);
     transform-origin: center top;
@@ -1035,7 +1195,8 @@ button:hover {
   }
 }
 
-@media (max-width: 380px), (max-height: 700px) {
+@media (max-width: 380px),
+(max-height: 700px) {
   .sky-wrapper {
     min-height: clamp(230px, 35vh, 282px);
   }
@@ -1179,56 +1340,4 @@ button:hover {
 
 .remove-btn:hover {
   color: rgba(var(--orbColorRGB), 1);
-}
-
-.veil-controls-wrapper {
-  position: relative;
-  z-index: 20020;
-  display: grid;
-  justify-items: center;
-  gap: 1rem;
-  pointer-events: none;
-}
-
-.veil-controls,
-.top-ui-row,
-.reflections-trigger,
-.inspiration-panel,
-.inspo-btn,
-.daily-quote-stage {
-  pointer-events: auto;
-}
-
-.top-ui-row {
-  position: relative;
-  z-index: 20021;
-  width: min(100%, 60rem);
-  display: grid;
-  justify-items: center;
-  gap: 1rem;
-}
-
-.reflections-trigger {
-  position: relative;
-  z-index: 20022;
-}
-
-.veil-controls {
-  position: relative;
-  z-index: 20023;
-}
-
-.mini-mood-orb-anchor {
-  position: fixed;
-  top: 92px;
-  right: 22px;
-  z-index: 20024;
-  pointer-events: auto;
-}
-
-.mini-mood-orb-weather {
-  position: fixed;
-  bottom: 104px;
-  right: 38px;
-  z-index: 20024;
 }
