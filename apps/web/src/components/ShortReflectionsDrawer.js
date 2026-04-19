@@ -1,6 +1,6 @@
+import { useState } from "react";
 import ReflectionsPanel from "./ReflectionsPanel";
 import "./Drawer.css";
-import { toRgbChannels } from "../utils/color";
 
 
 export default function ShortReflectionsDrawer({
@@ -12,7 +12,7 @@ export default function ShortReflectionsDrawer({
   onClose
 }) {
 
-  const orbRGB = toRgbChannels(orbColor);
+  const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
 
   return (
     <div
@@ -44,3 +44,4 @@ export default function ShortReflectionsDrawer({
     </div>
   );
 }
+

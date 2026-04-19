@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
-import { toRgbChannels } from "../utils/color";
 
 export default function QuietActionsDrawer({ orbColor, onClose }) {
   const [items, setItems] = useState([]);
   const [text, setText] = useState("");
 
-  const orbRGB = toRgbChannels(orbColor);
+  const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
 
   // Load saved items
   useEffect(() => {
-    const saved = localStorage.getItem("quietActions");
+    const saved = localStorage.setItem("quietActions", JSON.stringify(items));
+
     if (saved) setItems(JSON.parse(saved));
   }, []);
 
   // Save items whenever they change
   useEffect(() => {
-    localStorage.setItem("quietActions", JSON.stringify(items));
+    localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
   // ⭐ NEW: Add newest item at the TOP
@@ -26,7 +26,8 @@ export default function QuietActionsDrawer({ orbColor, onClose }) {
     setText("");
   };
 
-  const deleteItem = (id) => {
+  const deleteItem
+   = (id) => {
     setItems(items.filter((n) => n.id !== id));
   };
 
@@ -60,7 +61,9 @@ export default function QuietActionsDrawer({ orbColor, onClose }) {
         {items.map(item => (
           <li key={item.id}>
             <span>{item.text}</span>
-            <button className="remove-btn" onClick={() => deleteItem(item.id)}>
+            <button className="remove-btn" onClick={() =>
+              setItems(items.filter(i => i.id !== item.id))
+            }>
               ×
             </button>
           </li>
