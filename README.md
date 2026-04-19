@@ -1,5 +1,5 @@
 # Reflections In Light Constellations
-[![CodeQL](https://github.com/SOliv1/reflections-in-light/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/SOliv1/reflections-in-light/actions/workflows/github-code-scanning/codeql) [![wakatime](https://wakatime.com/badge/user/b1df3236-cf2d-4081-bd32-1df83d414551.svg)](https://wakatime.com/@b1df3236-cf2d-4081-bd32-1df83d414551)
+[![CodeQL](https://github.com/SOliv1/reflections-in-light/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/SOliv1/reflections-in-light/actions/workflows/github-code-scanning/codeql) [![wakatime](https://wakatime.com/badge/user/b1df3236-cf2d-4081-bd32-1df83d414551.svg)](https://wakatime.com/@b1df3236-cf2d-4081-bd32-1df83d414551) [![NodeJS (apps/web)](https://github.com/SOliv1/reflections-in-light-constellations/actions/workflows/webpack.yml/badge.svg)](https://github.com/SOliv1/reflections-in-light-constellations/actions/workflows/webpack.yml)
 
 A standalone `Insp-Home-Cinematic` app built from the Reflections in Light family, now evolving as its own experience.
 
