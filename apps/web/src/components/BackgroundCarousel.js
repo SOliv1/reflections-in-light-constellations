@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./BackgroundCarousel.css";
 import Veil from "./Veil/Veil";
-import { fetchFromApi } from "../api";
 
 const VEIL_CLASS_MAP = {
   on: "veil-default",
@@ -27,7 +26,7 @@ const MOOD_CLASS_MAP = {
 
 async function getRandomFromServer(folder) {
   try {
-    const res = await fetchFromApi(`/random-image?folder=${encodeURIComponent(folder)}`);
+    const res = await fetch(`http://localhost:5000/random-image?folder=${folder}`);
     const data = await res.json();
     return data.url || null;
   } catch (err) {
