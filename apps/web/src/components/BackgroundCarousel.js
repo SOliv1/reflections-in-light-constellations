@@ -89,62 +89,78 @@ export default function BackgroundCarousel({
   const seasonClassName = season ? `season-${season}` : "";
 
   return (
-    <div className={`background-carousel ${veilClassName} ${moodClassName} ${seasonClassName}`}>
-      <div className="seasonal-drift" />
+    <div className={`background-carousel veil-${veilMode}`}>
 
-      {/* Deep atmospheric layer */}
-      {deepLayer && (
-        <div
-          className="bg-layer deep-layer loaded"
-          style={{ backgroundImage: `url(${deepLayer})` }}
+
+    <div className="seasonal-drift" />
+
+    {/* Deep atmospheric layer */}
+    {deepLayer && (
+      <div
+        className="bg-layer deep-layer loaded"
+        style={{ backgroundImage: `url(${deepLayer})` }}
+      />
+    )}
+
+    {/* Mid-layer */}
+    {midLayer && (
+      <div
+        className="bg-layer mid-layer loaded"
+        style={{ backgroundImage: `url(${midLayer})` }}
+      />
+    )}
+
+    {/* Weather image layer */}
+
+    {weatherImage && (
+      <div
+        className={`weather-image loaded veil-${veilMode}`}
+        style={{ backgroundImage: `url(${weatherImage})` }}
+      />
+    )}
+
+    {/* DB photos */}
+    {hasPhotos &&
+      photos.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          className={`bg-image ${i === index ? "active" : ""} veil-${veilMode}`}
+          alt=""
+          loading={i === 0 ? "eager" : "lazy"}
+          decoding="async"
         />
-      )}
+      ))}
 
-      {/* Mid-layer */}
-      {midLayer && (
-        <div
-          className="bg-layer mid-layer loaded"
-          style={{ backgroundImage: `url(${midLayer})` }}
+    {weatherMood === "rain" && <div className="rain-layer" />}
+    {weatherMood === "snow" && <div className="snow-layer" />}
+    {weatherMood === "mist" && <div className="mist-layer" />}
+    {weatherMood === "storm" && <div className="lightning-flash" />}
+    {season === "autumn" && <div className="embers" />}
+
+    {/* DB photos */}
+    {hasPhotos &&
+      photos.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          className={`bg-image ${i === index ? "active" : ""}`}
+          alt=""
+          loading={i === 0 ? "eager" : "lazy"}
+          decoding="async"
         />
-      )}
+      ))}
 
-      {/* Weather image layer */}
-      {weatherImage && (
-        <div
-          className="weather-image loaded"
-          style={{ backgroundImage: `url(${weatherImage})` }}
-        />
-      )}
+    {/* Foreground shimmer */}
+    {foregroundLayer && (
+      <div
+        className="bg-layer foreground-layer loaded"
+        style={{ backgroundImage: `url(${foregroundLayer})` }}
+      />
+    )}
 
-      {weatherMood === "rain" && <div className="rain-layer" />}
-      {weatherMood === "snow" && <div className="snow-layer" />}
-      {weatherMood === "mist" && <div className="mist-layer" />}
-      {weatherMood === "storm" && <div className="lightning-flash" />}
-      {season === "autumn" && <div className="embers" />}
-
-      {/* DB photos */}
-      {hasPhotos &&
-        photos.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            className={`bg-image ${i === index ? "active" : ""}`}
-            alt=""
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-          />
-        ))}
-
-      {/* Foreground shimmer */}
-      {foregroundLayer && (
-        <div
-          className="bg-layer foreground-layer loaded"
-          style={{ backgroundImage: `url(${foregroundLayer})` }}
-        />
-      )}
-
-      {/* Cinematic veil */}
-      <Veil moodColor={weatherMood} state={veilMode} season={season} />
-    </div>
-  );
+    {/* Cinematic veil */}
+    <Veil moodColor={weatherMood} state={veilMode} season={season} />
+  </div>
+);
 }

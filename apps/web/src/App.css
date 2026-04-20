@@ -26,8 +26,17 @@
 /* ── VEIL OFF — fully invisible ─────────────────────────── */
 #veil.veil-off .twilight-overlay {
   background: transparent;
-  opacity: 0;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
 }
+
+.veil-layer {
+  transition: opacity 600ms ease, background 600ms ease, filter 600ms ease;
+}
+
 
 /* ── VEIL ON — deep space velvet, stars shine through ────── */
 /* Rich, near-black indigo gradient that evokes an ink-dark sky.
@@ -103,8 +112,33 @@
     color 0.6s ease,
     filter 0.6s ease;
   position: relative;
-  z-index: 15;
+  z-index: 40;
   overflow: visible;
+}
+
+/* ------------------ Seasonal / Mood accents ------------------ */
+/* The App layer uses a subtle overlay tint driven by season/mood.
+   Values are intentionally low-opacity so they add atmosphere without
+   changing contrast or breaking legibility. */
+.App {
+  --app-accent: rgba(220, 220, 230, 0.02);
+  background: linear-gradient(180deg, var(--app-accent), transparent 40%);
+}
+
+.App.season-spring { --app-accent: rgba(255, 210, 230, 0.035); }
+.App.season-summer { --app-accent: rgba(200, 235, 255, 0.03); }
+.App.season-autumn { --app-accent: rgba(255, 230, 190, 0.04); }
+.App.season-winter { --app-accent: rgba(220, 235, 255, 0.03); }
+
+.App.mood-sunny { --app-accent: rgba(255, 220, 120, 0.05); }
+.App.mood-rain { --app-accent: rgba(120, 160, 220, 0.035); }
+.App.mood-storm { --app-accent: rgba(110, 100, 160, 0.045); }
+.App.mood-neutral { --app-accent: rgba(220, 220, 230, 0.02); }
+
+/* Small accent for top-left home orb to better reflect the mood tint */
+.App .app-home-logo {
+  box-shadow: 0 12px 34px rgba(0,0,0,0.12), 0 0 28px rgba(0,0,0,0.06);
+  transition: box-shadow 0.45s ease, background 0.45s ease;
 }
 
 .app-background {
@@ -566,13 +600,13 @@ body {
 }
 
 
-.calendar-container {
+.calendar-header, .calendar-container {
   /*background: url('./assets/marble-grey-white.png');*/
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   position: relative;
-  z-index: 1;
+  z-index: 60;
 }
 
 /*
