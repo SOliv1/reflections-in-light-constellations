@@ -141,6 +141,45 @@
   transition: box-shadow 0.45s ease, background 0.45s ease;
 }
 
+/* ------------------ Tile tint & glow per mood ------------------ */
+.App .photo-gallery img,
+.App .photo-grid img {
+  transition: filter 360ms ease, box-shadow 360ms ease, transform 360ms ease;
+}
+
+.App.mood-sunny .photo-gallery img,
+.App.mood-sunny .photo-grid img {
+  filter: saturate(1.06) brightness(1.02);
+  box-shadow: 0 10px 30px rgba(255,200,100,0.06);
+}
+
+.App.mood-rain .photo-gallery img,
+.App.mood-rain .photo-grid img {
+  filter: saturate(1.02) contrast(0.98) brightness(0.98);
+  box-shadow: 0 10px 30px rgba(90,130,200,0.06);
+}
+
+.App.mood-storm .photo-gallery img,
+.App.mood-storm .photo-grid img {
+  filter: saturate(1.03) contrast(0.96) brightness(0.94);
+  box-shadow: 0 12px 36px rgba(90,70,140,0.08);
+}
+
+.App.mood-neutral .photo-gallery img,
+.App.mood-neutral .photo-grid img {
+  filter: none;
+  box-shadow: none;
+}
+
+/* Stronger presence when veil is lifted/on */
+#veil.veil-on .photo-gallery img,
+#veil.veil-lift .photo-gallery img,
+#veil.veil-on .photo-grid img,
+#veil.veil-lift .photo-grid img {
+  transform: translateZ(0);
+  filter: saturate(1.08) contrast(1.02);
+}
+
 .app-background {
   position: fixed;
   inset: 0;
