@@ -1441,3 +1441,35 @@ button:hover {
 .mini-orb-menu button {
   /* optional: if you can’t change HTML classes yet, keep this block but only for layout overrides */
 }
+
+/* ------------------ Calendar tile color treatment (scoped) ------------------ */
+/* Scoped under `.App.mood-*` so veil/mood overlay (#veil) remains untouched. */
+.App.mood-sunny .calendar-wrapper .calendar-tile,
+.App.mood-sunny .calendar-tile {
+  filter: saturate(1.18) brightness(1.05) contrast(1.03);
+  box-shadow: 0 12px 38px rgba(255,200,100,0.18) inset, 0 8px 26px rgba(255,200,100,0.08);
+}
+
+.App.mood-rain .calendar-wrapper .calendar-tile,
+.App.mood-rain .calendar-tile {
+  filter: saturate(1.10) brightness(0.98) contrast(0.98);
+  box-shadow: 0 12px 38px rgba(90,130,200,0.16) inset, 0 8px 26px rgba(90,130,200,0.08);
+}
+
+.App.mood-storm .calendar-wrapper .calendar-tile,
+.App.mood-storm .calendar-tile {
+  filter: saturate(1.12) brightness(0.96) contrast(0.96);
+  box-shadow: 0 14px 44px rgba(90,70,140,0.20) inset, 0 10px 30px rgba(90,70,140,0.10);
+}
+
+.App.mood-neutral .calendar-wrapper .calendar-tile,
+.App.mood-neutral .calendar-tile {
+  filter: saturate(1.02) brightness(1.02);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+/* Seasonal variant for calendar wrapper (slight tint on tile backgrounds) */
+.calendar-wrapper.season-spring .calendar-tile { background: linear-gradient(180deg, rgba(255,240,245,0.02), transparent); }
+.calendar-wrapper.season-summer .calendar-tile { background: linear-gradient(180deg, rgba(240,250,255,0.02), transparent); }
+.calendar-wrapper.season-autumn .calendar-tile { background: linear-gradient(180deg, rgba(255,245,230,0.02), transparent); }
+.calendar-wrapper.season-winter .calendar-tile { background: linear-gradient(180deg, rgba(235,245,255,0.02), transparent); }
