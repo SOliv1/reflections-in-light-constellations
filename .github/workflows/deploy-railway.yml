@@ -1,0 +1,42 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install web dependencies and build
+        working-directory: apps/web
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install Railway CLI
+        run: curl -sSL https://railway.app/install.sh | sh
+
+      - name: Login to Railway (CI)
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+        run: |
+          railway login --ci $RAILWAY_TOKEN
+
+      - name: Deploy web service to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+        run: |
+          # Deploy 'web' service using the Railway CLI; ensure project is set
+          railway link $RAILWAY_PROJECT_ID || true
+          railway up --yes --service web
