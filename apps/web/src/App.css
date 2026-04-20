@@ -121,19 +121,20 @@
    Values are intentionally low-opacity so they add atmosphere without
    changing contrast or breaking legibility. */
 .App {
-  --app-accent: rgba(220, 220, 230, 0.06);
-  background: linear-gradient(180deg, var(--app-accent), transparent 36%);
+  --app-accent: rgba(220, 220, 230, 0.12);
+  background: linear-gradient(180deg, var(--app-accent), transparent 34%);
+  background-blend-mode: overlay;
 }
 
-.App.season-spring { --app-accent: rgba(255, 210, 230, 0.08); }
-.App.season-summer { --app-accent: rgba(200, 235, 255, 0.07); }
-.App.season-autumn { --app-accent: rgba(255, 230, 190, 0.09); }
-.App.season-winter { --app-accent: rgba(220, 235, 255, 0.07); }
+.App.season-spring { --app-accent: rgba(255, 210, 230, 0.14); }
+.App.season-summer { --app-accent: rgba(200, 235, 255, 0.12); }
+.App.season-autumn { --app-accent: rgba(255, 230, 190, 0.15); }
+.App.season-winter { --app-accent: rgba(220, 235, 255, 0.12); }
 
-.App.mood-sunny { --app-accent: rgba(255, 220, 120, 0.10); }
-.App.mood-rain { --app-accent: rgba(120, 160, 220, 0.08); }
-.App.mood-storm { --app-accent: rgba(110, 100, 160, 0.10); }
-.App.mood-neutral { --app-accent: rgba(220, 220, 230, 0.06); }
+.App.mood-sunny { --app-accent: rgba(255, 220, 120, 0.20); }
+.App.mood-rain { --app-accent: rgba(120, 160, 220, 0.16); }
+.App.mood-storm { --app-accent: rgba(110, 100, 160, 0.20); }
+.App.mood-neutral { --app-accent: rgba(220, 220, 230, 0.12); }
 
 /* Small accent for top-left home orb to better reflect the mood tint */
 .App .app-home-logo {
@@ -150,26 +151,29 @@
 
 .App.mood-sunny .photo-gallery img,
 .App.mood-sunny .photo-grid img {
-  filter: saturate(1.12) brightness(1.04) contrast(1.02);
-  box-shadow: 0 14px 44px rgba(255,200,100,0.12);
+  filter: saturate(1.20) brightness(1.06) contrast(1.04);
+  box-shadow: 0 18px 64px rgba(255,200,100,0.22), 0 6px 18px rgba(255,200,100,0.06) inset;
+  transform: translateY(-2px);
 }
 
 .App.mood-rain .photo-gallery img,
 .App.mood-rain .photo-grid img {
-  filter: saturate(1.08) contrast(0.98) brightness(0.98);
-  box-shadow: 0 14px 44px rgba(90,130,200,0.12);
+  filter: saturate(1.16) contrast(0.98) brightness(0.98);
+  box-shadow: 0 18px 64px rgba(90,130,200,0.22), 0 6px 18px rgba(90,130,200,0.06) inset;
+  transform: translateY(-1px);
 }
 
 .App.mood-storm .photo-gallery img,
 .App.mood-storm .photo-grid img {
-  filter: saturate(1.10) contrast(0.94) brightness(0.94);
-  box-shadow: 0 16px 48px rgba(90,70,140,0.16);
+  filter: saturate(1.18) contrast(0.92) brightness(0.92);
+  box-shadow: 0 20px 72px rgba(90,70,140,0.28), 0 8px 22px rgba(90,70,140,0.08) inset;
+  transform: translateY(-2px);
 }
 
 .App.mood-neutral .photo-gallery img,
 .App.mood-neutral .photo-grid img {
-  filter: saturate(1.02) brightness(1.01);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  filter: saturate(1.06) brightness(1.03);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.06);
 }
 
 /* Stronger presence when veil is lifted/on */
