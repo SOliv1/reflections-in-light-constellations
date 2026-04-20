@@ -3,9 +3,9 @@ import "./BackgroundCarousel.css";
 import Veil from "./Veil/Veil";
 
 const VEIL_CLASS_MAP = {
-  on: "veil-default",
+  on: "veil-on",
   lift: "veil-lift",
-  off: "veil-none",
+  off: "veil-off",
 };
 
 const MOOD_CLASS_MAP = {

@@ -24,7 +24,7 @@
 }
 
 /* ── VEIL OFF — fully invisible ─────────────────────────── */
-#veil.veil-none .twilight-overlay {
+#veil.veil-off .twilight-overlay {
   background: transparent;
   opacity: 0;
 }
@@ -32,7 +32,7 @@
 /* ── VEIL ON — deep space velvet, stars shine through ────── */
 /* Rich, near-black indigo gradient that evokes an ink-dark sky.
    Kept well below 30% opacity so every star and planet can shimmer. */
-#veil.veil-default .twilight-overlay {
+#veil.veil-on .twilight-overlay {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(14, 8, 42, 0.42) 0%, transparent 72%),
     linear-gradient(180deg,
@@ -57,17 +57,17 @@
 }
 
 /* ── MOOD TINTS on the gradient itself (no filter on overlay) */
-#veil.veil-default.mood-rain .twilight-overlay {
+#veil.veil-on.mood-rain .twilight-overlay {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(8, 16, 48, 0.42) 0%, transparent 72%),
     linear-gradient(180deg, rgba(4, 8, 28, 0.38) 0%, rgba(6, 10, 32, 0.14) 60%, transparent 100%);
 }
-#veil.veil-default.mood-storm .twilight-overlay {
+#veil.veil-on.mood-storm .twilight-overlay {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(10, 8, 36, 0.52) 0%, transparent 68%),
     linear-gradient(180deg, rgba(4, 4, 20, 0.44) 0%, rgba(8, 6, 28, 0.16) 58%, transparent 100%);
 }
-#veil.veil-default.mood-sunny .twilight-overlay {
+#veil.veil-on.mood-sunny .twilight-overlay {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(18, 10, 42, 0.30) 0%, transparent 72%),
     linear-gradient(180deg, rgba(8, 6, 22, 0.24) 0%, rgba(10, 8, 26, 0.08) 60%, transparent 100%);
@@ -1340,4 +1340,25 @@ button:hover {
 
 .remove-btn:hover {
   color: rgba(var(--orbColorRGB), 1);
+}
+
+/* Shared mini‑orb menu button look */
+.mini-orb-btn {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.mini-orb-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Keep existing selector, but make it just “use the base class” */
+.mini-orb-menu button {
+  /* optional: if you can’t change HTML classes yet, keep this block but only for layout overrides */
 }
