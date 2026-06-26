@@ -8,6 +8,13 @@
   padding: 60px 40px;
 }
 
+/* Ensure calendar sits above sky-wrapper/veil layers and is clickable */
+.calendar-wrapper {
+  position: relative;
+  z-index: 3100; /* above .sky-wrapper (3000) but below UI portals */
+  pointer-events: auto;
+}
+
 .calendar-header {
   padding-left: 6vw;   /* cinematic inset */
   padding-right: 6vw;  /* optional, keeps symmetry*/
