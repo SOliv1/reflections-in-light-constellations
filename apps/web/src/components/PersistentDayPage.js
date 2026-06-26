@@ -9,6 +9,14 @@ import BirthdayStageExperience from "./BirthdayStageExperience";
 
 const MOODS = ["calm", "joyful", "stormy", "reflective", "natural"];
 
+function normalizePhotos(data) {
+  if (Array.isArray(data?.photos)) {
+    return data.photos.filter(Boolean);
+  }
+
+  return [data?.photoUrl || data?.imageUrl || data?.url].filter(Boolean);
+}
+
 export default function PersistentDayPage({
   dayIndex,
   dayDate,
@@ -47,7 +55,7 @@ export default function PersistentDayPage({
           return;
         }
 
-        setPhotos(data.photos || []);
+        setPhotos(normalizePhotos(data));
         setMood(data.mood || null);
       } catch (error) {
         if (!isMounted) {
@@ -143,7 +151,7 @@ export default function PersistentDayPage({
         );
       }
 
-      setPhotos((prev) => [...prev, uploadData.photoUrl]);
+      setPhotos((prev) => [...prev, ...normalizePhotos(uploadData)]);
       clearSelectedFile();
     } catch (error) {
       setErrorMessage(error.message);

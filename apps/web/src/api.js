@@ -19,6 +19,14 @@ export async function fetchFromApi(path, options) {
 
     try {
       const response = await fetch(requestUrl, options);
+      const contentType = response.headers.get("content-type") || "";
+
+      if (response.ok && contentType.includes("text/html")) {
+        lastError = new Error(
+          `Expected API response but received HTML from ${requestUrl}. Check REACT_APP_API_BASE_URL or API_UPSTREAM.`
+        );
+        continue;
+      }
 
       if (response.ok) {
         return response;
