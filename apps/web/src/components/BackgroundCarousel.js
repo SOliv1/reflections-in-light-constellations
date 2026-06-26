@@ -89,7 +89,7 @@ export default function BackgroundCarousel({
   const seasonClassName = season ? `season-${season}` : "";
 
   return (
-    <div className={`background-carousel veil-${veilMode}`}>
+    <div className={`background-carousel ${veilClassName} ${moodClassName} ${seasonClassName}`}>
 
 
     <div className="seasonal-drift" />
