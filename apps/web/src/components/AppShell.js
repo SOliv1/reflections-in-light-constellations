@@ -167,11 +167,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
             </div>
 
             {/* Main app shell */}
-<<<<<<< HEAD
-            <div className={`App mode-${mode} time-${timeOfDay} season-${season}`}>
-=======
               <div className={`App mode-${mode} time-${timeOfDay} season-${season} mood-${weatherMood}`}>
->>>>>>> origin/master
               {/* Home logo (top-left) — Link back to home */}
               <Link to="/" className="app-home-logo" aria-label="Return home">
                 <div className="orb-base">

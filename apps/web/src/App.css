@@ -24,17 +24,6 @@
 }
 
 /* ── VEIL OFF — fully invisible ─────────────────────────── */
-<<<<<<< HEAD
-#veil.veil-none .twilight-overlay {
-  background: transparent;
-  opacity: 0;
-}
-
-/* ── VEIL ON — deep space velvet, stars shine through ────── */
-/* Rich, near-black indigo gradient that evokes an ink-dark sky.
-   Kept well below 30% opacity so every star and planet can shimmer. */
-#veil.veil-default .twilight-overlay {
-=======
 #veil.veil-off .twilight-overlay {
   background: transparent;
   opacity: 0 !important;
@@ -53,7 +42,6 @@
 /* Rich, near-black indigo gradient that evokes an ink-dark sky.
    Kept well below 30% opacity so every star and planet can shimmer. */
 #veil.veil-on .twilight-overlay {
->>>>>>> origin/master
   background:
     radial-gradient(ellipse at 50% 0%, rgba(14, 8, 42, 0.42) 0%, transparent 72%),
     linear-gradient(180deg,
@@ -78,29 +66,17 @@
 }
 
 /* ── MOOD TINTS on the gradient itself (no filter on overlay) */
-<<<<<<< HEAD
-#veil.veil-default.mood-rain .twilight-overlay {
-=======
 #veil.veil-on.mood-rain .twilight-overlay {
->>>>>>> origin/master
   background:
     radial-gradient(ellipse at 50% 0%, rgba(8, 16, 48, 0.42) 0%, transparent 72%),
     linear-gradient(180deg, rgba(4, 8, 28, 0.38) 0%, rgba(6, 10, 32, 0.14) 60%, transparent 100%);
 }
-<<<<<<< HEAD
-#veil.veil-default.mood-storm .twilight-overlay {
-=======
 #veil.veil-on.mood-storm .twilight-overlay {
->>>>>>> origin/master
   background:
     radial-gradient(ellipse at 50% 0%, rgba(10, 8, 36, 0.52) 0%, transparent 68%),
     linear-gradient(180deg, rgba(4, 4, 20, 0.44) 0%, rgba(8, 6, 28, 0.16) 58%, transparent 100%);
 }
-<<<<<<< HEAD
-#veil.veil-default.mood-sunny .twilight-overlay {
-=======
 #veil.veil-on.mood-sunny .twilight-overlay {
->>>>>>> origin/master
   background:
     radial-gradient(ellipse at 50% 0%, rgba(18, 10, 42, 0.30) 0%, transparent 72%),
     linear-gradient(180deg, rgba(8, 6, 22, 0.24) 0%, rgba(10, 8, 26, 0.08) 60%, transparent 100%);
@@ -140,8 +116,6 @@
   overflow: visible;
 }
 
-<<<<<<< HEAD
-=======
 /* ------------------ Seasonal / Mood accents ------------------ */
 /* The App layer uses a subtle overlay tint driven by season/mood.
    Values are intentionally low-opacity so they add atmosphere without
@@ -212,7 +186,6 @@
   filter: saturate(1.08) contrast(1.02);
 }
 
->>>>>>> origin/master
 .app-background {
   position: fixed;
   inset: 0;
@@ -1446,9 +1419,6 @@ button:hover {
 
 .remove-btn:hover {
   color: rgba(var(--orbColorRGB), 1);
-<<<<<<< HEAD
-}
-=======
 }
 
 /* Shared mini‑orb menu button look */
@@ -1503,4 +1473,3 @@ button:hover {
 .calendar-wrapper.season-summer .calendar-tile { background: linear-gradient(180deg, rgba(240,250,255,0.02), transparent); }
 .calendar-wrapper.season-autumn .calendar-tile { background: linear-gradient(180deg, rgba(255,245,230,0.02), transparent); }
 .calendar-wrapper.season-winter .calendar-tile { background: linear-gradient(180deg, rgba(235,245,255,0.02), transparent); }
->>>>>>> origin/master
