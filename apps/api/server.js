@@ -44,6 +44,7 @@ function isAllowedOrigin(origin) {
 
   if (/^https:\/\/.+\.netlify\.app$/i.test(origin)) return true;
   if (/^https:\/\/.+\.onrender\.com$/i.test(origin)) return true;
+  if (/^https:\/\/.+\.up\.railway\.app$/i.test(origin)) return true;
 
   return false;
 }

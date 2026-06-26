@@ -5,38 +5,37 @@ on:
     branches: [ master ]
 
 jobs:
-  deploy:
-    name: Build and Deploy
+  deploy-api:
+    name: Deploy API
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
 
-      - name: Install web dependencies and build
-        working-directory: apps/web
-        run: |
-          npm ci
-          npm run build
+      - name: Deploy api service
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
+        working-directory: apps/api
+        run: railway up --service api --detach
+
+  deploy-web:
+    name: Deploy Web
+    runs-on: ubuntu-latest
+    needs: deploy-api
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install Railway CLI
-        run: curl -sSL https://railway.app/install.sh | sh
+        run: npm install -g @railway/cli
 
-      - name: Login to Railway (CI)
+      - name: Deploy web service
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-        run: |
-          railway login --ci $RAILWAY_TOKEN
-
-      - name: Deploy web service to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
-        run: |
-          # Deploy 'web' service using the Railway CLI; ensure project is set
-          railway link $RAILWAY_PROJECT_ID || true
-          railway up --yes --service web
+          RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
+        working-directory: apps/web
+        run: railway up --service web --detach
