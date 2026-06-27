@@ -1,5 +1,5 @@
 import express from "express";
-import { getDb } from "../db.js";
+import { connectToDb } from "../db.js";
 import {
   addPhotoToDay,
   deletePhotoFromDay,
@@ -7,47 +7,56 @@ import {
   getDayByDate,
   setDayMood
 } from "../models/Day.js";
+import { sendRouteError } from "../utils/apiErrors.js";
+import { DAY_DATE_MESSAGE, normalizeDayDate } from "../utils/dayDate.js";
 
 const router = express.Router();
 
 router.post("/add-photo", async (req, res) => {
   try {
-    const { date, photoUrl } = req.body;
+    const { date: rawDate, photoUrl } = req.body;
 
-    if (!date || !photoUrl) {
+    if (!rawDate || !photoUrl) {
       return res.status(400).json({ error: "Missing date or photoUrl" });
     }
 
-    const db = getDb();
+    const date = normalizeDayDate(rawDate);
+    if (!date) return res.status(400).json({ error: DAY_DATE_MESSAGE });
+
+    const db = await connectToDb();
     await addPhotoToDay(db, date, photoUrl);
     return res.json({ ok: true });
   } catch (error) {
     console.error("Day add-photo error:", error);
-    return res.status(500).json({ error: "Failed to add photo to day" });
+    return sendRouteError(res, error, "Failed to add photo to day");
   }
 });
 
 router.post("/set-mood", async (req, res) => {
   try {
-    const { date, mood } = req.body;
+    const { date: rawDate, mood } = req.body;
 
-    if (!date || !mood) {
+    if (!rawDate || !mood) {
       return res.status(400).json({ error: "Missing date or mood" });
     }
 
-    const db = getDb();
+    const date = normalizeDayDate(rawDate);
+    if (!date) return res.status(400).json({ error: DAY_DATE_MESSAGE });
+
+    const db = await connectToDb();
     await setDayMood(db, date, mood);
     return res.json({ ok: true });
   } catch (error) {
     console.error("Day set-mood error:", error);
-    return res.status(500).json({ error: "Failed to save mood" });
+    return sendRouteError(res, error, "Failed to save mood");
   }
 });
 
 router.get("/:date", async (req, res) => {
   try {
-    const { date } = req.params;
-    const db = getDb();
+    const date = normalizeDayDate(req.params.date);
+    if (!date) return res.status(400).json({ error: DAY_DATE_MESSAGE });
+    const db = await connectToDb();
     const day = await getDayByDate(db, date);
 
     if (!day) {
@@ -57,19 +66,22 @@ router.get("/:date", async (req, res) => {
     return res.json(day);
   } catch (error) {
     console.error("Day fetch error:", error);
-    return res.status(500).json({ error: "Failed to fetch day" });
+    return sendRouteError(res, error, "Failed to fetch day");
   }
 });
 
 router.post("/delete-photo", async (req, res) => {
   try {
-    const { date, photoUrl } = req.body;
+    const { date: rawDate, photoUrl } = req.body;
 
-    if (!date || !photoUrl) {
+    if (!rawDate || !photoUrl) {
       return res.status(400).json({ error: "Missing date or photoUrl" });
     }
 
-    const db = getDb();
+    const date = normalizeDayDate(rawDate);
+    if (!date) return res.status(400).json({ error: DAY_DATE_MESSAGE });
+
+    const db = await connectToDb();
     await deletePhotoFromDay(db, date, photoUrl);
     const updatedDay = await getDayByDate(db, date);
 
@@ -79,18 +91,18 @@ router.post("/delete-photo", async (req, res) => {
     });
   } catch (error) {
     console.error("Day delete-photo error:", error);
-    return res.status(500).json({ error: "Failed to delete photo from day" });
+    return sendRouteError(res, error, "Failed to delete photo from day");
   }
 });
 
 router.get("/", async (req, res) => {
   try {
-    const db = getDb();
+    const db = await connectToDb();
     const days = await getAllDays(db);
     return res.json(days);
   } catch (error) {
     console.error("Days fetch error:", error);
-    return res.status(500).json({ error: "Failed to fetch days" });
+    return sendRouteError(res, error, "Failed to fetch days");
   }
 });
 

@@ -13,6 +13,7 @@ function buildUrl(baseUrl, path) {
 export async function fetchFromApi(path, options) {
   const candidates = API_BASE_URLS.length > 0 ? API_BASE_URLS : [API_BASE_URL];
   let lastError;
+  let lastResponse;
 
   for (const baseUrl of candidates) {
     const requestUrl = buildUrl(baseUrl, path);
@@ -21,7 +22,11 @@ export async function fetchFromApi(path, options) {
       const response = await fetch(requestUrl, options);
       const contentType = response.headers.get("content-type") || "";
 
-      if (response.ok && contentType.includes("text/html")) {
+      // A frontend/static server can answer an API request with its HTML shell
+      // (commonly 404/405 for POST). That is not an API response, so continue
+      // to the next configured candidate instead of surfacing a misleading
+      // method error to the user.
+      if (contentType.includes("text/html")) {
         lastError = new Error(
           `Expected API response but received HTML from ${requestUrl}. Check REACT_APP_API_BASE_URL or API_UPSTREAM.`
         );
@@ -36,10 +41,15 @@ export async function fetchFromApi(path, options) {
         return response;
       }
 
+      lastResponse = response;
       lastError = new Error(`Request failed with status ${response.status} for ${requestUrl}`);
     } catch (error) {
       lastError = error;
     }
+  }
+
+  if (lastResponse) {
+    return lastResponse;
   }
 
   throw lastError || new Error(`All API endpoints failed for ${path}`);
