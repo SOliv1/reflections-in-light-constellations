@@ -26,8 +26,17 @@
 /* ── VEIL OFF — fully invisible ─────────────────────────── */
 #veil.veil-off .twilight-overlay {
   background: transparent;
-  opacity: 0;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
 }
+
+.veil-layer {
+  transition: opacity 600ms ease, background 600ms ease, filter 600ms ease;
+}
+
 
 /* ── VEIL ON — deep space velvet, stars shine through ────── */
 /* Rich, near-black indigo gradient that evokes an ink-dark sky.
@@ -103,8 +112,78 @@
     color 0.6s ease,
     filter 0.6s ease;
   position: relative;
-  z-index: 15;
+  z-index: 40;
   overflow: visible;
+}
+
+/* ------------------ Seasonal / Mood accents ------------------ */
+/* The App layer uses a subtle overlay tint driven by season/mood.
+   Values are intentionally low-opacity so they add atmosphere without
+   changing contrast or breaking legibility. */
+.App {
+  --app-accent: rgba(220, 220, 230, 0.22);
+  background: linear-gradient(180deg, var(--app-accent), transparent 30%);
+  background-blend-mode: overlay;
+  mix-blend-mode: multiply;
+}
+
+.App.season-spring { --app-accent: rgba(255, 210, 230, 0.26); }
+.App.season-summer { --app-accent: rgba(200, 235, 255, 0.24); }
+.App.season-autumn { --app-accent: rgba(255, 230, 190, 0.28); }
+.App.season-winter { --app-accent: rgba(220, 235, 255, 0.24); }
+
+.App.mood-sunny { --app-accent: rgba(255, 220, 120, 0.36); }
+.App.mood-rain { --app-accent: rgba(120, 160, 220, 0.28); }
+.App.mood-storm { --app-accent: rgba(110, 100, 160, 0.36); }
+.App.mood-neutral { --app-accent: rgba(220, 220, 230, 0.18); }
+
+/* Small accent for top-left home orb to better reflect the mood tint */
+.App .app-home-logo {
+  box-shadow: 0 12px 34px rgba(0,0,0,0.12), 0 0 28px rgba(0,0,0,0.06);
+  transition: box-shadow 0.45s ease, background 0.45s ease;
+}
+
+/* ------------------ Tile tint & glow per mood ------------------ */
+.App .photo-gallery img,
+.App .photo-grid img {
+  transition: filter 360ms ease, box-shadow 360ms ease, transform 360ms ease;
+}
+
+
+.App.mood-sunny .photo-gallery img,
+.App.mood-sunny .photo-grid img {
+  filter: saturate(1.36) brightness(1.12) contrast(1.08);
+  box-shadow: 0 28px 96px rgba(255,200,100,0.36), 0 10px 30px rgba(255,200,100,0.12) inset;
+  transform: translateY(-3px) scale(1.01);
+}
+
+.App.mood-rain .photo-gallery img,
+.App.mood-rain .photo-grid img {
+  filter: saturate(1.28) contrast(0.98) brightness(0.98);
+  box-shadow: 0 26px 88px rgba(90,130,200,0.32), 0 10px 28px rgba(90,130,200,0.10) inset;
+  transform: translateY(-2px) scale(1.005);
+}
+
+.App.mood-storm .photo-gallery img,
+.App.mood-storm .photo-grid img {
+  filter: saturate(1.30) contrast(0.90) brightness(0.90);
+  box-shadow: 0 30px 104px rgba(90,70,140,0.40), 0 12px 30px rgba(90,70,140,0.14) inset;
+  transform: translateY(-3px) scale(1.01);
+}
+
+.App.mood-neutral .photo-gallery img,
+.App.mood-neutral .photo-grid img {
+  filter: saturate(1.10) brightness(1.06);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.10);
+}
+
+/* Stronger presence when veil is lifted/on */
+#veil.veil-on .photo-gallery img,
+#veil.veil-lift .photo-gallery img,
+#veil.veil-on .photo-grid img,
+#veil.veil-lift .photo-grid img {
+  transform: translateZ(0);
+  filter: saturate(1.08) contrast(1.02);
 }
 
 .app-background {
@@ -566,13 +645,13 @@ body {
 }
 
 
-.calendar-container {
+.calendar-header, .calendar-container {
   /*background: url('./assets/marble-grey-white.png');*/
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   position: relative;
-  z-index: 1;
+  z-index: 60;
 }
 
 /*
@@ -1362,3 +1441,35 @@ button:hover {
 .mini-orb-menu button {
   /* optional: if you can’t change HTML classes yet, keep this block but only for layout overrides */
 }
+
+/* ------------------ Calendar tile color treatment (scoped) ------------------ */
+/* Scoped under `.App.mood-*` so veil/mood overlay (#veil) remains untouched. */
+.App.mood-sunny .calendar-wrapper .calendar-tile,
+.App.mood-sunny .calendar-tile {
+  filter: saturate(1.18) brightness(1.05) contrast(1.03);
+  box-shadow: 0 12px 38px rgba(255,200,100,0.18) inset, 0 8px 26px rgba(255,200,100,0.08);
+}
+
+.App.mood-rain .calendar-wrapper .calendar-tile,
+.App.mood-rain .calendar-tile {
+  filter: saturate(1.10) brightness(0.98) contrast(0.98);
+  box-shadow: 0 12px 38px rgba(90,130,200,0.16) inset, 0 8px 26px rgba(90,130,200,0.08);
+}
+
+.App.mood-storm .calendar-wrapper .calendar-tile,
+.App.mood-storm .calendar-tile {
+  filter: saturate(1.12) brightness(0.96) contrast(0.96);
+  box-shadow: 0 14px 44px rgba(90,70,140,0.20) inset, 0 10px 30px rgba(90,70,140,0.10);
+}
+
+.App.mood-neutral .calendar-wrapper .calendar-tile,
+.App.mood-neutral .calendar-tile {
+  filter: saturate(1.02) brightness(1.02);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+/* Seasonal variant for calendar wrapper (slight tint on tile backgrounds) */
+.calendar-wrapper.season-spring .calendar-tile { background: linear-gradient(180deg, rgba(255,240,245,0.02), transparent); }
+.calendar-wrapper.season-summer .calendar-tile { background: linear-gradient(180deg, rgba(240,250,255,0.02), transparent); }
+.calendar-wrapper.season-autumn .calendar-tile { background: linear-gradient(180deg, rgba(255,245,230,0.02), transparent); }
+.calendar-wrapper.season-winter .calendar-tile { background: linear-gradient(180deg, rgba(235,245,255,0.02), transparent); }

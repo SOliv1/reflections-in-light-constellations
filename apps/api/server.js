@@ -44,6 +44,7 @@ function isAllowedOrigin(origin) {
 
   if (/^https:\/\/.+\.netlify\.app$/i.test(origin)) return true;
   if (/^https:\/\/.+\.onrender\.com$/i.test(origin)) return true;
+  if (/^https:\/\/.+\.up\.railway\.app$/i.test(origin)) return true;
 
   return false;
 }
@@ -105,6 +106,8 @@ app.get("/health", async (_req, res) => {
 // ------------------------------------------------------------
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/background", backgroundRoutes);
+app.use("/api/days", daysRoutes);
+app.use("/api/upload", uploadRoute);
 app.use("/days", daysRoutes);
 app.use("/upload", uploadRoute);
 app.use("/api", weatherRoutes);

@@ -1,7 +1,7 @@
 import express from "express";
 import cloudinary from "../cloudinary.js";
 import multer from "multer";
-import { getDb } from "../db.js";
+import { connectToDb } from "../db.js";
 import { createGalleryItem } from "../models/Gallery.js";
 
 const storage = multer.memoryStorage();
@@ -31,7 +31,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     const shouldSaveToGallery = req.body.saveToGallery !== "false";
 
     if (shouldSaveToGallery) {
-      const db = getDb();
+      const db = await connectToDb();
       await createGalleryItem(db, {
         title: req.body.title || "Untitled",
         photoUrl: result.secure_url,

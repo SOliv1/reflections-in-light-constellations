@@ -51,6 +51,8 @@ app.get("/health", async (_req, res) => {
   });
 });
 
+app.use("/api/upload", uploadRoutes);
+app.use("/api/days", dayRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/days", dayRoutes);
 
