@@ -9,6 +9,15 @@ import BirthdayStageExperience from "./BirthdayStageExperience";
 
 const MOODS = ["calm", "joyful", "stormy", "reflective", "natural"];
 
+async function getApiError(response, fallbackMessage) {
+  try {
+    const data = await response.json();
+    return data?.error || fallbackMessage;
+  } catch {
+    return fallbackMessage;
+  }
+}
+
 function normalizePhotos(data) {
   if (Array.isArray(data?.photos)) {
     return data.photos.filter(Boolean);
@@ -45,7 +54,7 @@ export default function PersistentDayPage({
         setIsLoading(true);
         setErrorMessage("");
 
-        const res = await fetchFromApi(`/days/${dayDate}`);
+        const res = await fetchFromApi(`/api/days/${dayDate}`);
         if (!res.ok) {
           throw new Error(`Could not load gallery (${res.status})`);
         }
@@ -125,18 +134,23 @@ export default function PersistentDayPage({
       setIsUploading(true);
       setErrorMessage("");
 
-      const uploadRes = await fetchFromApi("/upload", {
+      const uploadRes = await fetchFromApi("/api/upload", {
         method: "POST",
         body: formData,
       });
 
       if (!uploadRes.ok) {
-        throw new Error(`Image upload failed (${uploadRes.status})`);
+        throw new Error(
+          await getApiError(
+            uploadRes,
+            `Image upload failed (${uploadRes.status})`
+          )
+        );
       }
 
       const uploadData = await uploadRes.json();
 
-      const saveRes = await fetchFromApi("/days/add-photo", {
+      const saveRes = await fetchFromApi("/api/days/add-photo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -147,7 +161,10 @@ export default function PersistentDayPage({
 
       if (!saveRes.ok) {
         throw new Error(
-          "The image uploaded, but the app could not save it to the database."
+          await getApiError(
+            saveRes,
+            "The image uploaded, but the app could not save it to the database."
+          )
         );
       }
 
@@ -165,7 +182,7 @@ export default function PersistentDayPage({
     setPhotos((prev) => prev.filter((url) => url !== photoUrlToDelete));
 
     try {
-      const res = await fetchFromApi("/days/delete-photo", {
+      const res = await fetchFromApi("/api/days/delete-photo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -191,7 +208,7 @@ export default function PersistentDayPage({
       setErrorMessage("");
       setMood(selectedMood);
 
-      const res = await fetchFromApi("/days/set-mood", {
+      const res = await fetchFromApi("/api/days/set-mood", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

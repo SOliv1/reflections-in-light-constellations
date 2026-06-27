@@ -4,7 +4,7 @@
 	@apiRoutes {
 		path /api/* /days* /upload* /random-image* /health
 	}
-	reverse_proxy @apiRoutes {$API_UPSTREAM:http://api:5000}
+	reverse_proxy @apiRoutes {$API_UPSTREAM:http://api.railway.internal:5000}
 
 	try_files {path} /index.html
 	file_server

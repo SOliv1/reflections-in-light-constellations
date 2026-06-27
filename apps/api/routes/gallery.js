@@ -3,14 +3,14 @@ import {
   deleteGalleryItemByPhotoUrl,
   getAllGalleryItems
 } from "../models/Gallery.js";
-import { getDb } from "../db.js";
+import { connectToDb } from "../db.js";
 
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const db = getDb();
+    const db = await connectToDb();
     const items = await getAllGalleryItems(db);
     const { season, mood } = req.query;
 
@@ -36,7 +36,7 @@ router.delete("/", async (req, res) => {
       return res.status(400).json({ error: "photoUrl is required" });
     }
 
-    const db = getDb();
+    const db = await connectToDb();
     const result = await deleteGalleryItemByPhotoUrl(db, photoUrl);
 
     if (result.deletedCount === 0) {
