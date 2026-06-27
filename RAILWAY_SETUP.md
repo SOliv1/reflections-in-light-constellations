@@ -25,6 +25,8 @@ Settings:
 
 - Root Directory: `/apps/web`
 - Watch Paths: `/apps/web/**`
+- Config File: `/apps/web/railway.json`
+- Builder: Dockerfile (clear any custom build and start commands)
 - Domain: generate after first deploy
 
 Environment variables:
