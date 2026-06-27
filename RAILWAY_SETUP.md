@@ -29,7 +29,12 @@ Settings:
 
 Environment variables:
 
-- `REACT_APP_API_BASE_URL=https://<your-api-domain>`
+- `API_UPSTREAM=http://reflections-in-light-constellations.railway.internal:5000`
+
+The web container proxies same-origin `/api/*` requests to the backend over
+Railway's private network. `API_UPSTREAM` is optional while the backend service
+keeps the name `reflections-in-light-constellations`, because that private URL
+is also the Caddy configuration default.
 
 Recommended flow:
 
@@ -80,7 +85,7 @@ If you use Railway MongoDB, generate the database first and then connect your AP
 6. Generate API domain.
 7. Add `web` service from GitHub.
 8. Set `web` Root Directory to `/apps/web`.
-9. Set `REACT_APP_API_BASE_URL` to the generated API domain.
+9. Confirm the web service's `API_UPSTREAM` uses the backend's Railway private domain.
 10. Deploy `web`.
 11. Generate web domain.
 12. Update `CORS_ALLOWED_ORIGINS` in `api` with the web domain.
