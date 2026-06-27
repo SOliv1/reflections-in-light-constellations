@@ -12,7 +12,7 @@ function getRuntimeFallbackUrls() {
     return [LOCAL_API_URL];
   }
 
-  const { hostname, origin } = window.location;
+  const { hostname, origin, protocol } = window.location;
   const isLocalHost =
     hostname === "localhost" ||
     hostname === "127.0.0.1" ||
@@ -23,7 +23,21 @@ function getRuntimeFallbackUrls() {
     return [LOCAL_API_URL];
   }
 
-  return origin ? [origin] : [];
+  const urls = [];
+
+  // In Codespaces/GitHub dev domains, the frontend and API are often on different
+  // forwarded ports under the same host slug, e.g. -3001.app.github.dev and
+  // -5000.app.github.dev. Try the API port before the current origin.
+  const githubDevHostMatch = hostname.match(/^(.*?)-\d+\.app\.github\.dev$/i);
+  if (githubDevHostMatch) {
+    urls.push(`${protocol}//${githubDevHostMatch[1]}-5000.app.github.dev`);
+  }
+
+  if (origin) {
+    urls.push(origin);
+  }
+
+  return urls;
 }
 
 const configuredUrls = normalizeUrls(

@@ -3,16 +3,20 @@ import "./DayImageCarousel.css";
 import { fetchFromApi } from "../api";
 
 
-
 const DayImageCarousel = () => {
   const [images, setImages] = useState([]);
 
   const fetchImages = async () => {
     const response = await fetchFromApi("/api/gallery");
-    const days = await response.json();
+    const items = await response.json();
 
-    // Collect all photos from all days
-    const allPhotos = days.map(day => day.photoUrl).filter(Boolean);
+    const allPhotos = items.flatMap((item) => {
+      if (Array.isArray(item?.photos)) {
+        return item.photos;
+      }
+
+      return [item?.photoUrl || item?.imageUrl || item?.url];
+    }).filter(Boolean);
 
     setImages(allPhotos);
   };

@@ -1,0 +1,39 @@
+name: Deploy to Railway
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-api:
+    name: Deploy API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy api service
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
+          RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
+        working-directory: apps/api
+        run: railway up --service api --detach
+
+  deploy-web:
+    name: Deploy Web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy web service
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
+          RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
+        working-directory: apps/web
+        run: railway up --service web --detach

@@ -10,11 +10,11 @@
   --veil-image-opacity: 0.58;
   --weather-image-opacity: 0.7;
 
-  position: fixed;
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
@@ -22,6 +22,11 @@
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+
+.background-carousel::after {
+  z-index: 0; /* stays in the same stacking context as its parent */
+}
+
 
 /* Mobile height fallback */
 .background-carousel {
@@ -63,11 +68,20 @@
   opacity: var(--veil-image-opacity);
 }
 
-/* Veil-none overrides */
-.veil-none .bg-image,
-.veil-none .weather-image {
+/* Veil-off overrides */
+.veil-off .bg-image,
+.veil-off .weather-image {
   filter: brightness(0.92) contrast(1.02) saturate(1.05) !important;
 }
+
+.weather-image.veil-off,
+.bg-image.veil-off {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  backdrop-filter: none !important;
+}
+
 
 /* Mobile fallback */
 @supports not (height: 100dvh) {
@@ -164,6 +178,16 @@
 .veil-off.background-carousel {
   opacity: 1 !important;
 }
+
+/* PURE GLASS — disable twilight overlay when veil is off */
+.veil.veil-off .twilight-overlay {
+  background: transparent !important;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  pointer-events: none !important;
+}
+
 
 /* Mobile veil transitions */
 @media (max-width: 768px) {
@@ -336,25 +360,40 @@
 /* -----------------------------------------------------------
    ORB-TINTED FOG LAYER
 ----------------------------------------------------------- */
+.background-carousel.veil-off::after {
+  opacity: 0 !important;
+  filter: none !important;
+  background: transparent !important;
+}
 
-.background-carousel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
+  .background-carousel.season-spring::after {
   background: radial-gradient(
     circle at 50% 60%,
-    rgba(var(--orbColorRGB), 0.22),
-    rgba(var(--orbColorRGB), 0.05) 60%,
+    rgba(180, 255, 200, 0.22),
+    rgba(180, 255, 200, 0.05) 60%,
     transparent 100%
   );
+}
 
-  mix-blend-mode: screen;
+.background-carousel.veil-on::after {
   opacity: 0.45;
   filter: blur(40px);
-  animation: fog-drift 18s ease-in-out infinite alternate;
 }
+
+.background-carousel.veil-lift::after {
+  opacity: 0.25;
+  filter: blur(20px);
+}
+
+/* PURE GLASS — disable fog layer completely when veil is off */
+.background-carousel.veil-off::after {
+  all: unset !important;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+}
+
 
 @keyframes fog-drift {
   0%   { transform: translateY(0) translateX(0); }
@@ -390,8 +429,8 @@
     transition: opacity 0.45s ease, background 0.45s ease;
   }
 
-  .veil-default,
-  .veil-default .twilight-overlay {
+  .veil-on,
+  .veil-on .twilight-overlay {
     opacity: 0.56;
   }
 
