@@ -18,8 +18,7 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
-        working-directory: apps/api
-        run: railway up --service reflections-in-light-constellations --ci
+        run: railway up ./apps/api --path-as-root --service reflections-in-light-constellations --ci
 
   deploy-web:
     name: Deploy Web
@@ -35,5 +34,4 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
-        working-directory: apps/web
-        run: railway up --service sparkling-gratitude --ci
+        run: railway up ./apps/web --path-as-root --service sparkling-gratitude --ci
