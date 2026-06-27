@@ -14,12 +14,12 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Deploy api service
+      - name: Deploy reflections-in-light-constellations backend service
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
         working-directory: apps/api
-        run: railway up --service api --detach
+        run: railway up --service reflections-in-light-constellations --detach
 
   deploy-web:
     name: Deploy Web
@@ -31,9 +31,9 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Deploy web service
+      - name: Deploy sparkling-gratitude web service
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
         working-directory: apps/web
-        run: railway up --service web --detach
+        run: railway up --service sparkling-gratitude --detach
