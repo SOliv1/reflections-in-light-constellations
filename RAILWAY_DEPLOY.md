@@ -19,14 +19,14 @@ Recommended environment variables to set in Railway for services (add as Railway
 
 Deployment steps
 1. Create a Railway project and add two services (if needed):
-   - `web` service for the frontend (apps/web)
-   - `api` service for the backend (apps/api)
+   - `sparkling-gratitude` service for the frontend (apps/web)
+   - `reflections-in-light-constellations` service for the backend (apps/api)
 
 2. In GitHub, add the two secrets `RAILWAY_API_KEY` and `RAILWAY_PROJECT_ID`.
 
-3. The included GitHub Actions workflow `.github/workflows/deploy-railway.yml` builds `apps/web` and runs `railway up` to deploy the `web` service.
+3. The included GitHub Actions workflow `.github/workflows/deploy-railway.yml` deploys both apps to their corresponding Railway services.
 
 Notes
-- The workflow assumes the Railway CLI is installed during the job and that `railway up --service web` will deploy the prepared build. Adjust the workflow if you prefer using Railway's GitHub integration or a different deployment strategy (Docker, Dockerfile, or monorepo setups).
+- The workflow assumes the Railway CLI is installed during the job and targets the exact service names currently configured in Railway. Adjust the workflow if those names change or if you prefer Railway's GitHub integration or a different deployment strategy (Docker, Dockerfile, or monorepo setups).
 - Do NOT store API keys in the repository; use Railway environment variables / GitHub secrets.
 - After adding new secrets, re-run a push to `master` to trigger the workflow.
