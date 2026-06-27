@@ -16,7 +16,7 @@ jobs:
 
       - name: Deploy api service
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
         working-directory: apps/api
         run: railway up --service api --detach
@@ -33,7 +33,7 @@ jobs:
 
       - name: Deploy web service
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
         working-directory: apps/web
         run: railway up --service web --detach
