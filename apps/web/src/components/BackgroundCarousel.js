@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./BackgroundCarousel.css";
 import Veil from "./Veil/Veil";
+import { fetchFromApi } from "../api";
 
 const VEIL_CLASS_MAP = {
   on: "veil-on",
@@ -26,7 +27,15 @@ const MOOD_CLASS_MAP = {
 
 async function getRandomFromServer(folder) {
   try {
-    const res = await fetch(`http://localhost:5000/random-image?folder=${folder}`);
+    const res = await fetchFromApi(
+      `/random-image?folder=${encodeURIComponent(folder)}`
+    );
+
+    if (!res.ok) {
+      console.warn(`Randomizer request failed with status ${res.status}.`);
+      return null;
+    }
+
     const data = await res.json();
     return data.url || null;
   } catch (err) {
@@ -137,19 +146,6 @@ export default function BackgroundCarousel({
     {weatherMood === "mist" && <div className="mist-layer" />}
     {weatherMood === "storm" && <div className="lightning-flash" />}
     {season === "autumn" && <div className="embers" />}
-
-    {/* DB photos */}
-    {hasPhotos &&
-      photos.map((src, i) => (
-        <img
-          key={i}
-          src={src}
-          className={`bg-image ${i === index ? "active" : ""}`}
-          alt=""
-          loading={i === 0 ? "eager" : "lazy"}
-          decoding="async"
-        />
-      ))}
 
     {/* Foreground shimmer */}
     {foregroundLayer && (
