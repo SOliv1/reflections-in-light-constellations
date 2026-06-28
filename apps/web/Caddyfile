@@ -1,11 +1,14 @@
 :{$PORT:8080} {
-	root * /usr/share/caddy
-
 	@apiRoutes {
 		path /api/* /days* /upload* /random-image* /health
 	}
-	reverse_proxy @apiRoutes {$API_UPSTREAM:http://reflections-in-light-constellations.railway.internal:5000}
+	handle @apiRoutes {
+		reverse_proxy {$API_UPSTREAM:http://reflections-in-light-constellations.railway.internal:5000}
+	}
 
-	try_files {path} /index.html
-	file_server
+	handle {
+		root * /usr/share/caddy
+		try_files {path} /index.html
+		file_server
+	}
 }
