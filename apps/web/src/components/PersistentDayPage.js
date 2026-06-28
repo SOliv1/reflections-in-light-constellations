@@ -6,6 +6,9 @@ import Portal from "./portal/Portal";
 import PhotoGallery from "./PhotoGallery";
 import { fetchFromApi } from "../api";
 import BirthdayStageExperience from "./BirthdayStageExperience";
+import moodLogo from "../assets/logos/moodLogo.png";
+import Constellation from "./Constellation";
+import CosmicPlanets from "./CosmicPlanets";
 
 const MOODS = ["calm", "joyful", "stormy", "reflective", "natural"];
 
@@ -33,6 +36,8 @@ export default function PersistentDayPage({
   macroMood = "architectural-water",
   title,
   specialExperience = null,
+  veilMode = "off",
+  starDensity = "normal",
 }) {
   const [favourites, setFavourites] = useState({});
   const [mood, setMood] = useState(null);
@@ -249,14 +254,22 @@ export default function PersistentDayPage({
     lightingPresets.find((preset) => preset.id === mood)?.label || mood;
 
   return (
-    <>
-      <Link to="/" className="crescent-portal"></Link>
-
-      <div
-        className={`day-page ${mood || ""} ${macroMood || ""} ${
+    <div
+        className={`day-page season-${season} ${mood || ""} ${macroMood || ""} ${
           specialExperience?.variant || ""
         }`}
       >
+        <header className="day-cosmic-header">
+          <Constellation
+            season={season}
+            veilMode={veilMode}
+            birthdayMode={specialExperience?.variant === "birthday-stage"}
+            showRocket
+            starDensity={starDensity}
+          />
+          <CosmicPlanets />
+        </header>
+
         {errorMessage && (
           <p role="alert" className="upload-error">
             {errorMessage}
@@ -318,6 +331,21 @@ export default function PersistentDayPage({
           )}
         </div>
 
+        <nav className="day-home-navigation" aria-label="Return home">
+          <Link to="/" className="app-home-logo day-home-logo" aria-label="Return home">
+            <img
+              src={moodLogo}
+              className="App-logo"
+              alt="Reflections in Light logo"
+            />
+          </Link>
+          <Link
+            to="/"
+            className="crescent-portal app-home-orb day-home-orb"
+            aria-label="Return home through the light"
+          />
+        </nav>
+
         {isLoading ? (
           <p>Loading saved photos...</p>
         ) : (
@@ -369,6 +397,5 @@ export default function PersistentDayPage({
           </button>
         </div>
       </div>
-    </>
   );
 }

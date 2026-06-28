@@ -10,8 +10,14 @@ function getSeason() {
   if (month >= 8 && month <= 10) return "autumn";
 }
 
-function Constellation({ veilMode, birthdayMode, starDensity = "normal" }) {
-  const season = getSeason();
+function Constellation({
+  veilMode,
+  birthdayMode,
+  showRocket = false,
+  starDensity = "normal",
+  season: seasonOverride,
+}) {
+  const season = seasonOverride || getSeason();
 
   // Determine moon phase by season
   const moonPhase = {
@@ -122,11 +128,14 @@ function Constellation({ veilMode, birthdayMode, starDensity = "normal" }) {
 
             <div className="planet-orbital"></div>
 
-            <div className="tiny-rocket">
-              <span className="rocket-window"></span>
-              <span className="rocket-flame"></span>
-            </div>
           </>
+        )}
+
+        {(showRocket || birthdayMode) && (
+          <div className="tiny-rocket">
+            <span className="rocket-window"></span>
+            <span className="rocket-flame"></span>
+          </div>
         )}
       </div>
     </section>
