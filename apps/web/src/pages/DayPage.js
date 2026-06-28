@@ -16,7 +16,7 @@ function toLegacyDayDate(value) {
   return `${day}-${month}-${year}`;
 }
 
-export default function DayPage() {
+export default function DayPage({ veilMode = "off", starDensity = "normal" }) {
   const { date } = useParams();
 
   if (!date || !isValidDateString(date)) {
@@ -58,6 +58,8 @@ export default function DayPage() {
             }
           : null
       }
+      veilMode={veilMode}
+      starDensity={starDensity}
     />
   );
 }

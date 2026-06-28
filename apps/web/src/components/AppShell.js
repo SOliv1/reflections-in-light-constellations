@@ -4,6 +4,8 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import BackgroundCarousel from "./BackgroundCarousel";
 import Calendar from "./Calendar";
 import Constellation from "./Constellation";
+import CosmicPlanets from "./CosmicPlanets";
+
 import Portal from "./portal/Portal";
 import DrawerUnified from "./DrawerUnified/DrawerUnified";
 import Veil from "./Veil/Veil";
@@ -154,6 +156,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
               <Constellation
                 veilMode={veilMode}
                 birthdayMode={isBirthdayScene}
+                showRocket
                 starDensity={starDensity}
               />
               <Portal
@@ -164,6 +167,8 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 cueText=""
                 weatherMood={weatherMood}
               />
+
+              <CosmicPlanets />
             </div>
 
             {/* Main app shell */}
@@ -226,7 +231,10 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
         }
       />
 
-      <Route path="/day/:date" element={<DayPage />} />
+      <Route
+        path="/day/:date"
+        element={<DayPage veilMode={veilMode} starDensity={starDensity} />}
+      />
     </Routes>
   );
 }

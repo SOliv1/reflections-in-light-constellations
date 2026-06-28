@@ -360,6 +360,100 @@ body {
 
 .day-page {
   position: relative;
+  min-height: 100vh;
+  --day-page-base: #f5eee5;
+  --day-page-glow: rgba(255, 222, 186, 0.38);
+  --day-page-haze: rgba(218, 190, 205, 0.18);
+  background:
+    radial-gradient(circle at 15% 30%, var(--day-page-glow), transparent 38%),
+    radial-gradient(circle at 88% 72%, var(--day-page-haze), transparent 42%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.34), transparent 55%),
+    var(--day-page-base);
+  transition: background 0.8s ease;
+}
+
+.day-page.season-winter {
+  --day-page-base: #edf0f2;
+  --day-page-glow: rgba(226, 236, 244, 0.52);
+  --day-page-haze: rgba(205, 199, 224, 0.24);
+}
+
+.day-page.season-spring {
+  --day-page-base: #f7ece8;
+  --day-page-glow: rgba(255, 215, 215, 0.42);
+  --day-page-haze: rgba(218, 205, 231, 0.24);
+}
+
+.day-page.season-summer {
+  --day-page-base: #f6eedc;
+  --day-page-glow: rgba(255, 225, 160, 0.4);
+  --day-page-haze: rgba(190, 218, 211, 0.2);
+}
+
+.day-page.season-autumn {
+  --day-page-base: #f1e3d5;
+  --day-page-glow: rgba(229, 171, 116, 0.34);
+  --day-page-haze: rgba(166, 125, 139, 0.16);
+}
+
+.day-cosmic-header {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: clamp(240px, 34vh, 360px);
+  overflow: hidden;
+  margin-bottom: 24px;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(99, 119, 181, 0.18), transparent 48%),
+    linear-gradient(180deg, rgba(7, 12, 32, 0.78), rgba(17, 18, 43, 0.34) 72%, transparent);
+}
+
+.day-cosmic-header .constellation-wrapper,
+.day-cosmic-header .planet-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Home links on a day page sit in the document flow above its gallery. */
+.day-home-navigation {
+  position: relative;
+  z-index: 20002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: min(100%, 360px);
+  margin: 24px auto 18px;
+  min-height: 72px;
+}
+
+.day-home-navigation .day-home-logo,
+.day-home-navigation .day-home-orb {
+  position: relative;
+  inset: auto;
+  flex: 0 0 auto;
+  pointer-events: auto;
+}
+
+.day-home-navigation .day-home-logo {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+}
+
+.day-home-navigation .day-home-logo .App-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.day-home-navigation .day-home-orb {
+  width: 28px;
+  height: 48px;
 }
 
 /* --- PHOTO GALLERY GLOBAL STYLES --- */
