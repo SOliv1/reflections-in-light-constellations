@@ -13,6 +13,7 @@ dotenv.config();
 // Create Express app
 // ------------------------------------------------------------
 const app = express();
+const release = "2026-06-28-carousel-routing";
 
 // ------------------------------------------------------------
 // CORS CONFIG
@@ -86,6 +87,7 @@ app.get("/health", async (_req, res) => {
     const dbStatus = getDbStatus();
     return res.status(503).json({
       app: "ok",
+      release,
       db: dbStatus.state,
       dbError: dbStatus.error || error.message,
       timestamp: new Date().toISOString(),
@@ -95,6 +97,7 @@ app.get("/health", async (_req, res) => {
   const dbStatus = getDbStatus();
   return res.json({
     app: "ok",
+    release,
     db: dbStatus.state,
     dbError: dbStatus.error,
     timestamp: new Date().toISOString(),
