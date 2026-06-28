@@ -1,13 +1,35 @@
 import express from "express";
 import cloudinary from "../cloudinary.js";
 import multer from "multer";
-import { connectToDb } from "../db.js";
+import { connectToDb, getDbStatus } from "../db.js";
 import { createGalleryItem } from "../models/Gallery.js";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 const router = express.Router();
+
+router.get("/health", async (_req, res) => {
+  try {
+    await connectToDb();
+  } catch (error) {
+    const dbStatus = getDbStatus();
+    return res.status(503).json({
+      app: "ok",
+      route: "upload",
+      db: dbStatus.state,
+      dbError: dbStatus.error || error.message,
+    });
+  }
+
+  const dbStatus = getDbStatus();
+  return res.json({
+    app: "ok",
+    route: "upload",
+    db: dbStatus.state,
+    dbError: dbStatus.error,
+  });
+});
 
 router.post("/", upload.single("image"), async (req, res) => {
   try {

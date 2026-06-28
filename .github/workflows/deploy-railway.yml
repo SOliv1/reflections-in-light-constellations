@@ -35,3 +35,25 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN || secrets.RAILWAY_API_KEY || secrets.RAILWAY_SECRET }}
           RAILWAY_PROJECT_ID: b5565950-6b5e-4ddf-9970-81614eb2fa8b
         run: railway up --service sparkling-gratitude --ci
+
+  smoke-production:
+    name: Verify production API routes
+    needs: [deploy-api, deploy-web]
+    runs-on: ubuntu-latest
+    env:
+      SMOKE_RETRIES: 30
+      SMOKE_DELAY_MS: 10000
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify API service
+        run: node tools/smoke-api.mjs https://reflections-in-light-constellations-production.up.railway.app
+
+      - name: Verify web proxy
+        run: node tools/smoke-api.mjs https://sparkling-gratitude-production-e9a3.up.railway.app
