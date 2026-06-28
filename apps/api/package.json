@@ -7,7 +7,7 @@
     "main":  "server.js",
     "scripts":  {
                     "start":  "node server.js",
-                    "test":  "node --test --test-isolation=none",
+                    "test":  "node test/run.js",
                     "dev":  "node --watch server.js"
                 },
     "keywords":  [
