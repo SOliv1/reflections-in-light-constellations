@@ -147,19 +147,6 @@ export default function BackgroundCarousel({
     {weatherMood === "storm" && <div className="lightning-flash" />}
     {season === "autumn" && <div className="embers" />}
 
-    {/* DB photos */}
-    {hasPhotos &&
-      photos.map((src, i) => (
-        <img
-          key={i}
-          src={src}
-          className={`bg-image ${i === index ? "active" : ""}`}
-          alt=""
-          loading={i === 0 ? "eager" : "lazy"}
-          decoding="async"
-        />
-      ))}
-
     {/* Foreground shimmer */}
     {foregroundLayer && (
       <div
