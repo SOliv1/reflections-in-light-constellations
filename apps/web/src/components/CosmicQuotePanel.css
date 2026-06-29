@@ -1,0 +1,79 @@
+.cosmic-quote-wrapper {
+    position: relative;
+    z-index: 9999;
+    /* adjust until it clears the logo */
+    z-index: 9999;
+    /* higher than carousel */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    /* spacing above carousel */
+}
+
+
+.cosmic-quote-panel {
+    --quote-light: rgba(242, 240, 248, 0.94);
+    --quote-ink: rgba(31, 28, 42, 0.86);
+    --quote-glow: rgba(225, 218, 255, 0.3);
+    text-align: center;
+    max-width: 700px;
+    padding: 1rem;
+}
+
+.cosmic-quote-panel.season-spring {
+    --quote-light: rgba(228, 247, 222, 0.96);
+    --quote-ink: rgba(52, 78, 58, 0.88);
+    --quote-glow: rgba(183, 232, 178, 0.32);
+}
+
+.cosmic-quote-panel.season-summer {
+    --quote-light: rgba(255, 240, 196, 0.97);
+    --quote-ink: rgba(91, 63, 28, 0.88);
+    --quote-glow: rgba(255, 211, 126, 0.34);
+}
+
+.cosmic-quote-panel.season-autumn {
+    --quote-light: rgba(255, 221, 194, 0.96);
+    --quote-ink: rgba(93, 49, 38, 0.9);
+    --quote-glow: rgba(232, 156, 112, 0.32);
+}
+
+.cosmic-quote-panel.season-winter {
+    --quote-light: rgba(220, 239, 255, 0.97);
+    --quote-ink: rgba(39, 58, 82, 0.9);
+    --quote-glow: rgba(160, 207, 255, 0.34);
+}
+
+.cosmic-quote-text {
+    font-size: 1.3rem;
+    letter-spacing: 0.03em;
+    color: var(--quote-light);
+    text-shadow:
+        0 0 10px var(--quote-glow),
+        0 0 24px var(--quote-glow);
+    margin-bottom: 0.3rem;
+    transition: color 0.8s ease, text-shadow 0.8s ease, opacity 0.8s ease;
+}
+
+.cosmic-quote-panel.quote-veil-lift .cosmic-quote-text {
+    opacity: 0.88;
+    text-shadow: 0 0 12px var(--quote-glow);
+}
+
+.cosmic-quote-panel.quote-veil-off .cosmic-quote-text {
+    color: var(--quote-ink);
+    text-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cosmic-quote-text {
+        transition: none;
+    }
+}
+
+.cosmic-quote-author {
+    font-size: 1rem;
+    opacity: 0.75;
+    letter-spacing: 0.02em;
+}

@@ -264,7 +264,7 @@ body {
   .constellation-overlay {
     background: rgba(44, 18, 72, 0.28);
     /* magical amethyst haze */
-    backdrop-filter: blur(3px) brightness(0.88) contrast(1.22) saturate(1.18);
+    backdrop-filter: none brightness(0.88) contrast(1.22) saturate(1.18);
   }
 }
 
@@ -273,7 +273,7 @@ body {
   .constellation-overlay {
     background: rgba(18, 12, 32, 0.18);
     /* deep indigo‑plum velvet */
-    backdrop-filter: blur(2px) brightness(0.88) contrast(1.12);
+    backdrop-filter: none brightness(0.88) contrast(1.12);
   }
 }
 
@@ -794,14 +794,6 @@ body {
   100% {
     transform: translate3d(-12px, 10px, 0) rotate(-26deg);
     opacity: 0.82;
-  }
-}
-
-/* Parallax does not cause jank  */
-
-@media (max-width: 600px) {
-  .constellation-container {
-    transform: translateY(calc(var(--scroll, 0) * 0.06px));
   }
 }
 

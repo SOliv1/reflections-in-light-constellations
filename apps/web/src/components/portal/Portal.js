@@ -10,9 +10,11 @@ export function Portal({
   macroMood,
   setMood,
   cueText,
-  portalState
+  portalState,
+  children,
 }) {
   const [showMoodMenu, setShowMoodMenu] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const dayClass = dayIndex ? `portal--day-${dayIndex}` : "";
   const seasonClass = season ? `portal--season-${season}` : "";
@@ -41,6 +43,7 @@ export function Portal({
     pulseClass,
     glowClass,
     awareClass,
+    children && isExpanded ? "portal--expanded" : "",
     hoverClass,
     macroMood
   ]
@@ -88,16 +91,27 @@ export function Portal({
       {/* ⭐ PORTAL CORE */}
       <div
         className={classes}
+        role={children ? "button" : undefined}
+        tabIndex={children ? 0 : undefined}
+        aria-label={children ? `${isExpanded ? "Collapse" : "Expand"} portal clock` : undefined}
+        aria-expanded={children ? isExpanded : undefined}
         onClick={() => {
+          if (children) setIsExpanded((expanded) => !expanded);
           if (type === "mood" && setMood) {
             setMood(mood);
           }
           if (onClick) onClick();
         }}
+        onKeyDown={(event) => {
+          if (!children || (event.key !== "Enter" && event.key !== " ")) return;
+          event.preventDefault();
+          setIsExpanded((expanded) => !expanded);
+        }}
       >
         <div className="portal__core">
           <div className="portal__crescent"></div>
           <div className="portal__shimmer"></div>
+          {children && <div className="portal__content">{children}</div>}
         </div>
       </div>
 

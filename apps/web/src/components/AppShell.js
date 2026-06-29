@@ -5,15 +5,17 @@ import BackgroundCarousel from "./BackgroundCarousel";
 import Calendar from "./Calendar";
 import Constellation from "./Constellation";
 import CosmicPlanets from "./CosmicPlanets";
-
+import CosmicQuotePanel from "./CosmicQuotePanel";
+import PortalTime from "./PortalTime";
+import WeatherGlyphPanel from "./WeatherGlyphPanel";
 import Portal from "./portal/Portal";
 import DrawerUnified from "./DrawerUnified/DrawerUnified";
 import Veil from "./Veil/Veil";
 
+
 import { fetchFromApi } from "../api";
 import { BIRTHDAY_DAY, BIRTHDAY_MONTH } from "../data/birthdayExperience";
 import useWeatherPhotos from "../hooks/useWeatherPhotos";
-
 import DayPage from "../pages/DayPage";
 
 import springSeasonal from "../assets/logos/springSeasonalLogo.png";
@@ -24,9 +26,11 @@ import moodOrbPink from "../assets/logos/moodOrbPink.png";
 import moodOrb from "../assets/logos/moodOrb.png";
 import { getSeasonalLogo } from "../logoSeasonal";
 import {
+  formatLocationLabel,
   normalizeWeatherClass,
   normalizeWeatherEntry,
 } from "../utils/weatherHelpers";
+import "../App.css";
 
 // veilMode and starDensity are now lifted to App.js and passed as props
 export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "off", starDensity = "normal" }) {
@@ -60,6 +64,11 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
 
   /* ---------------- WEATHER + GALLERY ---------------- */
   const [weatherCondition, setWeatherCondition] = useState(null);
+  const [temperature, setTemperature] = useState(null);
+  const [conditions, setConditions] = useState("");
+  const [weatherLocation, setWeatherLocation] = useState("Local weather");
+  const [weatherTimestamp, setWeatherTimestamp] = useState(null);
+
 
   useEffect(() => {
     async function loadGallery() {
@@ -86,27 +95,21 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
         const data = await res.json();
         const primary = data.weather?.[0] || {};
         setWeatherCondition(normalizeWeatherEntry(primary));
+        setTemperature(data.main?.temp ?? null);
+        setConditions(primary.description || primary.main || "Unknown");
+        setWeatherLocation(formatLocationLabel(data));
+        setWeatherTimestamp(data.dt ? data.dt * 1000 : Date.now());
       } catch {
         setWeatherCondition(normalizeWeatherClass("unknown"));
+        setTemperature(null);
+        setConditions("Weather unavailable");
+        setWeatherLocation("Local weather");
+        setWeatherTimestamp(null);
       }
     }
     loadWeather();
-  }, []);
-
-  /* ---------------- SCROLL LISTENER ---------------- */
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          document.documentElement.style.setProperty("--scroll", window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const refreshId = window.setInterval(loadWeather, 15 * 60 * 1000);
+    return () => window.clearInterval(refreshId);
   }, []);
 
   /* ---------------- TIME + SEASON ---------------- */
@@ -134,6 +137,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
 
   /* ---------------- DRAWERS ---------------- */
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sceneNavOpen, setSceneNavOpen] = useState(false);
   const mode = "architectural"; // default display mode
 
   /* ---------------- RENDER ---------------- */
@@ -143,6 +147,36 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
         path="/"
         element={
           <>
+            <nav
+              className={`scene-jump-nav ${sceneNavOpen ? "is-open" : ""}`}
+              aria-label="Jump to scene section"
+            >
+              <button
+                type="button"
+                className="scene-jump-toggle"
+                aria-expanded={sceneNavOpen}
+                aria-controls="scene-jump-links"
+                onClick={() => setSceneNavOpen((open) => !open)}
+              >
+                {sceneNavOpen ? "Close" : "Explore"}
+              </button>
+              {sceneNavOpen && (
+                <div className="scene-jump-links" id="scene-jump-links">
+                  <PortalTime
+                    compact
+                    season={season}
+                    mood={weatherMood}
+                    veilMode={veilMode}
+                  />
+                  <a href="#scene-sky" onClick={() => setSceneNavOpen(false)}>Sky</a>
+                  <a href="#scene-reflection" onClick={() => setSceneNavOpen(false)}>Reflection</a>
+                  <a href="#scene-weather" onClick={() => setSceneNavOpen(false)}>Weather</a>
+                  <a href="#scene-calendar" onClick={() => setSceneNavOpen(false)}>Calendar</a>
+                  <a href="#scene-footer" onClick={() => setSceneNavOpen(false)}>Contact</a>
+                </div>
+              )}
+            </nav>
+
             {/* Midnight veil — fixed overlay, subtle depth layer behind sky */}
             <Veil
               moodColor={weatherMood}
@@ -152,7 +186,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
             />
 
             {/* Sky wrapper — constellation + portal */}
-            <div className="sky-wrapper">
+            <div className="sky-wrapper" id="scene-sky">
               <Constellation
                 veilMode={veilMode}
                 birthdayMode={isBirthdayScene}
@@ -166,9 +200,14 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 mood={weatherMood}
                 cueText=""
                 weatherMood={weatherMood}
-              />
-
-              <CosmicPlanets />
+              >
+                <PortalTime
+                  embedded
+                  season={season}
+                  mood={weatherMood}
+                  veilMode={veilMode}
+                />
+              </Portal>
             </div>
 
             {/* Main app shell */}
@@ -191,6 +230,15 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 </div>
               </Link>
 
+               {/* Cosmic Quote Panel */}
+              <div className="cosmic-quote-wrapper" id="scene-reflection">
+                <CosmicQuotePanel
+                  season={season}
+                  mood={weatherMood}
+                  veilMode={veilMode}
+                />
+              </div>
+
               {/* Background photo carousel */}
               <BackgroundCarousel
                 photos={photos}
@@ -199,6 +247,11 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 weatherMood={weatherMood}
                 season={season}
               />
+
+              {/* Foreground planets — above carousel, below constellation/UI */}
+              <CosmicPlanets />
+
+
 
               {/* Constellation layer inside main App (density-aware) */}
               <Constellation
@@ -209,15 +262,31 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 starDensity={starDensity}
               />
 
+              {/* Weather Glyph Panel */}
+
+              <div id="scene-weather" className="scene-anchor-section">
+                <WeatherGlyphPanel
+                  condition={weatherCondition}
+                  temperature={temperature}
+                  location={weatherLocation}
+                  timestamp={weatherTimestamp}
+                  weatherMood={weatherMood}
+                  weatherDescription={conditions}
+                  isNight={isNight}
+                />
+              </div>
+
               {/* Calendar */}
-              <Calendar
-                season={season}
-                isNight={isNight}
-                weatherCondition={weatherCondition}
-                weatherMood={weatherMood}
-                isHomePage={true}
-                onDaySelect={() => setDrawerOpen(true)}
-              />
+              <div id="scene-calendar" className="scene-anchor-section">
+                <Calendar
+                  season={season}
+                  isNight={isNight}
+                  weatherCondition={weatherCondition}
+                  weatherMood={weatherMood}
+                  isHomePage={true}
+                  onDaySelect={() => setDrawerOpen(true)}
+                />
+              </div>
 
               {/* Unified Drawer */}
               <DrawerUnified
@@ -226,6 +295,19 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 season={season}
                 mood={weatherMood}
               />
+
+              <footer className="site-footer" id="scene-footer">
+                <p className="site-footer-title">Daily Orb Reflections</p>
+                <p>
+                  Contact: <a href="mailto:hello@seasonalstudio.co.uk">hello@seasonalstudio.co.uk</a>
+                </p>
+                <p>
+                  © 2026 Reflections in Light Constellations. Part of the Reflections in Light Family.
+                </p>
+                <p>
+                  Website: <a href="https://seasonal.studio/" target="_blank" rel="noopener noreferrer">seasonal.studio</a>
+                </p>
+              </footer>
             </div>
           </>
         }
