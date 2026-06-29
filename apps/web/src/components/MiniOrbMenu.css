@@ -20,7 +20,7 @@
       rgba(255, 255, 255, 0.95),
       rgba(255, 255, 255, 0.55),
       var(--orb-tint));
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
   box-shadow:
     0 0 12px var(--orb-tint),
     0 0 22px rgba(255, 255, 255, 0.4);
@@ -335,7 +335,7 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(10px);
+  backdrop-filter: none;
   color: #333;
   font-size: 12px;
   animation: radialPop 0.35s ease forwards;
@@ -379,7 +379,7 @@
   padding: 12px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px) saturate(180%);
+  backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
   display: flex;

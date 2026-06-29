@@ -12,7 +12,7 @@
     max-width: 480px;
 
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(18px);
+    backdrop-filter: none;
     border-radius: 28px;
     padding: 24px;
 
@@ -132,7 +132,7 @@
     color: rgba(var(--orbColorRGB), 0.95);
     padding: 10px 18px;
     border-radius: 18px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: none;
     transition: all 0.35s ease;
 }
 
