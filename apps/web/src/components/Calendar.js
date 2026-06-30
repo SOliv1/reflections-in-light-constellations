@@ -56,6 +56,11 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
   const firstDay = new Date(year, month, 1).getDay();
   const seasonClass = getSeasonClass(month);
   const today = new Date();
+  const todayIso = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
 
   const tiles = [];
 
@@ -106,15 +111,21 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
       <div className={`app ${season} ${isNight ? "night" : "day"} ${weatherCondition}`}>
 
         <div className="calendar-header">
+          <p className="calendar-controls-label" aria-label="Calendar controls">
+            Calendar controls
+          </p>
+
           <button
             className="calendar-nav calendar-nav-prev"
             type="button"
+            aria-label="Show previous calendar month"
+            title="Show previous calendar month"
             onClick={() =>
               setCurrentMonthKey(formatMonthKey(monthOptions[currentIndex - 1]))
             }
             disabled={currentIndex === 0}
           >
-            Previous
+            Previous month
           </button>
 
           {/* ⭐ HIDE MONTH/YEAR ON HOMEPAGE */}
@@ -126,17 +137,23 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
               })}
             </h2>
           )}
-          {isHomePage && <div className="calendar-title-spacer" aria-hidden="true" />}
+          {isHomePage && (
+            <Link to={`/day/${todayIso}`} className="calendar-today-quick">
+              Open Today
+            </Link>
+          )}
 
           <button
             className="calendar-nav calendar-nav-next"
             type="button"
+            aria-label="Show next calendar month"
+            title="Show next calendar month"
             onClick={() =>
               setCurrentMonthKey(formatMonthKey(monthOptions[currentIndex + 1]))
             }
             disabled={currentIndex === monthOptions.length - 1}
           >
-            Next
+            Next month
           </button>
         </div>
 

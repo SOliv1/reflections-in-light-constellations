@@ -442,7 +442,8 @@ body {
 }
 
 .scene-jump-toggle,
-.scene-jump-nav a {
+.scene-jump-nav a,
+.scene-jump-nav .scene-link-btn {
   padding: 7px 10px;
   border: 0;
   border-radius: 10px;
@@ -455,6 +456,23 @@ body {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+}
+
+.scene-jump-section-title {
+  margin-top: 4px;
+  padding: 5px 8px 2px;
+  color: rgba(255, 244, 212, 0.78);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.scene-link-btn.scene-link-primary {
+  background: rgba(255, 233, 170, 0.16);
+  color: rgba(255, 247, 224, 0.96);
+  border: 1px solid rgba(255, 233, 170, 0.34);
 }
 
 .scene-jump-links {
@@ -477,7 +495,14 @@ body {
 .scene-jump-toggle:hover,
 .scene-jump-toggle:focus-visible,
 .scene-jump-nav a:hover,
+.scene-jump-nav .scene-link-btn:hover,
 .scene-jump-nav a:focus-visible {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
+.scene-jump-nav .scene-link-btn:focus-visible {
   color: #fff;
   background: rgba(255, 255, 255, 0.12);
   outline: none;
@@ -545,9 +570,9 @@ body {
 
 @media (max-width: 700px) {
   .scene-jump-nav {
-    top: calc(env(safe-area-inset-top, 0px) + 12px);
-    right: 12px;
-    left: auto;
+    top: calc(env(safe-area-inset-top, 0px) + 84px);
+    left: 12px;
+    right: auto;
     bottom: auto;
     transform: none;
   }

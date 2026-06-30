@@ -11,20 +11,23 @@
 /* Ensure calendar sits above sky-wrapper/veil layers and is clickable */
 .calendar-wrapper {
   position: relative;
-  z-index: 3100; /* above .sky-wrapper (3000) but below UI portals */
+  z-index: 3100;
+  /* above .sky-wrapper (3000) but below UI portals */
   pointer-events: auto;
 }
 
 .calendar-header {
-  padding-left: 6vw;   /* cinematic inset */
-  padding-right: 6vw;  /* optional, keeps symmetry*/
+  padding-left: 6vw;
+  /* cinematic inset */
+  padding-right: 6vw;
+  /* optional, keeps symmetry*/
   width: 90%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-} 
+}
 
 .calendar-header {
   display: grid;
@@ -46,6 +49,29 @@
   min-height: 1px;
 }
 
+.calendar-controls-label {
+  display: none;
+  margin: 0;
+}
+
+.calendar-today-quick {
+  justify-self: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(183, 212, 255, 0.44);
+  background: rgba(24, 34, 62, 0.56);
+  color: rgba(242, 247, 255, 0.96);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.calendar-today-quick:hover {
+  background: rgba(36, 49, 86, 0.7);
+}
+
 
 .calendar-grid {
   display: grid;
@@ -53,7 +79,7 @@
   gap: 22px;
 }
 
-.calendar-grid > * {
+.calendar-grid>* {
   min-height: 140px;
 }
 
@@ -88,13 +114,12 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    circle at 50% 120%,
-    rgba(255, 255, 255, 0.12),
-    rgba(255, 255, 255, 0) 70%
-  );
+  background: radial-gradient(circle at 50% 120%,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0) 70%);
   pointer-events: none;
 }
+
 .calendar-title {
   box-shadow:
     0 0 12px rgba(255, 255, 255, 0.12),
@@ -165,7 +190,7 @@
 }
 
 
-  /* your base day styles here */
+/* your base day styles here */
 
 /* --- Weather mood tint for TODAY --- */
 .calendar-tile.calendar-day.today.sunny {
@@ -266,8 +291,10 @@
 ——————————————————————————————— */
 
 .calendar-grid {
-  margin-left: 4vw;   /* matches header + title inset */
-  margin-right: 4vw;  /* keeps right side balanced */
+  margin-left: 4vw;
+  /* matches header + title inset */
+  margin-right: 4vw;
+  /* keeps right side balanced */
   opacity: 0;
   animation: fadeInCalm 1.4s ease-out forwards;
 }
@@ -277,6 +304,7 @@
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -289,10 +317,31 @@
 
 @media (max-width: 600px) {
 
+  .calendar-controls-label {
+    display: block;
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(220, 231, 255, 0.24);
+    background: rgba(14, 20, 38, 0.54);
+    color: rgba(235, 241, 255, 0.92);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .calendar-today-quick {
+    padding: 5px 10px;
+    font-size: 0.62rem;
+  }
+
   .calendar-container {
     margin-top: 36px;
     padding-top: 14px;
-    border-top: 1px solid rgba(255,255,255,0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -306,27 +355,27 @@
     gap: 12px;
   }
 
-  .calendar-grid > * {
+  .calendar-grid>* {
     min-height: 52px !important;
   }
 
   /* Mini circular tiles */
-.calendar-tile {
-  flex: 0 0 auto !important;
-  width: 52px !important;
-  height: 52px !important;
-  border-radius: 50% !important;
-  font-size: .7rem !important;
-  padding: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0 !important;
-  background: rgba(255,255,255,0.08) !important;
-  box-shadow: 0 0 6px var(--mode-shadow) !important;
-  text-decoration: none !important;
-  color: inherit !important;
-}
+  .calendar-tile {
+    flex: 0 0 auto !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    font-size: .7rem !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 0 6px var(--mode-shadow) !important;
+    text-decoration: none !important;
+    color: inherit !important;
+  }
 
   .day-date-label {
     display: none !important;
@@ -339,7 +388,7 @@
 
   .calendar-tile.selected {
     transform: scale(1.15) !important;
-    background: rgba(255,255,255,0.18) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
     box-shadow: 0 0 12px var(--mode-shadow) !important;
   }
 
@@ -347,4 +396,3 @@
     display: none !important;
   }
 }
-

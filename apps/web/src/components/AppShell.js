@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 import BackgroundCarousel from "./BackgroundCarousel";
@@ -15,6 +15,7 @@ import Veil from "./Veil/Veil";
 
 import { fetchFromApi } from "../api";
 import { BIRTHDAY_DAY, BIRTHDAY_MONTH } from "../data/birthdayExperience";
+import { buildSpecialDateLinks, defaultSpecialDates } from "../data/specialDates";
 import useWeatherPhotos from "../hooks/useWeatherPhotos";
 import DayPage from "../pages/DayPage";
 
@@ -135,6 +136,39 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
   const backgroundImage = useWeatherPhotos(isHomePage);
   const weatherMood = weatherCondition || "neutral";
 
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const calendarTodayIso = [
+    currentYear,
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  const birthdayIso = [
+    currentYear,
+    String(BIRTHDAY_MONTH).padStart(2, "0"),
+    String(BIRTHDAY_DAY).padStart(2, "0"),
+  ].join("-");
+
+  const specialDateLinks = useMemo(() => {
+    let customDates = [];
+
+    if (typeof window !== "undefined") {
+      try {
+        const raw = window.localStorage.getItem("rilcSpecialDates");
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed)) customDates = parsed;
+      } catch {
+        customDates = [];
+      }
+    }
+
+    return buildSpecialDateLinks(currentYear, [
+      ...defaultSpecialDates,
+      ...customDates,
+    ]);
+  }, [currentYear]);
+
   /* ---------------- DRAWERS ---------------- */
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sceneNavOpen, setSceneNavOpen] = useState(false);
@@ -168,11 +202,42 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                     mood={weatherMood}
                     veilMode={veilMode}
                   />
-                  <a href="#scene-sky" onClick={() => setSceneNavOpen(false)}>Sky</a>
-                  <a href="#scene-reflection" onClick={() => setSceneNavOpen(false)}>Reflection</a>
-                  <a href="#scene-weather" onClick={() => setSceneNavOpen(false)}>Weather</a>
-                  <a href="#scene-calendar" onClick={() => setSceneNavOpen(false)}>Calendar</a>
-                  <a href="#scene-footer" onClick={() => setSceneNavOpen(false)}>Contact</a>
+                  <Link
+                    to={`/day/${calendarTodayIso}`}
+                    className="scene-link-btn scene-link-primary"
+                    onClick={() => setSceneNavOpen(false)}
+                  >
+                    Open Today
+                  </Link>
+
+                  <div className="scene-jump-section-title">Scene</div>
+                  <a className="scene-link-btn" href="#scene-sky" onClick={() => setSceneNavOpen(false)}>Sky</a>
+                  <a className="scene-link-btn" href="#scene-reflection" onClick={() => setSceneNavOpen(false)}>Reflection</a>
+                  <a className="scene-link-btn" href="#scene-weather" onClick={() => setSceneNavOpen(false)}>Weather</a>
+
+                  <div className="scene-jump-section-title">Calendar</div>
+                  <a className="scene-link-btn" href="#scene-calendar" onClick={() => setSceneNavOpen(false)}>Open Calendar</a>
+                  <Link
+                    to={`/day/${birthdayIso}`}
+                    className="scene-link-btn"
+                    onClick={() => setSceneNavOpen(false)}
+                  >
+                    Your Birthday
+                  </Link>
+
+                  <div className="scene-jump-section-title">Special Dates</div>
+                  {specialDateLinks.map((specialDate) => (
+                    <Link
+                      key={specialDate.id}
+                      to={`/day/${specialDate.isoDate}`}
+                      className="scene-link-btn"
+                      onClick={() => setSceneNavOpen(false)}
+                    >
+                      {specialDate.label}
+                    </Link>
+                  ))}
+
+                  <a className="scene-link-btn" href="#scene-footer" onClick={() => setSceneNavOpen(false)}>Contact</a>
                 </div>
               )}
             </nav>
