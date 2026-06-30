@@ -545,17 +545,18 @@ body {
 
 @media (max-width: 700px) {
   .scene-jump-nav {
-    top: auto;
-    left: 12px;
-    right: auto;
-    bottom: 12px;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: 12px;
+    left: auto;
+    bottom: auto;
     transform: none;
   }
 
   .scene-jump-toggle,
   .scene-jump-nav a {
-    padding: 8px;
-    font-size: 0.66rem;
+    min-height: 36px;
+    padding: 8px 10px;
+    font-size: 0.7rem;
   }
 }
 
