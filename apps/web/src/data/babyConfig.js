@@ -6,9 +6,9 @@ export const BABY_BIRTH_DATE = null;        // set after birth: "2024-12-18"
 export const BABY_NAME = "Little Star";     // update when ready
 
 // The Sagittarius window: Nov 22 – Dec 21
-export const SAGITTARIUS_START_MONTH = 11; // November (0-indexed)
+export const SAGITTARIUS_START_MONTH = 10; // November (0-indexed: Jan=0 … Nov=10)
 export const SAGITTARIUS_START_DAY = 22;
-export const SAGITTARIUS_END_MONTH = 11;   // December (0-indexed)
+export const SAGITTARIUS_END_MONTH = 11;   // December (0-indexed: Dec=11)
 export const SAGITTARIUS_END_DAY = 21;
 
 /**

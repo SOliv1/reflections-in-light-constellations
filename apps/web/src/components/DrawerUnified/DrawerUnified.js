@@ -6,8 +6,15 @@ import ActionsPanel from "./Panels/ActionsPanel";
 import NotesPanel from "./Panels/NotesPanel";
 import QuotePanel from "./Panels/QuotePanel";
 
-export default function DrawerUnified({ isOpen, onClose, season, mood }) {
-  const [activeTab, setActiveTab] = useState("reflections");
+export default function DrawerUnified({ isOpen, onClose, season, mood, initialTab = "reflections" }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  // Sync to initialTab whenever the drawer is opened on a different tab
+  React.useEffect(() => {
+    if (isOpen) {
+      setActiveTab(initialTab);
+    }
+  }, [isOpen, initialTab]);
 
   return (
     <div className={`drawer-unified ${isOpen ? "open" : ""}`}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MobileLayout from "../components/Mobile/MobileLayout";
+import DrawerUnified from "../components/DrawerUnified/DrawerUnified";
 import { fetchFromApi } from "../api";
 import { quotes } from "../data/quotes";
 import "../styles/mobile-integration.css";
@@ -28,6 +29,8 @@ export default function MobileHomePage({
   const [weatherData, setWeatherData] = useState(null);
   const [quoteOfDay, setQuoteOfDay] = useState({ quote: "", person: "" });
   const [reflection, setReflection] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerTab, setDrawerTab] = useState("reflections");
 
   /* ──────────────────────────────────────────────────────────────────────
      Clock: Update time every second
@@ -107,22 +110,17 @@ export default function MobileHomePage({
   };
 
   const handleCategorySelect = (categoryId) => {
-    // Route to drawer/category page based on ID
-    switch (categoryId) {
-      case "short-reflections":
-        navigate("/reflections");
-        break;
-      case "quiet-actions":
-        navigate("/actions");
-        break;
-      case "light-notes":
-        navigate("/notes");
-        break;
-      case "quote-of-day":
-        // Already visible, could scroll to quote section
-        break;
-      default:
-        break;
+    // Map mobile category tile IDs to DrawerUnified tab IDs
+    const tabMap = {
+      "short-reflections": "reflections",
+      "quiet-actions":     "actions",
+      "light-notes":       "notes",
+      "quote-of-day":      "quote",
+    };
+    const tab = tabMap[categoryId];
+    if (tab) {
+      setDrawerTab(tab);
+      setDrawerOpen(true);
     }
   };
 
@@ -135,20 +133,31 @@ export default function MobileHomePage({
   const glow = `A warm ${temperature} deg glow`;
 
   return (
-    <MobileLayout
-      time={time}
-      reflection={reflection}
-      temperature={parseFloat(temperature)}
-      weatherDescription={weatherDescription}
-      weatherGlow={glow}
-      location={location}
-      currentReflection={currentReflectionNum}
-      quoteOfDay={quoteOfDay}
-      onNavigatePrevious={handlePreviousReflection}
-      onNavigateNext={handleNextReflection}
-      onSelectReflection={handleSelectReflection}
-      onToday={handleToday}
-      onCategorySelect={handleCategorySelect}
-    />
+    <>
+      <MobileLayout
+        time={time}
+        reflection={reflection}
+        temperature={parseFloat(temperature)}
+        weatherDescription={weatherDescription}
+        weatherGlow={glow}
+        location={location}
+        currentReflection={currentReflectionNum}
+        quoteOfDay={quoteOfDay}
+        onNavigatePrevious={handlePreviousReflection}
+        onNavigateNext={handleNextReflection}
+        onSelectReflection={handleSelectReflection}
+        onToday={handleToday}
+        onCategorySelect={handleCategorySelect}
+      />
+
+      {/* Unified drawer — slides up from bottom when a category tile is tapped */}
+      <DrawerUnified
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        season={season}
+        mood={weatherMood}
+        initialTab={drawerTab}
+      />
+    </>
   );
 }
