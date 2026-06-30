@@ -162,6 +162,32 @@
   --app-accent: rgba(220, 220, 230, 0.18);
 }
 
+@media (max-width: 768px) {
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(84, 98, 154, 0.34) 0%, rgba(18, 22, 38, 0.88) 42%, rgba(8, 10, 20, 0.98) 100%);
+  }
+
+  .App {
+    min-height: 100vh;
+    background:
+      linear-gradient(180deg,
+        rgba(7, 10, 22, 0) 0%,
+        rgba(7, 10, 22, 0) 20rem,
+        rgba(7, 10, 22, 0.56) 27rem,
+        rgba(7, 10, 22, 0.9) 100%),
+      linear-gradient(180deg,
+        transparent 0%,
+        var(--app-accent) 14%,
+        transparent 46%);
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+}
+
 /* Small accent for top-left home orb to better reflect the mood tint */
 .App .app-home-logo {
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12), 0 0 28px rgba(0, 0, 0, 0.06);
