@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import MobileLayout from "../components/Mobile/MobileLayout";
 import { fetchFromApi } from "../api";
 import { quotes } from "../data/quotes";
+import "../styles/mobile-integration.css";
 
 /**
  * MobileHomePage
- * ════════════════════════════════════════════════════════════════
+ * ═════════════════════════════════════════════════════════════════════════════
  * The mobile-first home experience for Reflections of Light.
  * Integrates real data from API and manages mobile navigation.
  *
@@ -28,9 +29,9 @@ export default function MobileHomePage({
   const [quoteOfDay, setQuoteOfDay] = useState({ quote: "", person: "" });
   const [reflection, setReflection] = useState("");
 
-  /* ────────────────────────────────────────────────────────────────
+  /* ───────────────────────────────────────────────────────────────────────────
      Clock: Update time every second
-  ──────────────────────────────────────────────────────────────── */
+  ─────────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     function updateTime() {
       const now = new Date();
@@ -44,9 +45,9 @@ export default function MobileHomePage({
     return () => clearInterval(interval);
   }, []);
 
-  /* ────────────────────────────────────────────────────────────────
+  /* ───────────────────────────────────────────────────────────────────────────
      Weather: Load current weather data
-  ──────────────────────────────────────────────────────────────── */
+  ─────────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     async function loadWeather() {
       try {
@@ -62,9 +63,9 @@ export default function MobileHomePage({
     loadWeather();
   }, []);
 
-  /* ────────────────────────────────────────────────────────────────
+  /* ───────────────────────────────────────────────────────────────────────────
      Quote of the Day: Calculate based on current date
-  ──────────────────────────────────────────────────────────────── */
+  ─────────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     const today = new Date();
     const index = (today.getDate() - 1) % quotes.length;
@@ -82,9 +83,9 @@ export default function MobileHomePage({
     setReflection(reflections[reflectionIndex]);
   }, []);
 
-  /* ────────────────────────────────────────────────────────────────
+  /* ───────────────────────────────────────────────────────────────────────────
      Handlers
-  ──────────────────────────────────────────────────────────────── */
+  ─────────────────────────────────────────────────────────────────────────── */
   const handlePreviousReflection = () => {
     const newNum = currentReflectionNum === 1 ? 30 : currentReflectionNum - 1;
     setCurrentReflectionNum(newNum);
@@ -125,9 +126,9 @@ export default function MobileHomePage({
     }
   };
 
-  /* ────────────────────────────────────────────────────────────────
+  /* ───────────────────────────────────────────────────────────────────────────
      Extract weather data for display
-  ──────────────────────────────────────────────────────────────── */
+  ─────────────────────────────────────────────────────────────────────────── */
   const temperature = weatherData?.main?.temp?.toFixed(1) || 20.9;
   const weatherDesc = weatherData?.weather?.[0]?.main || "Clear";
   const weatherDescription = weatherData?.weather?.[0]?.description || "A quiet layer of overcast cloud";

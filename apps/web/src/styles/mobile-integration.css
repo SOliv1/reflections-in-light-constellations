@@ -1,20 +1,20 @@
-/* ════════════════════════════════════════════════════════════════
-   Mobile Integration: Ensure mobile layout sits above existing layers
-   ════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════════
+   Mobile Integration: Ensure mobile layout is visible above sky layers
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Mobile container is clickable and sits above background layers */
+/* Mobile container is clickable and sits ABOVE sky wrapper on mobile */
 .mobile-container {
   position: relative;
-  z-index: 2500;  /* Above veil (1), below modals (3000+) */
+  z-index: 3100;  /* Above sky-wrapper (3000) */
   pointer-events: auto;
 }
 
-/* Ensure no layout shift on mobile */
+/* Prevent layout shift on mobile */
 @media (max-width: 767px) {
   /* Override any desktop padding on small screens */
   .mobile-container {
     padding: var(--mobile-edge-lg) var(--mobile-edge);
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
   }
@@ -22,6 +22,19 @@
   /* Disable horizontal scroll */
   body, html {
     overflow-x: hidden;
+  }
+
+  /* Ensure mobile sections are visible */
+  .explore-section,
+  .weather-card,
+  .reflection-nav,
+  .carousel-container,
+  .today-button,
+  .category-grid,
+  .quote-card,
+  .mobile-footer {
+    position: relative;
+    z-index: 3100;
   }
 }
 
