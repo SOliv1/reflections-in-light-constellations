@@ -37,8 +37,8 @@
     --quote-light: rgba(249, 247, 255, 0.99);
     --quote-ink: rgba(22, 24, 36, 0.96);
     --quote-glow: rgba(225, 218, 255, 0.3);
-    --quote-surface: rgba(15, 20, 38, 0.46);
-    --quote-edge: rgba(220, 232, 255, 0.36);
+    --quote-surface: rgba(255, 255, 255, 0.34);
+    --quote-edge: rgba(214, 226, 250, 0.46);
     text-align: center;
     max-width: 700px;
     padding: 1rem;
@@ -48,32 +48,32 @@
     --quote-light: rgba(228, 247, 222, 0.96);
     --quote-ink: rgba(52, 78, 58, 0.88);
     --quote-glow: rgba(183, 232, 178, 0.32);
-    --quote-surface: rgba(25, 47, 33, 0.4);
-    --quote-edge: rgba(196, 236, 190, 0.38);
+    --quote-surface: rgba(238, 252, 236, 0.36);
+    --quote-edge: rgba(196, 236, 190, 0.44);
 }
 
 .cosmic-quote-panel.season-summer {
     --quote-light: rgba(255, 240, 196, 0.97);
     --quote-ink: rgba(91, 63, 28, 0.88);
     --quote-glow: rgba(255, 211, 126, 0.34);
-    --quote-surface: rgba(68, 45, 16, 0.4);
-    --quote-edge: rgba(255, 224, 152, 0.38);
+    --quote-surface: rgba(255, 247, 225, 0.38);
+    --quote-edge: rgba(255, 224, 152, 0.44);
 }
 
 .cosmic-quote-panel.season-autumn {
     --quote-light: rgba(255, 221, 194, 0.96);
     --quote-ink: rgba(93, 49, 38, 0.9);
     --quote-glow: rgba(232, 156, 112, 0.32);
-    --quote-surface: rgba(63, 29, 22, 0.4);
-    --quote-edge: rgba(244, 185, 152, 0.38);
+    --quote-surface: rgba(255, 240, 230, 0.36);
+    --quote-edge: rgba(244, 185, 152, 0.44);
 }
 
 .cosmic-quote-panel.season-winter {
     --quote-light: rgba(220, 239, 255, 0.97);
     --quote-ink: rgba(39, 58, 82, 0.9);
     --quote-glow: rgba(160, 207, 255, 0.34);
-    --quote-surface: rgba(19, 36, 58, 0.42);
-    --quote-edge: rgba(179, 219, 255, 0.4);
+    --quote-surface: rgba(237, 247, 255, 0.36);
+    --quote-edge: rgba(179, 219, 255, 0.46);
 }
 
 .cosmic-quote-text {
@@ -81,7 +81,7 @@
     font-weight: 600;
     line-height: 1.55;
     letter-spacing: 0.03em;
-    color: var(--quote-light);
+    color: var(--quote-ink);
     display: inline-block;
     padding: 0.42rem 0.9rem;
     border-radius: 14px;
@@ -90,8 +90,8 @@
         var(--quote-surface);
     border: 1px solid var(--quote-edge);
     text-shadow:
-        0 1px 8px rgba(0, 0, 0, 0.48),
-        0 0 14px var(--quote-glow);
+        0 1px 2px rgba(255, 255, 255, 0.5),
+        0 0 10px var(--quote-glow);
     margin-bottom: 0.3rem;
     transition: color 0.8s ease, text-shadow 0.8s ease, opacity 0.8s ease;
 }
@@ -102,8 +102,8 @@
 
 .cosmic-quote-panel.quote-veil-off .cosmic-quote-text {
     color: var(--quote-ink);
-    background: rgba(255, 255, 255, 0.68);
-    border-color: rgba(30, 46, 84, 0.18);
+    background: rgba(255, 255, 255, 0.58);
+    border-color: rgba(30, 46, 84, 0.16);
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.38);
 }
 

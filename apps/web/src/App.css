@@ -429,10 +429,11 @@ body {
   display: grid;
   gap: 6px;
   padding: 5px;
-  border: 1px solid rgba(222, 225, 244, 0.2);
+  border: 1px solid rgba(222, 225, 244, 0.34);
   border-radius: 999px;
-  background: rgba(20, 20, 34, 0.58);
-  box-shadow: 0 8px 24px rgba(4, 4, 14, 0.18);
+  background:
+    linear-gradient(160deg, rgba(255, 250, 242, 0.62), rgba(233, 240, 255, 0.5));
+  box-shadow: 0 8px 22px rgba(72, 92, 138, 0.14);
   transform: none;
   contain: layout paint;
 }
@@ -448,7 +449,7 @@ body {
   border: 0;
   border-radius: 10px;
   background: transparent;
-  color: rgba(242, 242, 250, 0.86);
+  color: rgba(36, 44, 72, 0.92);
   font-family: inherit;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
@@ -461,7 +462,7 @@ body {
 .scene-jump-section-title {
   margin-top: 4px;
   padding: 5px 8px 2px;
-  color: rgba(255, 244, 212, 0.78);
+  color: rgba(103, 82, 46, 0.9);
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -470,9 +471,9 @@ body {
 }
 
 .scene-link-btn.scene-link-primary {
-  background: rgba(255, 233, 170, 0.16);
-  color: rgba(255, 247, 224, 0.96);
-  border: 1px solid rgba(255, 233, 170, 0.34);
+  background: rgba(255, 233, 170, 0.32);
+  color: rgba(78, 58, 18, 0.95);
+  border: 1px solid rgba(226, 187, 106, 0.36);
 }
 
 .scene-jump-links {
@@ -483,14 +484,14 @@ body {
 .scene-menu-time {
   display: block;
   padding: 0.45rem 0.6rem;
-  border-bottom: 1px solid rgba(228, 230, 246, 0.24);
-  color: rgba(255, 251, 232, 0.98);
-  background: rgba(10, 15, 30, 0.28);
+  border-bottom: 1px solid rgba(198, 211, 240, 0.46);
+  color: rgba(33, 42, 73, 0.94);
+  background: rgba(255, 255, 255, 0.48);
   font-size: 0.74rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
-  text-shadow: 0 1px 6px rgba(6, 8, 22, 0.68);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.42);
   text-align: center;
   white-space: nowrap;
 }
@@ -500,14 +501,14 @@ body {
 .scene-jump-nav a:hover,
 .scene-jump-nav .scene-link-btn:hover,
 .scene-jump-nav a:focus-visible {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
+  color: rgba(22, 30, 56, 0.96);
+  background: rgba(255, 255, 255, 0.52);
   outline: none;
 }
 
 .scene-jump-nav .scene-link-btn:focus-visible {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
+  color: rgba(22, 30, 56, 0.96);
+  background: rgba(255, 255, 255, 0.52);
   outline: none;
 }
 
@@ -555,18 +556,18 @@ body {
 
 .portal-time-text {
   padding: 0.45rem 0.75rem;
-  border: 1px solid rgba(235, 236, 250, 0.32);
+  border: 1px solid rgba(215, 226, 246, 0.46);
   border-radius: 999px;
-  background: rgba(12, 16, 32, 0.52);
-  color: rgba(251, 252, 255, 0.98);
+  background: rgba(255, 255, 255, 0.54);
+  color: rgba(30, 40, 70, 0.96);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
-  text-shadow: 0 1px 7px rgba(4, 8, 20, 0.72);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.38);
 }
 
 .portal-time-zone {
-  color: rgba(255, 245, 214, 0.9);
+  color: rgba(91, 74, 36, 0.9);
   font-size: 0.7em;
 }
 
@@ -690,12 +691,12 @@ body {
   min-height: 88px;
   padding: 10px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(218, 230, 255, 0.42);
+  border: 1px solid rgba(206, 220, 247, 0.52);
   background: linear-gradient(135deg,
-      rgba(18, 27, 52, 0.74),
-      rgba(36, 52, 88, 0.68));
+      rgba(255, 247, 231, 0.58),
+      rgba(225, 236, 255, 0.52));
   box-shadow:
-    0 14px 34px rgba(9, 14, 30, 0.28),
+    0 12px 28px rgba(110, 130, 170, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
@@ -744,9 +745,9 @@ body {
   transform: translateX(-50%);
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(11, 17, 34, 0.66);
-  border: 1px solid rgba(211, 226, 255, 0.44);
-  color: rgba(240, 246, 255, 0.95);
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(198, 214, 245, 0.48);
+  color: rgba(39, 49, 79, 0.9);
   font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.08em;
