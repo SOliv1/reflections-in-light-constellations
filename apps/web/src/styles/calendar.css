@@ -44,6 +44,26 @@
   justify-self: end;
 }
 
+.calendar-nav {
+  min-height: 38px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(198, 220, 255, 0.44);
+  background: rgba(17, 27, 52, 0.58);
+  color: rgba(242, 247, 255, 0.96);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.calendar-nav:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .calendar-title-spacer {
   width: min(18rem, 100%);
   min-height: 1px;
@@ -336,6 +356,12 @@
   .calendar-today-quick {
     padding: 5px 10px;
     font-size: 0.62rem;
+  }
+
+  .calendar-nav {
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 0.6rem;
   }
 
   .calendar-container {

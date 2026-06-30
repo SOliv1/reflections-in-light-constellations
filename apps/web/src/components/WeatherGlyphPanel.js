@@ -42,7 +42,7 @@ export default function WeatherGlyphPanel({
     if (c.includes("mist") || c.includes("fog")) return "Mist settling gently";
     if (c.includes("storm")) return "A restless storm presence";
 
-    return conditionValue;
+    return conditionValue || "Weather details unavailable";
   }
 
   function poeticTemperature(temp) {
@@ -81,7 +81,7 @@ export default function WeatherGlyphPanel({
         </div>
       </div>
 
-      <div className="weather-panel-text">
+      <div className="weather-panel-text" role="status" aria-live="polite">
         <div className="condition">{poeticCondition(conditionCopy)}</div>
         <div className="temperature">{poeticTemperature(temperature)}</div>
         <div className="location">{resolvedLocation}</div>

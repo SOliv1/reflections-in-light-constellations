@@ -679,9 +679,18 @@ body {
   align-items: center;
   justify-content: center;
   gap: 22px;
-  width: min(100%, 360px);
+  width: min(100%, 420px);
   margin: 24px auto 18px;
-  min-height: 72px;
+  min-height: 88px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(218, 230, 255, 0.42);
+  background: linear-gradient(135deg,
+      rgba(18, 27, 52, 0.74),
+      rgba(36, 52, 88, 0.68));
+  box-shadow:
+    0 14px 34px rgba(9, 14, 30, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .day-home-navigation .day-home-logo,
@@ -696,6 +705,9 @@ body {
   width: 64px;
   height: 64px;
   overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.58),
+    0 10px 26px rgba(130, 176, 255, 0.36);
 }
 
 .day-home-navigation .day-home-logo .App-logo {
@@ -709,6 +721,44 @@ body {
 .day-home-navigation .day-home-orb {
   width: 28px;
   height: 48px;
+  filter:
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.48)) drop-shadow(0 0 16px rgba(152, 193, 255, 0.42));
+}
+
+.day-home-navigation .day-home-logo:hover,
+.day-home-navigation .day-home-orb:hover {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.day-home-navigation::before {
+  content: "Return home";
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(11, 17, 34, 0.66);
+  border: 1px solid rgba(211, 226, 255, 0.44);
+  color: rgba(240, 246, 255, 0.95);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .day-home-navigation {
+    width: min(100%, 340px);
+    min-height: 82px;
+    padding: 9px 14px;
+    gap: 18px;
+  }
+
+  .day-home-navigation::before {
+    top: -22px;
+    font-size: 0.61rem;
+  }
 }
 
 /* --- PHOTO GALLERY GLOBAL STYLES --- */
@@ -993,16 +1043,6 @@ body {
   filter: drop-shadow(0 0 20px rgba(204, 232, 172, 0.24));
 }
 
-
-.calendar-header,
-.calendar-container {
-  /*background: url('./assets/marble-grey-white.png');*/
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  position: relative;
-  z-index: 60;
-}
 
 /*
 .mode-architectural {

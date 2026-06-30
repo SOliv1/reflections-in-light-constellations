@@ -46,6 +46,19 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
   const monthOptions = useMemo(() => buildMonthOptions(), []);
   const [currentMonthKey, setCurrentMonthKey] = useState(getInitialMonth);
 
+  function goToMonth(indexDelta) {
+    const currentIndex = monthOptions.findIndex(
+      (option) => formatMonthKey(option) === currentMonthKey
+    );
+    const nextIndex = currentIndex + indexDelta;
+
+    if (nextIndex < 0 || nextIndex >= monthOptions.length) {
+      return;
+    }
+
+    setCurrentMonthKey(formatMonthKey(monthOptions[nextIndex]));
+  }
+
   const activeMonth =
     monthOptions.find((option) => formatMonthKey(option) === currentMonthKey) ||
     monthOptions[0];
@@ -120,9 +133,7 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
             type="button"
             aria-label="Show previous calendar month"
             title="Show previous calendar month"
-            onClick={() =>
-              setCurrentMonthKey(formatMonthKey(monthOptions[currentIndex - 1]))
-            }
+            onClick={() => goToMonth(-1)}
             disabled={currentIndex === 0}
           >
             Previous month
@@ -148,9 +159,7 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
             type="button"
             aria-label="Show next calendar month"
             title="Show next calendar month"
-            onClick={() =>
-              setCurrentMonthKey(formatMonthKey(monthOptions[currentIndex + 1]))
-            }
+            onClick={() => goToMonth(1)}
             disabled={currentIndex === monthOptions.length - 1}
           >
             Next month
