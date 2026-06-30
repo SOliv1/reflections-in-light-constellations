@@ -15,6 +15,7 @@ import { BIRTHDAY_DAY, BIRTHDAY_MONTH } from "../data/birthdayExperience";
 import useWeatherPhotos from "../hooks/useWeatherPhotos";
 
 import DayPage from "../pages/DayPage";
+import MobileHomePage from "../pages/MobileHomePage";
 
 import springSeasonal from "../assets/logos/springSeasonalLogo.png";
 import reflectionsMarkLogo from "../assets/logos/reflectionsMarkLogo.png";
@@ -31,7 +32,27 @@ import {
 // veilMode and starDensity are now lifted to App.js and passed as props
 export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "off", starDensity = "normal" }) {
 
-  /* ---------------- MODE + UI STATE ---------------- */
+  /* ───────────────────────────────────────────────────────────────────────
+     RESPONSIVE DETECTION — Show mobile layout on small screens
+     ─────────────────────────────────────────────────────────────────────── */
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check initial viewport
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
+    // Listen for window resize
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  /* ──────────────────────────────────────────────────────────────────────── 
+     MODE + UI STATE 
+  ─────────────────────────────────────────────────────────────────────── */
   const [photos, setPhotos] = useState([]);
   const [autoVeil] = useState(false);
 
@@ -48,7 +69,9 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
   const defaultLogo = moodOrb; // base orb shown when showTestLogo is off
   const activeLogo = showTestLogo ? activeSeasonal : defaultLogo;
 
-  /* ---------------- ROUTER + BIRTHDAY ---------------- */
+  /* ──────────────────────────────────────────────────────────────────────── 
+     ROUTER + BIRTHDAY 
+  ─────────────────────────────────────────────────────────────────────── */
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -58,8 +81,11 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
       Number(birthdayMatch[3]) === BIRTHDAY_DAY
     : false;
 
-  /* ---------------- WEATHER + GALLERY ---------------- */
+  /* ──────────────────────────────────────────────────────────────────────── 
+     WEATHER + GALLERY 
+  ─────────────────────────────────────────────────────────────────────── */
   const [weatherCondition, setWeatherCondition] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
 
   useEffect(() => {
     async function loadGallery() {
@@ -85,6 +111,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
         const res = await fetchFromApi("/api/weather");
         const data = await res.json();
         const primary = data.weather?.[0] || {};
+        setWeatherData(data);
         setWeatherCondition(normalizeWeatherEntry(primary));
       } catch {
         setWeatherCondition(normalizeWeatherClass("unknown"));
@@ -93,7 +120,9 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
     loadWeather();
   }, []);
 
-  /* ---------------- SCROLL LISTENER ---------------- */
+  /* ──────────────────────────────────────────────────────────────────────── 
+     SCROLL LISTENER 
+  ─────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
@@ -109,7 +138,9 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* ---------------- TIME + SEASON ---------------- */
+  /* ──────────────────────────────────────────────────────────────────────── 
+     TIME + SEASON 
+  ─────────────────────────────────────────────────────────────────────── */
   const hour = new Date().getHours();
   let timeOfDay = "day";
   if (hour >= 19 || hour < 5) timeOfDay = "night";
@@ -132,11 +163,15 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
   const backgroundImage = useWeatherPhotos(isHomePage);
   const weatherMood = weatherCondition || "neutral";
 
-  /* ---------------- DRAWERS ---------------- */
+  /* ──────────────────────────────────────────────────────────────────────── 
+     DRAWERS 
+  ─────────────────────────────────────────────────────────────────────── */
   const [drawerOpen, setDrawerOpen] = useState(false);
   const mode = "architectural"; // default display mode
 
-  /* ---------------- RENDER ---------------- */
+  /* ──────────────────────────────────────────────────────────────────────── 
+     RENDER 
+  ─────────────────────────────────────────────────────────────────────── */
   return (
     <Routes>
       <Route
@@ -171,62 +206,77 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
               <CosmicPlanets />
             </div>
 
-            {/* Main app shell */}
-              <div className={`App mode-${mode} time-${timeOfDay} season-${season} mood-${weatherMood}`}>
-              {/* Home logo (top-left) — Link back to home */}
-              <Link to="/" className="app-home-logo" aria-label="Return home">
-                <div className="orb-base">
-                  <img
-                    src={activeLogo}
-                    className="orb-tint"
-                    alt="Mood orb logo"
-                  />
-                  {showR && (
-                    <img
-                      src={reflectionsMarkLogo}
-                      className="orb-mark"
-                      alt="Reflections mark"
-                    />
-                  )}
-                </div>
-              </Link>
-
-              {/* Background photo carousel */}
-              <BackgroundCarousel
+            {/* 
+              ⭐ MOBILE vs DESKTOP DETECTION
+              On mobile (< 768px): Show mobile-first layout
+              On desktop (≥ 768px): Show calendar + classic layout
+            */}
+            {isMobile ? (
+              <MobileHomePage
+                weatherCondition={weatherData}
+                weatherMood={weatherMood}
+                season={season}
+                veilMode={veilMode}
                 photos={photos}
-                veilMode={veilMode}
-                weatherImage={backgroundImage}
-                weatherMood={weatherMood}
-                season={season}
               />
+            ) : (
+              /* Main app shell — desktop view */
+              <div className={`App mode-${mode} time-${timeOfDay} season-${season} mood-${weatherMood}`}>
+                {/* Home logo (top-left) — Link back to home */}
+                <Link to="/" className="app-home-logo" aria-label="Return home">
+                  <div className="orb-base">
+                    <img
+                      src={activeLogo}
+                      className="orb-tint"
+                      alt="Mood orb logo"
+                    />
+                    {showR && (
+                      <img
+                        src={reflectionsMarkLogo}
+                        className="orb-mark"
+                        alt="Reflections mark"
+                      />
+                    )}
+                  </div>
+                </Link>
 
-              {/* Constellation layer inside main App (density-aware) */}
-              <Constellation
-                season={season}
-                timeOfDay={timeOfDay}
-                mode={mode}
-                veilMode={veilMode}
-                starDensity={starDensity}
-              />
+                {/* Background photo carousel */}
+                <BackgroundCarousel
+                  photos={photos}
+                  veilMode={veilMode}
+                  weatherImage={backgroundImage}
+                  weatherMood={weatherMood}
+                  season={season}
+                />
 
-              {/* Calendar */}
-              <Calendar
-                season={season}
-                isNight={isNight}
-                weatherCondition={weatherCondition}
-                weatherMood={weatherMood}
-                isHomePage={true}
-                onDaySelect={() => setDrawerOpen(true)}
-              />
+                {/* Constellation layer inside main App (density-aware) */}
+                <Constellation
+                  season={season}
+                  timeOfDay={timeOfDay}
+                  mode={mode}
+                  veilMode={veilMode}
+                  starDensity={starDensity}
+                />
 
-              {/* Unified Drawer */}
-              <DrawerUnified
-                isOpen={drawerOpen}
-                onClose={() => setDrawerOpen(false)}
-                season={season}
-                mood={weatherMood}
-              />
-            </div>
+                {/* Calendar */}
+                <Calendar
+                  season={season}
+                  isNight={isNight}
+                  weatherCondition={weatherCondition}
+                  weatherMood={weatherMood}
+                  isHomePage={true}
+                  onDaySelect={() => setDrawerOpen(true)}
+                />
+
+                {/* Unified Drawer */}
+                <DrawerUnified
+                  isOpen={drawerOpen}
+                  onClose={() => setDrawerOpen(false)}
+                  season={season}
+                  mood={weatherMood}
+                />
+              </div>
+            )}
           </>
         }
       />
