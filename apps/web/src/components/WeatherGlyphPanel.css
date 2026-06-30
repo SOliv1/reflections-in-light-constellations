@@ -74,21 +74,36 @@
 }
 
 .weather-reading-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.14rem 0.48rem;
+  border-radius: 999px;
+  border: 1px solid rgba(228, 237, 255, 0.44);
+  background: rgba(9, 14, 30, 0.54);
   font-size: 1.65rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.99);
   text-shadow:
-    0 2px 12px rgba(8, 10, 22, 0.4),
-    0 0 18px rgba(255, 255, 255, 0.16);
+    0 1px 8px rgba(5, 8, 20, 0.72),
+    0 0 10px rgba(255, 255, 255, 0.22);
 }
 
 .weather-reading-unit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.08rem 0.36rem;
+  border-radius: 999px;
+  border: 1px solid rgba(222, 232, 255, 0.34);
+  background: rgba(7, 12, 26, 0.44);
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(244, 248, 255, 0.92);
 }
 
 .weather-panel-text {
@@ -156,7 +171,7 @@
   }
 
   .weather-reading-value {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
   }
 
   .weather-panel-text {

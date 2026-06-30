@@ -108,19 +108,24 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.22rem;
-  color: rgba(250, 249, 255, 0.96);
-  font-size: 0.82rem;
-  font-weight: 600;
+  color: rgba(253, 252, 255, 0.99);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.14rem 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(230, 237, 255, 0.42);
+  background: rgba(8, 11, 24, 0.52);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   line-height: 1;
   text-shadow:
-    0 1px 5px rgba(8, 8, 24, 0.72),
-    0 0 12px rgba(222, 228, 255, 0.48);
+    0 1px 8px rgba(5, 6, 18, 0.78),
+    0 0 10px rgba(224, 232, 255, 0.4);
   white-space: nowrap;
 }
 
 .portal-core-time .portal-time-zone {
+  color: rgba(244, 248, 255, 0.9);
   font-size: 0.58em;
 }
 

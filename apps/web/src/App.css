@@ -483,11 +483,14 @@ body {
 .scene-menu-time {
   display: block;
   padding: 0.45rem 0.6rem;
-  border-bottom: 1px solid rgba(228, 230, 246, 0.14);
-  color: rgba(255, 246, 218, 0.94);
+  border-bottom: 1px solid rgba(228, 230, 246, 0.24);
+  color: rgba(255, 251, 232, 0.98);
+  background: rgba(10, 15, 30, 0.28);
   font-size: 0.74rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
+  text-shadow: 0 1px 6px rgba(6, 8, 22, 0.68);
   text-align: center;
   white-space: nowrap;
 }
@@ -552,15 +555,18 @@ body {
 
 .portal-time-text {
   padding: 0.45rem 0.75rem;
-  border: 1px solid rgba(235, 236, 250, 0.16);
+  border: 1px solid rgba(235, 236, 250, 0.32);
   border-radius: 999px;
-  background: rgba(18, 18, 32, 0.28);
+  background: rgba(12, 16, 32, 0.52);
+  color: rgba(251, 252, 255, 0.98);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
+  text-shadow: 0 1px 7px rgba(4, 8, 20, 0.72);
 }
 
 .portal-time-zone {
-  color: rgba(255, 240, 196, 0.76);
+  color: rgba(255, 245, 214, 0.9);
   font-size: 0.7em;
 }
 
