@@ -626,6 +626,10 @@ body {
   --day-page-base: #f5eee5;
   --day-page-glow: rgba(255, 222, 186, 0.38);
   --day-page-haze: rgba(218, 190, 205, 0.18);
+  --door-chip-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(230, 239, 255, 0.62));
+  --door-chip-border: rgba(206, 220, 247, 0.6);
+  --door-chip-ink: rgba(37, 48, 81, 0.9);
+  --door-chip-glow: rgba(156, 189, 246, 0.2);
   background:
     radial-gradient(circle at 15% 30%, var(--day-page-glow), transparent 38%),
     radial-gradient(circle at 88% 72%, var(--day-page-haze), transparent 42%),
@@ -638,24 +642,36 @@ body {
   --day-page-base: #edf0f2;
   --day-page-glow: rgba(226, 236, 244, 0.52);
   --day-page-haze: rgba(205, 199, 224, 0.24);
+  --door-chip-bg: linear-gradient(135deg, rgba(244, 249, 255, 0.78), rgba(222, 236, 252, 0.66));
+  --door-chip-border: rgba(196, 216, 245, 0.66);
+  --door-chip-glow: rgba(152, 188, 236, 0.22);
 }
 
 .day-page.season-spring {
   --day-page-base: #f7ece8;
   --day-page-glow: rgba(255, 215, 215, 0.42);
   --day-page-haze: rgba(218, 205, 231, 0.24);
+  --door-chip-bg: linear-gradient(135deg, rgba(255, 245, 248, 0.78), rgba(236, 247, 240, 0.64));
+  --door-chip-border: rgba(220, 205, 235, 0.62);
+  --door-chip-glow: rgba(191, 167, 222, 0.2);
 }
 
 .day-page.season-summer {
   --day-page-base: #f6eedc;
   --day-page-glow: rgba(255, 225, 160, 0.4);
   --day-page-haze: rgba(190, 218, 211, 0.2);
+  --door-chip-bg: linear-gradient(135deg, rgba(255, 248, 230, 0.78), rgba(230, 244, 252, 0.64));
+  --door-chip-border: rgba(225, 209, 174, 0.62);
+  --door-chip-glow: rgba(216, 180, 118, 0.2);
 }
 
 .day-page.season-autumn {
   --day-page-base: #f1e3d5;
   --day-page-glow: rgba(229, 171, 116, 0.34);
   --day-page-haze: rgba(166, 125, 139, 0.16);
+  --door-chip-bg: linear-gradient(135deg, rgba(255, 243, 232, 0.76), rgba(244, 232, 220, 0.62));
+  --door-chip-border: rgba(212, 180, 147, 0.62);
+  --door-chip-glow: rgba(188, 133, 84, 0.2);
 }
 
 .day-cosmic-header {
@@ -743,15 +759,19 @@ body {
   top: -26px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(198, 214, 245, 0.48);
-  color: rgba(39, 49, 79, 0.9);
+  background: var(--door-chip-bg);
+  border: 1px solid var(--door-chip-border);
+  color: var(--door-chip-ink);
   font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 750;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
+  box-shadow:
+    0 6px 16px var(--door-chip-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.34);
 }
 
 @media (max-width: 600px) {

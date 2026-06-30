@@ -506,6 +506,37 @@
   cursor: pointer;
 }
 
+/* Day page: keep portal seasonal but softer so the door remains the hero. */
+.day-page .portal--seasonal {
+  background:
+    radial-gradient(circle at 50% 32%,
+      rgba(255, 255, 255, 0.28),
+      rgba(var(--season-rgb), 0.24) 44%,
+      rgba(var(--season-rgb), 0.14) 70%,
+      transparent 88%);
+  border-color: rgba(246, 249, 255, 0.78);
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.2),
+    0 0 18px rgba(var(--season-rgb), 0.16) !important;
+  animation-duration: 8.8s;
+}
+
+.day-page .portal--seasonal .portal__core {
+  box-shadow:
+    0 0 24px rgba(var(--season-rgb), 0.24),
+    0 0 34px rgba(var(--season-rgb), 0.14),
+    inset 0 0 20px rgba(255, 255, 255, 0.18);
+}
+
+.day-page .portal--seasonal .portal__crescent {
+  opacity: 0.34;
+  filter: saturate(0.9) brightness(1.06);
+}
+
+.day-page .portal--seasonal .portal__shimmer {
+  opacity: 0.2;
+}
+
 .portal--seasonal.portal--mood-warm-spotlight {
   background: radial-gradient(circle at 50% 35%,
       rgba(255, 220, 173, 0.62),
@@ -697,6 +728,12 @@
   box-shadow:
     0 0 18px rgba(255, 255, 255, 0.38),
     0 0 28px var(--season-tint) !important;
+}
+
+.day-page .portal--seasonal:hover {
+  box-shadow:
+    0 0 14px rgba(255, 255, 255, 0.24),
+    0 0 20px rgba(var(--season-rgb), 0.2) !important;
 }
 
 /* Veil OFF */
