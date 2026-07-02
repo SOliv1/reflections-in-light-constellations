@@ -15,8 +15,14 @@
   .mobile-container {
     padding: var(--mobile-edge-lg) var(--mobile-edge);
     width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
     overflow-x: hidden;
+    color: #fff;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(119, 139, 205, 0.32), transparent 34%),
+      radial-gradient(circle at 78% 34%, rgba(175, 128, 151, 0.2), transparent 38%),
+      linear-gradient(180deg, #12182f 0%, #1c2850 42%, #334b69 72%, #151b31 100%);
   }
 
   /* Disable horizontal scroll */
