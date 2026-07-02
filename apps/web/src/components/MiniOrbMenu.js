@@ -24,6 +24,7 @@ export default function MiniOrbMenu({
     autumn: "rgba(255, 180, 120, 0.55)",
     winter: "rgba(200, 220, 255, 0.55)",
   };
+  const activeTint = seasonTint[testSeason] || "rgba(190, 205, 255, 0.72)";
 
   // 4. Orb memory — restore last season on mount
   useEffect(() => {
@@ -131,14 +132,14 @@ export default function MiniOrbMenu({
       {/* Seasonal particle drift */}
       <div
         className="mini-orb-particles"
-        style={{ "--orb-tint": seasonTint[testSeason] }}
+        style={{ "--orb-tint": activeTint }}
       />
 
       {/* Orbiting moon (seasonal path via data attribute) */}
       <div
         className="mini-orb-moon"
         data-season={moonSeason}
-        style={{ "--orb-tint": seasonTint[testSeason] }}
+        style={{ "--orb-tint": activeTint }}
       />
 
       {/* Micro-weather */}
@@ -148,11 +149,14 @@ export default function MiniOrbMenu({
       />
 
       {/* Main mini orb */}
-      <div
+      <button
+        type="button"
+        aria-label="Explore menu"
+        aria-expanded={open}
         className={`mini-orb ${open ? "open" : ""} ${breathingClass} ${
           isSleeping ? "sleep" : ""
         }`}
-        style={{ "--orb-tint": seasonTint[testSeason] }}
+        style={{ "--orb-tint": activeTint }}
         onMouseDown={startPress}
         onMouseUp={endPress}
         onMouseLeave={endPress}
@@ -161,7 +165,9 @@ export default function MiniOrbMenu({
           setRadialOpen(false);
           setIsSleeping(false);
         }}
-      />
+      >
+        <span className="mini-orb-label">Explore</span>
+      </button>
 
       {/* Long‑press radial menu */}
       {radialOpen && (
