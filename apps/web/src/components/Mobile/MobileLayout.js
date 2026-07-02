@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ExploreHeader from "./ExploreHeader";
 import WeatherCard from "./WeatherCard";
 import ReflectionNav from "./ReflectionNav";
@@ -45,15 +45,8 @@ export default function MobileLayout({
   onToday = () => {},
   onCategorySelect = () => {}
 }) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Fade in on mount
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   return (
-    <div className={`mobile-container ${ isVisible ? "fade-in" : "" }`}>
+    <div className="mobile-container">
       {/* 1. Explore Header */}
       <ExploreHeader
         time={time}
