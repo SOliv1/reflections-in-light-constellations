@@ -30,6 +30,7 @@ import "../../styles/mobile.css";
  */
 
 export default function MobileLayout({
+  constellationImage = null,
   time = "--:--",
   reflection = "",
   temperature = 20.9,
@@ -45,7 +46,12 @@ export default function MobileLayout({
   onCategorySelect = () => {}
 }) {
   return (
-    <div className="mobile-container">
+    <div
+      className="mobile-container"
+      style={constellationImage ? {
+        backgroundImage: `linear-gradient(180deg, rgba(9, 14, 38, 0.42), rgba(18, 28, 62, 0.72)), url(${constellationImage})`
+      } : undefined}
+    >
       {/* 1. Explore Header */}
       <div id="scene-reflection"><ExploreHeader time={time} reflection={reflection} /></div>
 

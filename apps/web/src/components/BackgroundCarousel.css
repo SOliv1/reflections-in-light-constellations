@@ -38,6 +38,7 @@
    WEATHER IMAGE + DB PHOTO LAYERS — MERGED + CLEAN
 ----------------------------------------------------------- */
 
+.constellations-image,
 .weather-image,
 .bg-image {
   position: absolute;
@@ -69,11 +70,13 @@
 }
 
 /* Veil-off overrides */
+.veil-off .constellations-image,
 .veil-off .bg-image,
 .veil-off .weather-image {
   filter: brightness(0.92) contrast(1.02) saturate(1.05) !important;
 }
 
+.constellations-image.veil-off,
 .weather-image.veil-off,
 .bg-image.veil-off {
   filter: none !important;
@@ -162,13 +165,8 @@
 }
 
 
-/* No veil */
-.veil-off {
-  opacity: 0 !important;
-  background: none !important;
-  mix-blend-mode: normal !important;
-}
-
+/* No veil — scope this to the veil itself. Image layers also carry the
+   `veil-off` state class and must retain their background images. */
 .veil.veil-off {
   opacity: 0 !important;
   background: none !important;
@@ -364,6 +362,60 @@
   opacity: 0 !important;
   filter: none !important;
   background: transparent !important;
+}
+
+.constellations-image.veil-on {
+  opacity: 0.78;
+}
+
+.constellations-image.veil-lift {
+  opacity: 0.9;
+}
+
+.constellations-image {
+  z-index: 2;
+  opacity: 0.92;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 7%,
+    rgba(0, 0, 0, 0.78) 16%,
+    #000 27%,
+    #000 84%,
+    rgba(0, 0, 0, 0.72) 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 7%,
+    rgba(0, 0, 0, 0.78) 16%,
+    #000 27%,
+    #000 84%,
+    rgba(0, 0, 0, 0.72) 93%,
+    transparent 100%
+  );
+}
+
+@media (min-width: 769px) {
+  .background-carousel {
+    height: calc(100svh + 6rem);
+  }
+
+  .constellations-image {
+    height: 100%;
+  }
+}
+
+/* The dedicated constellation asset is the desktop carousel, not another
+   decorative layer behind the legacy weather and gallery imagery. */
+.background-carousel.has-constellations .weather-image,
+.background-carousel.has-constellations .bg-image {
+  opacity: 0 !important;
+  visibility: hidden;
 }
 
 /* Veil Off means a genuinely clear image: decorative depth layers are removed. */

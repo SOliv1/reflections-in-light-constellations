@@ -45,48 +45,20 @@ async function getRandomFromServer(folder) {
 
 
 export default function BackgroundCarousel({
-  photos,
   veilMode,
-  weatherImage,
   weatherMood,
   season,
 }) {
-  const [index, setIndex] = useState(0);
-
   const [deepLayer, setDeepLayer] = useState(null);
-  const [midLayer, setMidLayer] = useState(null);
-  const [foregroundLayer, setForegroundLayer] = useState(null);
-
-  const hasPhotos = Array.isArray(photos) && photos.length > 0;
 
   // ------------------------------------------------------------
-  // Rotate DB photos
-  // ------------------------------------------------------------
-  useEffect(() => {
-    if (!hasPhotos) {
-      setIndex(0);
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % photos.length);
-    }, 20000);
-
-    return () => clearInterval(interval);
-  }, [hasPhotos, photos]);
-
-  // ------------------------------------------------------------
-  // Load Cloudinary atmospheric layers (via backend)
+  // Load the dedicated Cloudinary constellations collection.
   // ------------------------------------------------------------
   useEffect(() => {
     async function loadLayers() {
       const deep = await getRandomFromServer("constellations");
-      const mid = await getRandomFromServer(season ? season.toLowerCase() : "spring");
-      const fg = await getRandomFromServer("textures");
 
       setDeepLayer(deep);
-      setMidLayer(mid);
-      setForegroundLayer(fg);
     }
 
     loadLayers();
@@ -97,62 +69,24 @@ export default function BackgroundCarousel({
   const seasonClassName = season ? `season-${season}` : "";
 
   return (
-    <div className={`background-carousel ${veilClassName} ${moodClassName} ${seasonClassName}`}>
+    <div className={`background-carousel has-constellations ${veilClassName} ${moodClassName} ${seasonClassName}`}>
 
 
     <div className="seasonal-drift" />
 
-    {/* Deep atmospheric layer */}
+    {/* Primary Cloudinary constellations carousel layer */}
     {deepLayer && (
       <div
-        className="bg-layer deep-layer loaded"
+        className={`constellations-image loaded veil-${veilMode}`}
         style={{ backgroundImage: `url(${deepLayer})` }}
       />
     )}
-
-    {/* Mid-layer */}
-    {midLayer && (
-      <div
-        className="bg-layer mid-layer loaded"
-        style={{ backgroundImage: `url(${midLayer})` }}
-      />
-    )}
-
-    {/* Weather image layer */}
-
-    {weatherImage && (
-      <div
-        className={`weather-image loaded veil-${veilMode}`}
-        style={{ backgroundImage: `url(${weatherImage})` }}
-      />
-    )}
-
-    {/* DB photos */}
-    {hasPhotos &&
-      photos.map((src, i) => (
-        <img
-          key={i}
-          src={src}
-          className={`bg-image ${i === index ? "active" : ""} veil-${veilMode}`}
-          alt=""
-          loading={i === 0 ? "eager" : "lazy"}
-          decoding="async"
-        />
-      ))}
 
     {weatherMood === "rain" && <div className="rain-layer" />}
     {weatherMood === "snow" && <div className="snow-layer" />}
     {weatherMood === "mist" && <div className="mist-layer" />}
     {weatherMood === "storm" && <div className="lightning-flash" />}
     {season === "autumn" && <div className="embers" />}
-
-    {/* Foreground shimmer */}
-    {foregroundLayer && (
-      <div
-        className="bg-layer foreground-layer loaded"
-        style={{ backgroundImage: `url(${foregroundLayer})` }}
-      />
-    )}
 
   </div>
 );

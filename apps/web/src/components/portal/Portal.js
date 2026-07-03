@@ -1,5 +1,6 @@
 import "./Portal.css";
 import { useState } from "react";
+import PortalTime from "../PortalTime";
 
 export function Portal({
   dayIndex,
@@ -98,6 +99,7 @@ export function Portal({
         <div className="portal__core">
           <div className="portal__crescent"></div>
           <div className="portal__shimmer"></div>
+          <PortalTime />
         </div>
       </div>
 

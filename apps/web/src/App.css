@@ -376,6 +376,38 @@ body {
 #scene-calendar,
 #scene-footer { scroll-margin-top: 16px; }
 
+.desktop-constellation-showcase {
+  position: relative;
+  z-index: 35;
+  width: 100%;
+  min-height: clamp(28rem, 66svh, 46rem);
+  pointer-events: none;
+}
+
+.desktop-constellation-showcase::before {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: -5rem;
+  left: 4%;
+  right: 4%;
+  height: 12rem;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255, 227, 196, 0.3), transparent 68%),
+    linear-gradient(180deg, transparent, rgba(205, 218, 255, 0.12) 72%, transparent);
+  filter: blur(16px);
+  mix-blend-mode: screen;
+  opacity: 0.82;
+}
+
+.desktop-constellation-showcase::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 22%;
+  background: linear-gradient(180deg, transparent, rgba(12, 20, 47, 0.18));
+}
+
 .desktop-weather-scene,
 .desktop-tools-scene {
   position: relative;
@@ -450,6 +482,32 @@ body {
 @media (max-width: 900px) and (min-width: 768px) {
   .desktop-tools-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Desktop rhythm: keep the drawer, calendar title and calendar grid visually
+   connected. Mobile-first calendar spacing remains unchanged. */
+@media (min-width: 769px) {
+  .App .desktop-tools-scene {
+    margin-bottom: 0.75rem;
+  }
+
+  .App #scene-calendar {
+    margin-top: 0;
+  }
+
+  .App .calendar-header,
+  .App .calendar-container {
+    min-height: 0;
+  }
+
+  .App .calendar-header {
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .App .calendar-container {
+    padding-top: 1rem;
   }
 }
 

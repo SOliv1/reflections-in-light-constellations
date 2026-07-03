@@ -267,6 +267,14 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                   mode={mode}
                   veilMode={veilMode}
                   starDensity={starDensity}
+                  showMoon={false}
+                />
+
+                {/* Clear desktop gallery space so the selected constellation
+                    photograph can be appreciated before the glass panels. */}
+                <section
+                  className="desktop-constellation-showcase"
+                  aria-label="Constellation image"
                 />
 
                 <section id="scene-weather" className="desktop-weather-scene" aria-labelledby="desktop-weather-title">

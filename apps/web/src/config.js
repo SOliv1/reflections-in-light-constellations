@@ -1,4 +1,5 @@
 const LOCAL_API_URL = "http://localhost:5000";
+const PRODUCTION_API_URL = "https://sparkling-gratitude-production-e9a3.up.railway.app";
 
 function normalizeUrls(rawValue) {
   return (rawValue || "")
@@ -20,7 +21,9 @@ function getRuntimeFallbackUrls() {
     hostname === "[::1]";
 
   if (isLocalHost) {
-    return [LOCAL_API_URL];
+    // Prefer a local API during development, then use the deployed API so the
+    // preview still receives Cloudinary and weather data when port 5000 is off.
+    return [LOCAL_API_URL, PRODUCTION_API_URL];
   }
 
   const urls = [];

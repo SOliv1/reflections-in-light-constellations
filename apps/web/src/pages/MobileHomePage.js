@@ -30,6 +30,24 @@ export default function MobileHomePage({
   const [quoteOfDay, setQuoteOfDay] = useState({ quote: "", person: "" });
   const [reflection, setReflection] = useState("");
   const [activeDrawer, setActiveDrawer] = useState(null);
+  const [constellationImage, setConstellationImage] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadConstellationImage() {
+      try {
+        const res = await fetchFromApi("/random-image?folder=constellations");
+        const data = await res.json();
+        if (active) setConstellationImage(data?.url || null);
+      } catch (err) {
+        console.error("Failed to load constellation image:", err);
+      }
+    }
+
+    loadConstellationImage();
+    return () => { active = false; };
+  }, []);
 
   /* ──────────────────────────────────────────────────────────────────────
      Clock: Update time every second
@@ -125,6 +143,7 @@ export default function MobileHomePage({
   return (
     <>
       <MobileLayout
+        constellationImage={constellationImage}
         time={time}
         reflection={reflection}
         temperature={parseFloat(temperature)}
