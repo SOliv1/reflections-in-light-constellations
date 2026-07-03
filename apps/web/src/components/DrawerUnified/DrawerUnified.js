@@ -6,8 +6,10 @@ import ActionsPanel from "./Panels/ActionsPanel";
 import NotesPanel from "./Panels/NotesPanel";
 import QuotePanel from "./Panels/QuotePanel";
 
-export default function DrawerUnified({ isOpen, onClose, season, mood }) {
-  const [activeTab, setActiveTab] = useState("reflections");
+export default function DrawerUnified({ isOpen, onClose, season, mood, activeTab: controlledTab, onTabChange }) {
+  const [internalTab, setInternalTab] = useState("reflections");
+  const activeTab = controlledTab ?? internalTab;
+  const setActiveTab = onTabChange ?? setInternalTab;
 
   return (
     <div className={`drawer-unified ${isOpen ? "open" : ""}`}>

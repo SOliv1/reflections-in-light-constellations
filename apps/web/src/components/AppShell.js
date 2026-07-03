@@ -9,6 +9,7 @@ import CosmicPlanets from "./CosmicPlanets";
 import Portal from "./portal/Portal";
 import DrawerUnified from "./DrawerUnified/DrawerUnified";
 import Veil from "./Veil/Veil";
+import WeatherGlyphPanel from "./WeatherGlyphPanel";
 
 import { fetchFromApi } from "../api";
 import { BIRTHDAY_DAY, BIRTHDAY_MONTH } from "../data/birthdayExperience";
@@ -171,7 +172,13 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
      DRAWERS 
   ─────────────────────────────────────────────────────────────────────── */
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerTab, setDrawerTab] = useState("reflections");
   const mode = "architectural"; // default display mode
+
+  const openReflectionTool = (tab) => {
+    setDrawerTab(tab);
+    setDrawerOpen(true);
+  };
 
   /* ──────────────────────────────────────────────────────────────────────── 
      RENDER 
@@ -262,6 +269,34 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                   starDensity={starDensity}
                 />
 
+                <section id="scene-weather" className="desktop-weather-scene" aria-labelledby="desktop-weather-title">
+                  <div className="desktop-scene-heading">
+                    <span>Present conditions</span>
+                    <h2 id="desktop-weather-title">Weather in this light</h2>
+                  </div>
+                  <WeatherGlyphPanel
+                    condition={weatherCondition}
+                    temperature={weatherData?.main?.temp}
+                    location={weatherData?.name}
+                    weatherMood={weatherMood}
+                    isNight={isNight}
+                    weatherDescription={weatherData?.weather?.[0]?.description}
+                  />
+                </section>
+
+                <section id="scene-drawer" className="desktop-tools-scene" aria-labelledby="desktop-drawer-title">
+                  <div className="desktop-scene-heading">
+                    <span>Pause and gather</span>
+                    <h2 id="desktop-drawer-title">Reflection Drawer</h2>
+                  </div>
+                  <div className="desktop-tools-grid">
+                    <button type="button" onClick={() => openReflectionTool("reflections")}>Short Reflections</button>
+                    <button type="button" onClick={() => openReflectionTool("actions")}>Quiet Actions</button>
+                    <button type="button" onClick={() => openReflectionTool("notes")}>Light Notes</button>
+                    <button type="button" onClick={() => openReflectionTool("quote")}>Quote of the Day</button>
+                  </div>
+                </section>
+
                 {/* Calendar */}
                 <div id="scene-calendar" className="scene-anchor-section">
                   <Calendar
@@ -270,7 +305,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                     weatherCondition={weatherCondition}
                     weatherMood={weatherMood}
                     isHomePage={true}
-                    onDaySelect={() => setDrawerOpen(true)}
+                    onDaySelect={() => openReflectionTool("reflections")}
                   />
                 </div>
 
@@ -280,6 +315,8 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                   onClose={() => setDrawerOpen(false)}
                   season={season}
                   mood={weatherMood}
+                  activeTab={drawerTab}
+                  onTabChange={setDrawerTab}
                 />
               </div>
             )}

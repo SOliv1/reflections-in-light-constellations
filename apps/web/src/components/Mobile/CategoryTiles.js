@@ -10,7 +10,7 @@ const CATEGORIES = [
 
 export default function CategoryTiles({ onSelectCategory }) {
   return (
-    <div className="category-grid">
+    <div className="category-grid" id="scene-drawer">
       {CATEGORIES.map((category) => (
         <button
           key={category.id}

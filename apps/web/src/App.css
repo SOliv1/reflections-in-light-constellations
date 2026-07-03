@@ -359,6 +359,83 @@ body {
 #scene-calendar,
 #scene-footer { scroll-margin-top: 16px; }
 
+.desktop-weather-scene,
+.desktop-tools-scene {
+  position: relative;
+  z-index: 40;
+  width: min(92%, 68rem);
+  margin: 2rem auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-sizing: border-box;
+  border: 1px solid rgba(225, 232, 255, 0.18);
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(157, 180, 255, 0.16), transparent 42%),
+    rgba(20, 29, 61, 0.58);
+  box-shadow: 0 1.4rem 4rem rgba(4, 8, 25, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.desktop-scene-heading {
+  margin-bottom: 1.4rem;
+  text-align: center;
+  color: rgba(245, 248, 255, 0.96);
+}
+
+.desktop-scene-heading span {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: rgba(218, 226, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.desktop-scene-heading h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  font-weight: 300;
+  letter-spacing: 0.025em;
+}
+
+.desktop-weather-scene .weather-glyph-panel {
+  margin-bottom: 0;
+}
+
+.desktop-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.desktop-tools-grid button {
+  min-height: 4rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(229, 235, 255, 0.22);
+  border-radius: 1rem;
+  background: rgba(230, 236, 255, 0.1);
+  color: rgba(250, 251, 255, 0.96);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.desktop-tools-grid button:hover,
+.desktop-tools-grid button:focus-visible {
+  background: rgba(230, 236, 255, 0.2);
+  transform: translateY(-2px);
+  outline: 2px solid rgba(225, 233, 255, 0.7);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) and (min-width: 768px) {
+  .desktop-tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .crescent-portal {
   position: fixed;
   top: 18px;

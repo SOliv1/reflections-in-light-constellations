@@ -114,10 +114,9 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
             }
             disabled={currentIndex === 0}
           >
-            Previous
+            Previous Month
           </button>
 
-          {/* ⭐ HIDE MONTH/YEAR ON HOMEPAGE */}
           {!isHomePage && (
             <h2 className="calendar-title">
               {activeMonth.toLocaleDateString("en-GB", {
@@ -126,7 +125,11 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
               })}
             </h2>
           )}
-          {isHomePage && <div className="calendar-title-spacer" aria-hidden="true" />}
+          {isHomePage && (
+            <h2 className="calendar-title calendar-home-title">
+              Reflections Calendar
+            </h2>
+          )}
 
           <button
             className="calendar-nav calendar-nav-next"
@@ -136,7 +139,7 @@ function Calendar({ season, isNight, weatherCondition, weatherMood, isHomePage }
             }
             disabled={currentIndex === monthOptions.length - 1}
           >
-            Next
+            Next Month
           </button>
         </div>
 

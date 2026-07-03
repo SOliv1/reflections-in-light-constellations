@@ -209,6 +209,7 @@ export default function MiniOrbMenu({
           <a href="/#scene-reflection" className="mini-menu-link" onClick={closeMenu}>Reflection</a>
           <a href="/#scene-weather" className="mini-menu-link" onClick={closeMenu}>Weather</a>
           <a href="/#scene-calendar" className="mini-menu-link" onClick={closeMenu}>Calendar</a>
+          <a href="/#scene-drawer" className="mini-menu-link" onClick={closeMenu}>Reflection Drawer</a>
           <Link to={`/day/${birthdayIso}`} className="mini-menu-link" onClick={closeMenu}>Your Birthday</Link>
 
           <div className="mini-menu-section">Special Dates</div>
