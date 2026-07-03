@@ -320,22 +320,22 @@
 }
 
 .deep-layer {
-  filter: blur(12px) brightness(0.9);
-  opacity: 0.45;
+  filter: blur(6px) brightness(0.94);
+  opacity: 0.3;
   transform: translateY(-2%);
   z-index: 0;
 }
 
 .mid-layer {
-  filter: blur(6px) brightness(1);
-  opacity: 0.35;
+  filter: blur(3px) brightness(1);
+  opacity: 0.22;
   transform: translateY(-1%);
   z-index: 1;
 }
 
 .foreground-layer {
-  filter: blur(2px) brightness(1.1);
-  opacity: 0.18;
+  filter: blur(0.75px) brightness(1.06);
+  opacity: 0.1;
   mix-blend-mode: screen;
   z-index: 3;
 }
@@ -366,6 +366,16 @@
   background: transparent !important;
 }
 
+/* Veil Off means a genuinely clear image: decorative depth layers are removed. */
+.background-carousel.veil-off .bg-layer,
+.background-carousel.veil-off .seasonal-drift {
+  display: none;
+}
+
+.background-carousel.veil-off::before {
+  opacity: 0.12;
+}
+
   .background-carousel.season-spring::after {
   background: radial-gradient(
     circle at 50% 60%,
@@ -376,13 +386,13 @@
 }
 
 .background-carousel.veil-on::after {
-  opacity: 0.45;
-  filter: blur(40px);
+  opacity: 0.24;
+  filter: blur(16px);
 }
 
 .background-carousel.veil-lift::after {
-  opacity: 0.25;
-  filter: blur(20px);
+  opacity: 0.14;
+  filter: blur(8px);
 }
 
 /* PURE GLASS — disable fog layer completely when veil is off */

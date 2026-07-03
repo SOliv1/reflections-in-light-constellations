@@ -15,6 +15,7 @@ Recommended environment variables to set in Railway for services (add as Railway
 - `CLOUDINARY_API_KEY`
 - `CLOUDINARY_API_SECRET`
 - `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_CONSTELLATIONS_FOLDER` (optional; defaults to `constellations`)
 - `MONGO_DB_URI`
 
 Deployment steps

@@ -124,7 +124,24 @@
   --app-accent: rgba(220, 220, 230, 0.22);
   background: linear-gradient(180deg, var(--app-accent), transparent 30%);
   background-blend-mode: overlay;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
+}
+
+/* Foreground experience remains optically clean above image and veil effects. */
+.App .desktop-weather-scene,
+.App .desktop-tools-scene,
+.App .calendar-wrapper {
+  position: relative;
+  z-index: 50;
+  filter: none;
+}
+
+.App .app-home-logo {
+  filter: none;
+}
+
+.App .calendar-wrapper {
+  z-index: 3100;
 }
 
 .App.season-spring { --app-accent: rgba(255, 210, 230, 0.26); }
@@ -373,7 +390,7 @@ body {
     radial-gradient(circle at 18% 0%, rgba(157, 180, 255, 0.16), transparent 42%),
     rgba(20, 29, 61, 0.58);
   box-shadow: 0 1.4rem 4rem rgba(4, 8, 25, 0.2);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
 }
 
 .desktop-scene-heading {

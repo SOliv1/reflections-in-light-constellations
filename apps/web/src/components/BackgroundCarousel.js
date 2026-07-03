@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./BackgroundCarousel.css";
-import Veil from "./Veil/Veil";
 import { fetchFromApi } from "../api";
 
 const VEIL_CLASS_MAP = {
@@ -81,7 +80,7 @@ export default function BackgroundCarousel({
   // ------------------------------------------------------------
   useEffect(() => {
     async function loadLayers() {
-      const deep = await getRandomFromServer("reflections");
+      const deep = await getRandomFromServer("constellations");
       const mid = await getRandomFromServer(season ? season.toLowerCase() : "spring");
       const fg = await getRandomFromServer("textures");
 
@@ -155,8 +154,6 @@ export default function BackgroundCarousel({
       />
     )}
 
-    {/* Cinematic veil */}
-    <Veil moodColor={weatherMood} state={veilMode} season={season} />
   </div>
 );
 }

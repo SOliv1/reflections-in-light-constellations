@@ -6,9 +6,11 @@ const router = express.Router();
 
 const FOLDER_ALIASES = {
   reflections: "reflections-in-light",
+  constellations: process.env.CLOUDINARY_CONSTELLATIONS_FOLDER || "constellations",
 };
 
 const SEASON_FOLDERS = new Set(["winter", "spring", "summer", "autumn"]);
+const FALLBACK_TO_REFLECTIONS = new Set(["constellations", ...SEASON_FOLDERS]);
 
 async function findImagesInFolder(folder) {
   return cloudinary.search
@@ -37,7 +39,7 @@ router.get("/", async (req, res) => {
     // alive with the general reflections collection until that folder exists.
     if (
       (!result.resources || result.resources.length === 0) &&
-      SEASON_FOLDERS.has(requestedFolder)
+      FALLBACK_TO_REFLECTIONS.has(requestedFolder)
     ) {
       selectedFolder = FOLDER_ALIASES.reflections;
       result = await findImagesInFolder(selectedFolder);

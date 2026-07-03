@@ -6,6 +6,7 @@
   width: 90%;
   margin: 0 auto;
   padding: 60px 40px;
+  box-sizing: border-box;
 }
 
 /* Ensure calendar sits above sky-wrapper/veil layers and is clickable */
@@ -24,6 +25,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  box-sizing: border-box;
 } 
 
 .calendar-header {
