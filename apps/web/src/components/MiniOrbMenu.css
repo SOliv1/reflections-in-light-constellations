@@ -400,8 +400,14 @@
   top: 100%;
   right: 0;
   width: min(280px, calc(100vw - 32px));
-  max-height: calc(100vh - 90px);
+  box-sizing: border-box;
+  max-height: calc(100vh - 84px);
+  max-height: calc(100dvh - 84px);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  scrollbar-gutter: stable;
   margin-top: 10px;
   padding: 12px;
   border-radius: 14px;
@@ -415,6 +421,10 @@
   gap: 8px;
   animation: menuBloom 0.35s ease forwards;
   z-index: 30;
+}
+
+.mini-orb-menu > * {
+  flex: 0 0 auto;
 }
 
 @keyframes menuBloom {
