@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MobileLayout from "../components/Mobile/MobileLayout";
+import MobileDrawerHost from "../components/MobileDrawerHost";
 import { fetchFromApi } from "../api";
 import { quotes } from "../data/quotes";
 import "../styles/mobile-integration.css";
@@ -28,6 +29,7 @@ export default function MobileHomePage({
   const [weatherData, setWeatherData] = useState(null);
   const [quoteOfDay, setQuoteOfDay] = useState({ quote: "", person: "" });
   const [reflection, setReflection] = useState("");
+  const [activeDrawer, setActiveDrawer] = useState(null);
 
   /* ──────────────────────────────────────────────────────────────────────
      Clock: Update time every second
@@ -107,24 +109,10 @@ export default function MobileHomePage({
   };
 
   const handleCategorySelect = (categoryId) => {
-    // Route to drawer/category page based on ID
-    switch (categoryId) {
-      case "short-reflections":
-        navigate("/reflections");
-        break;
-      case "quiet-actions":
-        navigate("/actions");
-        break;
-      case "light-notes":
-        navigate("/notes");
-        break;
-      case "quote-of-day":
-        // Already visible, could scroll to quote section
-        break;
-      default:
-        break;
-    }
+    setActiveDrawer(categoryId);
   };
+
+  const closeDrawer = useCallback(() => setActiveDrawer(null), []);
 
   /* ──────────────────────────────────────────────────────────────────────
      Extract weather data for display
@@ -135,20 +123,30 @@ export default function MobileHomePage({
   const glow = `A warm ${temperature} deg glow`;
 
   return (
-    <MobileLayout
-      time={time}
-      reflection={reflection}
-      temperature={parseFloat(temperature)}
-      weatherDescription={weatherDescription}
-      weatherGlow={glow}
-      location={location}
-      currentReflection={currentReflectionNum}
-      quoteOfDay={quoteOfDay}
-      onNavigatePrevious={handlePreviousReflection}
-      onNavigateNext={handleNextReflection}
-      onSelectReflection={handleSelectReflection}
-      onToday={handleToday}
-      onCategorySelect={handleCategorySelect}
-    />
+    <>
+      <MobileLayout
+        time={time}
+        reflection={reflection}
+        temperature={parseFloat(temperature)}
+        weatherDescription={weatherDescription}
+        weatherGlow={glow}
+        location={location}
+        currentReflection={currentReflectionNum}
+        quoteOfDay={quoteOfDay}
+        onNavigatePrevious={handlePreviousReflection}
+        onNavigateNext={handleNextReflection}
+        onSelectReflection={handleSelectReflection}
+        onToday={handleToday}
+        onCategorySelect={handleCategorySelect}
+      />
+      <MobileDrawerHost
+        activeDrawer={activeDrawer}
+        onChange={setActiveDrawer}
+        onClose={closeDrawer}
+        quote={quoteOfDay}
+        season={season}
+        weatherMood={weatherMood}
+      />
+    </>
   );
 }

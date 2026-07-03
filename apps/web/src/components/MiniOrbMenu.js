@@ -205,10 +205,10 @@ export default function MiniOrbMenu({
           <Link to={`/day/${todayIso}`} className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Open Today</Link>
 
           <div className="mini-menu-section">Navigate</div>
-          <a href="#scene-sky" className="mini-menu-link" onClick={closeMenu}>Sky</a>
-          <a href="#scene-reflection" className="mini-menu-link" onClick={closeMenu}>Reflection</a>
-          <a href="#scene-weather" className="mini-menu-link" onClick={closeMenu}>Weather</a>
-          <a href="#scene-calendar" className="mini-menu-link" onClick={closeMenu}>Calendar</a>
+          <a href="/#scene-sky" className="mini-menu-link" onClick={closeMenu}>Home</a>
+          <a href="/#scene-reflection" className="mini-menu-link" onClick={closeMenu}>Reflection</a>
+          <a href="/#scene-weather" className="mini-menu-link" onClick={closeMenu}>Weather</a>
+          <a href="/#scene-calendar" className="mini-menu-link" onClick={closeMenu}>Calendar</a>
           <Link to={`/day/${birthdayIso}`} className="mini-menu-link" onClick={closeMenu}>Your Birthday</Link>
 
           <div className="mini-menu-section">Special Dates</div>
@@ -217,7 +217,7 @@ export default function MiniOrbMenu({
               {specialDate.label}
             </Link>
           ))}
-          <a href="#scene-footer" className="mini-menu-link" onClick={closeMenu}>Contact</a>
+          <a href="/#scene-footer" className="mini-menu-link" onClick={closeMenu}>Contact</a>
 
           <div className="mini-menu-section">Atmosphere</div>
           <button onClick={cycleSeason}>

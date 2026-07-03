@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import BackgroundCarousel from "./BackgroundCarousel";
 import Calendar from "./Calendar";
@@ -291,6 +291,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
         path="/day/:date"
         element={<DayPage veilMode={veilMode} starDensity={starDensity} />}
       />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

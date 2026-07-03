@@ -1,22 +1,26 @@
 import { useState, useEffect } from "react";
 
 export default function QuietActionsDrawer({ orbColor, onClose }) {
-  const [items, setItems] = useState([]);
-  const [text, setText] = useState("");
+  const [items, setItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem("quietActions");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [text, setText] = useState(() => localStorage.getItem("quietActionsDraft") || "");
 
   const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
 
-  // Load saved items
-  useEffect(() => {
-    const saved = localStorage.setItem("quietActions", JSON.stringify(items));
-
-    if (saved) setItems(JSON.parse(saved));
-  }, []);
-
   // Save items whenever they change
   useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
+    localStorage.setItem("quietActions", JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem("quietActionsDraft", text);
+  }, [text]);
 
   // ⭐ NEW: Add newest item at the TOP
   const addItem = () => {
@@ -25,12 +29,6 @@ export default function QuietActionsDrawer({ orbColor, onClose }) {
     setItems([newItem, ...items]);   // NEWEST FIRST
     setText("");
   };
-
-  const deleteItem
-   = (id) => {
-    setItems(items.filter((n) => n.id !== id));
-  };
-
 
   return (
     <div
