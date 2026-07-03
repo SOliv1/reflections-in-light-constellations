@@ -6,7 +6,6 @@ import Carousel from "./Carousel";
 import TodayButton from "./TodayButton";
 import CategoryTiles from "./CategoryTiles";
 import QuoteCard from "./QuoteCard";
-import Footer from "./Footer";
 import "../../styles/mobile.css";
 
 /**
@@ -87,8 +86,6 @@ export default function MobileLayout({
         />
       )}
 
-      {/* 8. Footer */}
-      <div id="scene-footer"><Footer /></div>
     </div>
   );
 }
