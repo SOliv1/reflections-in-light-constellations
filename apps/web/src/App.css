@@ -331,6 +331,34 @@ body {
   pointer-events: auto;
 }
 
+/* Preserve the deployed mobile-first atmosphere when the responsive shell is active. */
+@media (max-width: 768px) {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(84, 98, 154, 0.34) 0%, rgba(18, 22, 38, 0.88) 42%, rgba(8, 10, 20, 0.98) 100%);
+  }
+}
+
+.scene-menu-time {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid rgba(228, 230, 246, 0.14);
+  color: rgba(255, 246, 218, 0.94);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.scene-anchor-section,
+#scene-sky,
+#scene-reflection,
+#scene-weather,
+#scene-calendar,
+#scene-footer { scroll-margin-top: 16px; }
+
 .crescent-portal {
   position: fixed;
   top: 18px;

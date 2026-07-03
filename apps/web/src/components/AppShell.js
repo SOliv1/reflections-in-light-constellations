@@ -191,7 +191,7 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
             />
 
             {/* Sky wrapper — constellation + portal */}
-            <div className="sky-wrapper">
+            <div className="sky-wrapper" id="scene-sky">
               <Constellation
                 veilMode={veilMode}
                 birthdayMode={isBirthdayScene}
@@ -263,14 +263,16 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
                 />
 
                 {/* Calendar */}
-                <Calendar
-                  season={season}
-                  isNight={isNight}
-                  weatherCondition={weatherCondition}
-                  weatherMood={weatherMood}
-                  isHomePage={true}
-                  onDaySelect={() => setDrawerOpen(true)}
-                />
+                <div id="scene-calendar" className="scene-anchor-section">
+                  <Calendar
+                    season={season}
+                    isNight={isNight}
+                    weatherCondition={weatherCondition}
+                    weatherMood={weatherMood}
+                    isHomePage={true}
+                    onDaySelect={() => setDrawerOpen(true)}
+                  />
+                </div>
 
                 {/* Unified Drawer */}
                 <DrawerUnified

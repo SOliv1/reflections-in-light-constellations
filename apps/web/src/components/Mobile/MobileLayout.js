@@ -48,18 +48,15 @@ export default function MobileLayout({
   return (
     <div className="mobile-container">
       {/* 1. Explore Header */}
-      <ExploreHeader
-        time={time}
-        reflection={reflection}
-      />
+      <div id="scene-reflection"><ExploreHeader time={time} reflection={reflection} /></div>
 
       {/* 2. Weather Card */}
-      <WeatherCard
+      <div id="scene-weather"><WeatherCard
         temperature={temperature}
         description={weatherDescription}
         glow={weatherGlow}
         location={location}
-      />
+      /></div>
 
       {/* 3. Reflection Navigation */}
       <ReflectionNav
@@ -70,11 +67,11 @@ export default function MobileLayout({
       />
 
       {/* 4. Carousel (1-30) */}
-      <Carousel
+      <div id="scene-calendar"><Carousel
         items={30}
         activeIndex={currentReflection}
         onSelectItem={onSelectReflection}
-      />
+      /></div>
 
       {/* 5. Today Button */}
       <TodayButton onClick={onToday} />
@@ -91,7 +88,7 @@ export default function MobileLayout({
       )}
 
       {/* 8. Footer */}
-      <Footer />
+      <div id="scene-footer"><Footer /></div>
     </div>
   );
 }

@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import PortalTime from "./PortalTime";
+import { BIRTHDAY_DAY, BIRTHDAY_MONTH } from "../data/birthdayExperience";
+import { buildSpecialDateLinks, defaultSpecialDates } from "../data/specialDates";
 import "./MiniOrbMenu.css";
 
 export default function MiniOrbMenu({
@@ -16,6 +20,21 @@ export default function MiniOrbMenu({
   const [open, setOpen] = useState(false);
   const [radialOpen, setRadialOpen] = useState(false);
   const [isSleeping, setIsSleeping] = useState(false);
+  const currentYear = new Date().getFullYear();
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const birthdayIso = `${currentYear}-${String(BIRTHDAY_MONTH).padStart(2, "0")}-${String(BIRTHDAY_DAY).padStart(2, "0")}`;
+  const specialDateLinks = useMemo(() => {
+    let customDates = [];
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem("rilcSpecialDates") || "[]");
+      if (Array.isArray(parsed)) customDates = parsed;
+    } catch {
+      customDates = [];
+    }
+    return buildSpecialDateLinks(currentYear, [...defaultSpecialDates, ...customDates]);
+  }, [currentYear]);
+
+  const closeMenu = () => setOpen(false);
 
   // 1. Seasonal tint colours
   const seasonTint = {
@@ -182,6 +201,25 @@ export default function MiniOrbMenu({
       {/* Drop‑down menu */}
       {open && (
         <div className="mini-orb-menu">
+          <PortalTime compact />
+          <Link to={`/day/${todayIso}`} className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Open Today</Link>
+
+          <div className="mini-menu-section">Navigate</div>
+          <a href="#scene-sky" className="mini-menu-link" onClick={closeMenu}>Sky</a>
+          <a href="#scene-reflection" className="mini-menu-link" onClick={closeMenu}>Reflection</a>
+          <a href="#scene-weather" className="mini-menu-link" onClick={closeMenu}>Weather</a>
+          <a href="#scene-calendar" className="mini-menu-link" onClick={closeMenu}>Calendar</a>
+          <Link to={`/day/${birthdayIso}`} className="mini-menu-link" onClick={closeMenu}>Your Birthday</Link>
+
+          <div className="mini-menu-section">Special Dates</div>
+          {specialDateLinks.map((specialDate) => (
+            <Link key={specialDate.id} to={`/day/${specialDate.isoDate}`} className="mini-menu-link" onClick={closeMenu}>
+              {specialDate.label}
+            </Link>
+          ))}
+          <a href="#scene-footer" className="mini-menu-link" onClick={closeMenu}>Contact</a>
+
+          <div className="mini-menu-section">Atmosphere</div>
           <button onClick={cycleSeason}>
             Season: {testSeason || "auto"}
           </button>
