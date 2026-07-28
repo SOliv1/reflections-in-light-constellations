@@ -26,6 +26,41 @@ import {
 const router = express.Router();
 const shareLinksBySlug = new Map();
 const MAX_RECIPIENT_EMAILS = 25;
+const PASSWORD_VERIFY_WINDOW_MS = 10 * 60 * 1000;
+const PASSWORD_VERIFY_MAX_ATTEMPTS = 10;
+const passwordVerifyAttemptsByKey = new Map();
+
+function getPasswordVerifyRateLimitKey(req) {
+  const forwardedFor = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  const ip = forwardedFor || req.ip || req.socket?.remoteAddress || 'unknown';
+  const slug = String(req.params.urlSlug || '').trim().toLowerCase();
+  return `${slug}:${ip}`;
+}
+
+function enforcePasswordVerifyRateLimit(req, res, next) {
+  const now = Date.now();
+  const key = getPasswordVerifyRateLimitKey(req);
+  const existing = passwordVerifyAttemptsByKey.get(key);
+
+  if (!existing || now - existing.firstAttemptAt >= PASSWORD_VERIFY_WINDOW_MS) {
+    passwordVerifyAttemptsByKey.set(key, { attempts: 1, firstAttemptAt: now });
+    return next();
+  }
+
+  if (existing.attempts >= PASSWORD_VERIFY_MAX_ATTEMPTS) {
+    const retryAfterMs = PASSWORD_VERIFY_WINDOW_MS - (now - existing.firstAttemptAt);
+    const retryAfterSeconds = Math.max(1, Math.ceil(retryAfterMs / 1000));
+    res.set('Retry-After', String(retryAfterSeconds));
+    return res.status(429).json({
+      error: 'Too many password attempts. Please try again later.',
+      retryAfterSeconds,
+    });
+  }
+
+  existing.attempts += 1;
+  passwordVerifyAttemptsByKey.set(key, existing);
+  return next();
+}
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -347,7 +382,7 @@ router.post('/create', async (req, res) => {
  * POST /api/share/:urlSlug/verify-password
  * Verify password for protected share links
  */
-router.post('/:urlSlug/verify-password', async (req, res) => {
+router.post('/:urlSlug/verify-password', enforcePasswordVerifyRateLimit, async (req, res) => {
   try {
     const { password } = req.body;
     const { urlSlug } = req.params;
@@ -373,6 +408,8 @@ router.post('/:urlSlug/verify-password', async (req, res) => {
     if (!isValid) {
       return res.status(401).json({ error: 'Incorrect password' });
     }
+
+    passwordVerifyAttemptsByKey.delete(getPasswordVerifyRateLimitKey(req));
 
     res.json({
       success: true,
