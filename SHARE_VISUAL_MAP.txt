@@ -1,0 +1,197 @@
+/* 
+  VISUAL MAP: WHERE TO FIND SHARE LINKS
+  
+  This shows the exact locations where you'll see share buttons
+  in your Reflections in Light app
+*/
+
+================================================================================
+                            LOCATION MAP
+================================================================================
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                          GALLERY / DAY VIEW                             ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                                                         ┃
+┃  Summer Memories              🔗 SHARE COLLECTION BUTTON              ┃
+┃  ─────────────────────────────────────────────────────────────        ┃
+┃                                                                         ┃
+┃  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────┐ ┃
+┃  │              │  │              │  │              │  │          │ ┃
+┃  │   Photo 1    │  │   Photo 2    │  │   Photo 3    │  │ Photo 4  │ ┃
+┃  │              │  │              │  │              │  │          │ ┃
+┃  │  [🔗👤🗑]   │  │              │  │  [🔗👤🗑]   │  │          │ ┃
+┃  │ HOVER STATE  │  │              │  │ HOVER STATE  │  │          │ ┃
+┃  └──────────────┘  └──────────────┘  └──────────────┘  └──────────┘ ┃
+┃    ↑ SHARE BUTTON        (no hover)      ↑ SHARE BUTTON     (no hover)│
+┃     ON HOVER                              ON HOVER                     ┃
+┃                                                                         ┃
+┃  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────┐ ┃
+┃  │              │  │              │  │              │  │          │ ┃
+┃  │   Photo 5    │  │   Photo 6    │  │   Photo 7    │  │ Photo 8  │ ┃
+┃  │              │  │              │  │              │  │          │ ┃
+┃  └──────────────┘  └──────────────┘  └──────────────┘  └──────────┘ ┃
+┃                                                                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+SHARE LOCATIONS EXPLAINED:
+
+1️⃣  "🔗 SHARE COLLECTION" (Top Right)
+    └─ Shares ALL photos in this album/gallery
+    └─ Opens ShareModal for the collection
+    └─ Creates one link for entire album
+
+2️⃣  "🔗" (Photo Tile Hover)
+    └─ Appears when you hover over a photo in the grid
+    └─ Shares just that ONE photo
+    └─ Opens ShareModal for single photo
+
+================================================================================
+
+EXPANDED PHOTO VIEW:
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🔗 SHARE | [Mood 1] [Mood 2] [Mood 3] | 🗑      ┃
+┃  ────────────────────────────────────────────────  ┃
+┃                                                    ┃
+┃              (Large photo display)                 ┃
+┃              1600 x 900 pixels                     ┃
+┃                                                    ┃
+┃              Click anywhere to close               ┃
+┃                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+   ↑ SHARE BUTTON
+     Click to open ShareModal
+
+================================================================================
+
+SHARE MODAL (Popup after clicking Share):
+
+┌─────────────────────────────────────────────────────┐
+│                                                  ✕   │
+│  🔗 Share this moment                               │
+│  Choose how you'd like to invite others in         │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  How would you like to share?                      │
+│  ○ Public link                                      │
+│  ○ Share with friends                              │
+│  ○ Password protected                              │
+│                                                     │
+│  Permissions                                        │
+│  ☑ Allow downloads                                  │
+│  ☑ Allow comments & reactions                       │
+│  ☐ Hide camera details                             │
+│                                                     │
+│  Set the mood                                       │
+│  [🌅] [🌤️] [🎉] [📸]                            │
+│                                                     │
+│  Caption                                            │
+│  ┌──────────────────────────────────────────────┐  │
+│  │ Add your thoughts...                         │  │
+│  └──────────────────────────────────────────────┘  │
+│                                                     │
+│            [Cancel] [Create share link]             │
+└─────────────────────────────────────────────────────┘
+
+================================================================================
+
+STEP-BY-STEP WALKTHROUGH:
+
+Step 1: NAVIGATE TO GALLERY
+       ─────────────────────
+       Open your Gallery or Day view
+       You'll see a grid of photos
+
+Step 2: FIND THE SHARE BUTTONS
+       ──────────────────────────
+       Option A) Look at the TOP RIGHT
+                 You'll see: "🔗 Share Collection"
+       
+       Option B) HOVER over any photo in the grid
+                 You'll see: [🔗] [❤️] [🗑️]
+
+Step 3: CLICK A SHARE BUTTON
+       ──────────────────────
+       🔗 Share Collection  → Shares all photos in album
+       🔗 (on photo)        → Shares just that photo
+
+Step 4: SHAREMODAL OPENS
+       ───────────────────
+       You see the share options popup
+
+Step 5: CONFIGURE SHARE
+       ─────────────────
+       Choose: Public / Friends / Password
+       Set: Permissions, Mood, Caption
+
+Step 6: CREATE LINK
+       ──────────────
+       Click "Create share link" button
+
+Step 7: LINK CREATED
+       ──────────────
+       Backend generates: http://localhost:3000/share/soft-dawn-7f3k
+       Copy and share with friends!
+
+================================================================================
+
+REFERENCE:
+
+🔗  = Share button (creates shareable link)
+❤️  = Favourite button (save to favorites)
+🗑️  = Delete button (remove photo)
+
+When you see:  [🔗👤🗑]  ← These appear on HOVER only
+               [   ]     ← Photo tile shows just the image normally
+
+┌──────────────┐
+│              │
+│    Photo     │  ← Normal view
+│              │
+│              │
+└──────────────┘
+
+┌──────────────┐
+│              │
+│    Photo     │  ← Hover view (see action buttons)
+│              │
+│ [🔗👤🗑]    │
+└──────────────┘
+
+================================================================================
+
+COMMON QUESTIONS:
+
+Q: Where is the "Share" button?
+A: Hover over a photo in the gallery grid, look at the bottom-right corner
+
+Q: Can I share an entire album?
+A: Yes! Click "🔗 Share Collection" at the top of the gallery
+
+Q: What happens after I click Share?
+A: A modal pops up where you choose how to share (public/friends/password)
+
+Q: How do I get the share link?
+A: After clicking "Create share link", the URL is generated:
+   Example: http://localhost:3000/share/soft-dawn-7f3k
+
+Q: Can recipients download the photo?
+A: Yes, but only if you enable it in the Permissions section
+
+Q: Can I password-protect a share?
+A: Yes! Select "Password protected" in the share modal
+
+Q: Can I see who viewed my shared photo?
+A: Yes! View analytics show viewer emails and counts
+
+================================================================================
+
+KEYBOARD SHORTCUTS (Optional to add):
+
+Cmd/Ctrl + Shift + S    = Open share modal for selected photo
+Cmd/Ctrl + C            = Copy share link to clipboard
+ESC                     = Close share modal
+
+================================================================================
+*/

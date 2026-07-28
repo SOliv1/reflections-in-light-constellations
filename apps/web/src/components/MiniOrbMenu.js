@@ -203,6 +203,7 @@ export default function MiniOrbMenu({
         <div className="mini-orb-menu">
           <PortalTime compact />
           <Link to={`/day/${todayIso}`} className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Open Today</Link>
+          <Link to="/share-start" className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Share Album</Link>
 
           <div className="mini-menu-section">Navigate</div>
           <a href="/#scene-sky" className="mini-menu-link" onClick={closeMenu}>Home</a>
