@@ -949,6 +949,17 @@ body {
   }
 }
 
+/* Keep the complete moon aura inside the shallow laptop/desktop sky band.
+   Mobile retains its existing moon scale and placement. */
+@media (min-width: 769px) {
+  .sky-wrapper .moon {
+    top: 18%;
+    right: 9%;
+    width: 180px;
+    height: 180px;
+  }
+}
+
 /* Smooth transitions */
 .moon {
   transition:

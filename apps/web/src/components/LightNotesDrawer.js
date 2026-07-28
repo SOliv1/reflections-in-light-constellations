@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
 
 export default function LightNotesDrawer({ orbColor, onClose }) {
-  const [notes, setNotes] = useState([]);
-  const [text, setText] = useState("");
+  const [notes, setNotes] = useState(() => {
+    try {
+      const saved = localStorage.getItem("lightNotes");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [text, setText] = useState(() => localStorage.getItem("lightNotesDraft") || "");
 
   const orbRGB = orbColor.replace("rgb(", "").replace(")", "");
-
-  // Load saved notes
-  useEffect(() => {
-    const saved = localStorage.getItem("lightNotes");
-    if (saved) setNotes(JSON.parse(saved));
-  }, []);
 
   // Save notes whenever they change
   useEffect(() => {
     localStorage.setItem("lightNotes", JSON.stringify(notes));
   }, [notes]);
+
+  useEffect(() => {
+    localStorage.setItem("lightNotesDraft", text);
+  }, [text]);
 
   // ⭐ NEW: Add newest note at the TOP
   const addNote = () => {

@@ -1,0 +1,50 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Mobile Integration: Ensure mobile layout is visible above sky layers
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile container is clickable and sits ABOVE sky wrapper on mobile */
+.mobile-container {
+  position: relative;
+  z-index: 3100;  /* Above sky-wrapper (3000) */
+  pointer-events: auto;
+}
+
+/* Prevent layout shift on mobile */
+@media (max-width: 767px) {
+  /* Override any desktop padding on small screens */
+  .mobile-container {
+    padding: var(--mobile-edge-lg) var(--mobile-edge);
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    color: #fff;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(119, 139, 205, 0.32), transparent 34%),
+      radial-gradient(circle at 78% 34%, rgba(175, 128, 151, 0.2), transparent 38%),
+      linear-gradient(180deg, #12182f 0%, #1c2850 42%, #334b69 72%, #151b31 100%);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+  }
+
+  /* Disable horizontal scroll */
+  body, html {
+    overflow-x: hidden;
+  }
+
+  /* Ensure mobile sections are visible */
+  .explore-section,
+  .weather-card,
+  .reflection-nav,
+  .carousel-container,
+  .today-button,
+  .category-grid,
+  .quote-card,
+  .mobile-footer {
+    position: relative;
+    z-index: 3100;
+  }
+}
+

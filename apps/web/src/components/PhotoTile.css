@@ -1,21 +1,23 @@
 .photo-tile {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    min-width: 0;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
 }
 
 @keyframes warmGlow {
   0% {
     box-shadow: 0 0 0px rgba(255, 215, 130, 0);
   }
+
   40% {
     box-shadow: 0 0 12px rgba(255, 215, 130, 0.15);
   }
+
   100% {
     box-shadow: 0 0 0px rgba(255, 215, 130, 0);
   }
@@ -30,6 +32,7 @@
     opacity: 0;
     transform: scale(0.96);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -37,46 +40,46 @@
 }
 
 .photo-tile:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
 }
 
 .photo-tile-image {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    height: auto;
-    object-fit: cover;
-    background: rgba(255, 255, 255, 0.18);
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .photo-tile--error .photo-tile-image {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 
 /* Heart button */
 .photo-tile-heart {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    border: none;
-    background: rgba(0, 0, 0, 0.35);
-    color: rgba(255, 255, 255, 0.8);
-    border-radius: 999px;
-    padding: 4px 8px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
 .photo-tile-heart:hover {
-    background: rgba(0, 0, 0, 0.55);
-    transform: scale(1.05);
+  background: rgba(0, 0, 0, 0.55);
+  transform: scale(1.05);
 }
 
 .photo-tile-heart.favourite {
-    background: rgba(255, 215, 0, 0.9);
-    color: #3b2a10;
+  background: rgba(255, 215, 0, 0.9);
+  color: #3b2a10;
 }
 
 .photo-delete-btn {
@@ -95,6 +98,44 @@
     0 2px 6px rgba(138, 106, 47, 0.14);
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   cursor: pointer;
+}
+
+.photo-tile-actions {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.photo-tile:hover .photo-tile-actions,
+.photo-tile:focus-within .photo-tile-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photo-share-btn {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(10, 15, 34, 0.72);
+  color: #fff7e8;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.photo-share-btn:hover {
+  background: rgba(33, 46, 89, 0.82);
+  transform: translateY(-1px);
 }
 
 .photo-delete-btn:hover {
@@ -125,11 +166,20 @@
 }
 
 @media (max-width: 600px) {
+
   .photo-tile-heart,
   .photo-delete-btn {
     width: 38px;
     height: 38px;
   }
+
+  .photo-tile-actions {
+    opacity: 1;
+    transform: none;
+  }
+
+  .photo-share-btn {
+    font-size: 0.68rem;
+    padding: 6px 9px;
+  }
 }
-
-

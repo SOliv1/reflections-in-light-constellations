@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppShell from "./components/AppShell";
+import GlobalFooter from "./components/GlobalFooter";
 import MiniOrbMenu from "./components/MiniOrbMenu";
 
 import "./App.css";
@@ -37,6 +38,8 @@ export default function App() {
         veilMode={veilMode}
         starDensity={starDensity}
       />
+
+      <GlobalFooter />
     </Router>
   );
 }

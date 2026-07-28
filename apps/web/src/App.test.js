@@ -19,5 +19,7 @@ import App from './App';
 // 3. Then your test
 test('renders app without crashing', () => {
   render(<App />);
-  expect(screen.getByText(/reflections/i)).toBeInTheDocument();
+  expect(screen.getByRole('contentinfo')).toHaveTextContent(
+    'Reflections-In-Light-Constellations'
+  );
 });

@@ -1,0 +1,100 @@
+.global-footer {
+  position: relative;
+  z-index: 3200;
+  width: 100%;
+  box-sizing: border-box;
+  padding: clamp(2rem, 5vw, 3.5rem) max(1rem, env(safe-area-inset-left)) calc(2rem + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(222, 228, 255, 0.18);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(105, 119, 184, 0.18), transparent 58%),
+    rgba(8, 11, 28, 0.86);
+  color: rgba(235, 238, 255, 0.76);
+  text-align: center;
+}
+
+.global-footer__inner {
+  width: min(100%, 70rem);
+  margin: 0 auto;
+}
+
+.global-footer p,
+.global-footer address {
+  margin: 0;
+}
+
+.global-footer__title {
+  color: rgba(255, 250, 238, 0.96);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.global-footer__family {
+  margin-top: 0.35rem !important;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+
+.global-footer__contact {
+  margin-top: 1.35rem !important;
+  color: rgba(239, 241, 255, 0.86);
+  font-size: 0.9rem;
+  font-style: normal;
+}
+
+.global-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+}
+
+.global-footer__colophon {
+  max-width: 58rem;
+  margin: 1.15rem auto 0 !important;
+  font-size: 0.78rem;
+  line-height: 1.75;
+}
+
+.global-footer a {
+  color: rgba(219, 229, 255, 0.96);
+  text-decoration-color: rgba(195, 210, 255, 0.45);
+  text-underline-offset: 0.22em;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.global-footer a:hover,
+.global-footer a:focus-visible {
+  color: #fff;
+  text-decoration-color: rgba(255, 255, 255, 0.9);
+}
+
+.global-footer a:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid rgba(216, 226, 255, 0.75);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .global-footer {
+    padding-right: 1.15rem;
+    padding-left: 1.15rem;
+  }
+
+  .global-footer__contact {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .global-footer__contact > span[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-footer a {
+    transition: none;
+  }
+}

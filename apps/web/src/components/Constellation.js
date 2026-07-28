@@ -14,6 +14,7 @@ function Constellation({
   veilMode,
   birthdayMode,
   showRocket = false,
+  showMoon = true,
   starDensity = "normal",
   season: seasonOverride,
 }) {
@@ -39,7 +40,7 @@ function Constellation({
       <div className="constellation-skywash" aria-hidden="true"></div>
 
       {/* Moon */}
-      <div className={`moon ${moonPhase}`} aria-hidden="true"></div>
+      {showMoon && <div className={`moon ${moonPhase}`} aria-hidden="true"></div>}
 
       {/* Stars and planets */}
       <div className="constellation-container" aria-hidden="true">
