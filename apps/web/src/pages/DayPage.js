@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import PersistentDayPage from "../components/PersistentDayPage";
 import {
   BIRTHDAY_DAY,
@@ -18,6 +18,7 @@ function toLegacyDayDate(value) {
 
 export default function DayPage({ veilMode = "off", starDensity = "normal" }) {
   const { date } = useParams();
+  const location = useLocation();
 
   if (!date || !isValidDateString(date)) {
     return <Navigate to="/" replace />;
@@ -39,6 +40,8 @@ export default function DayPage({ veilMode = "off", starDensity = "normal" }) {
           : "autumn";
   const isBirthdayScene =
     jsDate.getMonth() + 1 === BIRTHDAY_MONTH && jsDate.getDate() === BIRTHDAY_DAY;
+  const searchParams = new URLSearchParams(location.search || "");
+  const autoOpenShare = searchParams.get("share") === "album";
 
   return (
     <PersistentDayPage
@@ -58,6 +61,7 @@ export default function DayPage({ veilMode = "off", starDensity = "normal" }) {
             }
           : null
       }
+      autoOpenShare={autoOpenShare}
       veilMode={veilMode}
       starDensity={starDensity}
     />

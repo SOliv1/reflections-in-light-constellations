@@ -6,6 +6,7 @@ import backgroundRoutes from "./routes/background.js";
 import daysRoutes from "./routes/days.js";
 import galleryRoutes from "./routes/gallery.js";
 import randomImageRoute from "./routes/randomImage.js";
+import shareRoutes from "./routes/share.js";
 import uploadRoute from "./routes/upload.js";
 import weatherRoutes from "./routes/weather.js";
 
@@ -88,6 +89,7 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/background", backgroundRoutes);
 app.use("/api/days", daysRoutes);
 app.use("/api/upload", uploadRoute);
+app.use("/api/share", shareRoutes);
 app.use("/days", daysRoutes);
 app.use("/upload", uploadRoute);
 app.use("/api", weatherRoutes);

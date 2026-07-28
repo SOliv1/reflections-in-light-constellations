@@ -17,6 +17,8 @@ import useWeatherPhotos from "../hooks/useWeatherPhotos";
 
 import DayPage from "../pages/DayPage";
 import MobileHomePage from "../pages/MobileHomePage";
+import SharePage from "../pages/SharePage";
+import ShareStartPage from "../pages/ShareStartPage";
 
 import springSeasonal from "../assets/logos/springSeasonalLogo.png";
 import reflectionsMarkLogo from "../assets/logos/reflectionsMarkLogo.png";
@@ -336,6 +338,8 @@ export default function AppShell({ testSeason, showTestLogo, showR, veilMode = "
         path="/day/:date"
         element={<DayPage veilMode={veilMode} starDensity={starDensity} />}
       />
+      <Route path="/share-start" element={<ShareStartPage />} />
+      <Route path="/share/:slug" element={<SharePage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -1,5 +1,7 @@
 import { API_BASE_URL, API_BASE_URLS } from "./config";
 
+const API_REQUEST_TIMEOUT_MS = 10000;
+
 function buildUrl(baseUrl, path) {
   if (/^https?:\/\//i.test(path)) {
     return path;
@@ -17,9 +19,17 @@ export async function fetchFromApi(path, options) {
 
   for (const baseUrl of candidates) {
     const requestUrl = buildUrl(baseUrl, path);
+    const controller = new AbortController();
+    const timeoutHandle = setTimeout(() => {
+      controller.abort();
+    }, API_REQUEST_TIMEOUT_MS);
+    const requestOptions = {
+      ...(options || {}),
+      signal: controller.signal,
+    };
 
     try {
-      const response = await fetch(requestUrl, options);
+      const response = await fetch(requestUrl, requestOptions);
       const contentType = response.headers.get("content-type") || "";
 
       // A frontend/static server can answer an API request with its HTML shell
@@ -44,7 +54,13 @@ export async function fetchFromApi(path, options) {
       lastResponse = response;
       lastError = new Error(`Request failed with status ${response.status} for ${requestUrl}`);
     } catch (error) {
-      lastError = error;
+      if (error?.name === "AbortError") {
+        lastError = new Error(`Request timed out after ${API_REQUEST_TIMEOUT_MS}ms for ${requestUrl}`);
+      } else {
+        lastError = error;
+      }
+    } finally {
+      clearTimeout(timeoutHandle);
     }
   }
 

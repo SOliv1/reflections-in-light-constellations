@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PhotoTile from "./PhotoTile";
+import ShareModal from "./ShareModal";
 import "./PhotoGallery.css";
 
 const PhotoGallery = ({
@@ -12,8 +13,15 @@ const PhotoGallery = ({
   onSelectMood,
   onDelete,
   onApproachPortal,
+  onCreateShare,
+  collectionShareTarget = null,
+  shareButtonLabel = "Share Collection",
+  autoOpenCollectionShare = false,
 }) => {
   const [expandedPhoto, setExpandedPhoto] = useState(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareTarget, setShareTarget] = useState(null);
+  const hasAutoOpenedShare = useRef(false);
   console.log("Gallery images:", images);
 
   const seasonalBorderGlow = {
@@ -50,8 +58,42 @@ const moodImageOverlay = {
 };
 
 
+  const openShareForPhoto = (photo) => {
+    setShareTarget(photo || null);
+    setShowShareModal(true);
+  };
+
+  const openShareForCollection = useCallback(() => {
+    setShareTarget(collectionShareTarget || { id: "day-collection", type: "collection" });
+    setShowShareModal(true);
+  }, [collectionShareTarget]);
+
+  const handleShare = async (payload) => {
+    return await onCreateShare?.(payload);
+  };
+
+  useEffect(() => {
+    if (!autoOpenCollectionShare || hasAutoOpenedShare.current) {
+      return;
+    }
+
+    hasAutoOpenedShare.current = true;
+    openShareForCollection();
+  }, [autoOpenCollectionShare, openShareForCollection]);
+
   return (
     <>
+      <div className="photo-gallery-header">
+        <h3>Captured reflections</h3>
+        <button
+          type="button"
+          className="gallery-share-btn"
+          onClick={openShareForCollection}
+        >
+          {shareButtonLabel}
+        </button>
+      </div>
+
       <div className="photo-grid">
         {images.map((image) => (
           <PhotoTile
@@ -64,6 +106,7 @@ const moodImageOverlay = {
             season={season}
             onDelete={() => onDelete(image.id)}
             onApproachPortal={onApproachPortal}
+            onShare={() => openShareForPhoto(image)}
 
           />
         ))}
@@ -86,6 +129,17 @@ const moodImageOverlay = {
                 {preset.label}
               </button>
             ))}
+            <button
+              type="button"
+              className="photo-modal-share"
+              onClick={(event) => {
+                event.stopPropagation();
+                const expandedImage = images.find((image) => image.src === expandedPhoto) || null;
+                openShareForPhoto(expandedImage);
+              }}
+            >
+              Share photo
+            </button>
           </div>
         ) : null}
         <div
@@ -106,6 +160,16 @@ const moodImageOverlay = {
         </div>
       </div>
      )}
+
+      {showShareModal && (
+        <ShareModal
+          photo={shareTarget?.type === "collection" ? null : shareTarget}
+          album={shareTarget?.type === "collection" ? shareTarget : null}
+          onClose={() => setShowShareModal(false)}
+          onShare={handleShare}
+          defaultMood={mood || "mood-soft-dawn"}
+        />
+      )}
 
     </>
   );

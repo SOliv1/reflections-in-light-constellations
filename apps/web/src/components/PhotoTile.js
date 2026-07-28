@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import "./PhotoTile.css";
 
 export default function PhotoTile({
   photo,
@@ -8,7 +9,8 @@ export default function PhotoTile({
   onToggle,
   season,
   onDelete,
-  onApproachPortal
+  onApproachPortal,
+  onShare,
 }) {
   const tileRef = useRef(null);
 
@@ -92,14 +94,30 @@ export default function PhotoTile({
         {isFavourite ? "❤️" : "🤍"}
       </button>
 
-      <button
-        className="photo-delete-btn"
-        onClick={handleDelete}
-        aria-label="Move photo to basket"
-        title="Move to basket"
-      >
-        🧺
-      </button>
+      <div className="photo-tile-actions">
+        <button
+          type="button"
+          className="photo-share-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            onShare?.(photo);
+          }}
+          aria-label="Share photo"
+          title="Share photo"
+        >
+          Share
+        </button>
+
+        <button
+          type="button"
+          className="photo-delete-btn"
+          onClick={handleDelete}
+          aria-label="Move photo to basket"
+          title="Move to basket"
+        >
+          🧺
+        </button>
+      </div>
     </div>
   );
 }

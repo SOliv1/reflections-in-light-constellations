@@ -36,6 +36,7 @@ export default function PersistentDayPage({
   macroMood = "architectural-water",
   title,
   specialExperience = null,
+  autoOpenShare = false,
   veilMode = "off",
   starDensity = "normal",
 }) {
@@ -231,6 +232,34 @@ export default function PersistentDayPage({
     }
   }
 
+  async function handleCreateShare(payload) {
+    const response = await fetchFromApi("/api/share/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ownerId: "guest-user",
+        ...payload,
+        photoId: payload.photoId || null,
+        albumId: payload.albumId || `day-${dayDate}`,
+      }),
+    });
+
+    const result = await response.json();
+    if (!response.ok || !result?.success) {
+      throw new Error(result?.error || "Failed to create share link");
+    }
+
+    if (result.shareUrl && navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(result.shareUrl);
+      } catch {
+        // Clipboard can be blocked by browser permissions.
+      }
+    }
+
+    return result;
+  }
+
   function handlePhotoApproach() {
     setPortalState("aware");
     const moodSource = lightingPresets.length > 0 ? lightingPresets : MOODS.map((id) => ({ id }));
@@ -374,6 +403,10 @@ export default function PersistentDayPage({
             }}
             onDelete={handleDeletePhoto}
             onApproachPortal={handlePhotoApproach}
+            onCreateShare={handleCreateShare}
+            collectionShareTarget={{ id: `day-${dayDate}`, type: "collection" }}
+            shareButtonLabel="Share Today"
+            autoOpenCollectionShare={autoOpenShare}
           />
         )}
 

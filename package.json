@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "start": "npm start --prefix apps/web",
+    "start:api": "npm start --prefix apps/api",
+    "start:web": "npm start --prefix apps/web",
+    "dev:api": "npm run dev --prefix apps/api"
+  },
   "dependencies": {
     "playwright": "^1.59.1"
   }
