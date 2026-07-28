@@ -2,6 +2,9 @@ name: Deploy to Railway
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - codex/refine-cosmic-scene
 
 jobs:
   deploy-api:

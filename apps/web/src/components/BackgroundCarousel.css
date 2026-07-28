@@ -24,7 +24,8 @@
 }
 
 .background-carousel::after {
-  z-index: 0; /* stays in the same stacking context as its parent */
+  z-index: 0;
+  /* stays in the same stacking context as its parent */
 }
 
 
@@ -38,7 +39,6 @@
    WEATHER IMAGE + DB PHOTO LAYERS — MERGED + CLEAN
 ----------------------------------------------------------- */
 
-.constellations-image,
 .weather-image,
 .bg-image {
   position: absolute;
@@ -70,13 +70,11 @@
 }
 
 /* Veil-off overrides */
-.veil-off .constellations-image,
 .veil-off .bg-image,
 .veil-off .weather-image {
   filter: brightness(0.92) contrast(1.02) saturate(1.05) !important;
 }
 
-.constellations-image.veil-off,
 .weather-image.veil-off,
 .bg-image.veil-off {
   filter: none !important;
@@ -88,6 +86,7 @@
 
 /* Mobile fallback */
 @supports not (height: 100dvh) {
+
   .weather-image,
   .bg-image {
     height: 100vh;
@@ -95,6 +94,7 @@
 }
 
 @media (max-width: 768px) {
+
   .weather-image,
   .bg-image {
     width: 100vw;
@@ -105,6 +105,7 @@
 
 @supports not (height: 100svh) {
   @media (max-width: 768px) {
+
     .weather-image,
     .bg-image {
       height: 100vh;
@@ -129,6 +130,7 @@
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+
 .veil-on .twilight-overlay {
   opacity: 0.62;
   background:
@@ -138,8 +140,9 @@
 
 /* Blue-hour veil (cooler, deeper) */
 .veil.blue-hour {
-  background: rgba(10, 20, 40, 0.55); /* blue‑black twilight */
-  backdrop-filter: blur(3px);
+  background: rgba(10, 20, 40, 0.55);
+  /* blue‑black twilight */
+  backdrop-filter: none;
 }
 
 /* Lift veil */
@@ -161,12 +164,17 @@
 /* Night veil (optional) */
 .veil.night {
   background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(4px);
+  backdrop-filter: none;
 }
 
 
-/* No veil — scope this to the veil itself. Image layers also carry the
-   `veil-off` state class and must retain their background images. */
+/* No veil */
+.veil-off {
+  opacity: 0 !important;
+  background: none !important;
+  mix-blend-mode: normal !important;
+}
+
 .veil.veil-off {
   opacity: 0 !important;
   background: none !important;
@@ -189,6 +197,7 @@
 
 /* Mobile veil transitions */
 @media (max-width: 768px) {
+
   #veil,
   #veil .twilight-overlay {
     transition: opacity 0.45s ease, background 0.45s ease;
@@ -318,22 +327,22 @@
 }
 
 .deep-layer {
-  filter: blur(6px) brightness(0.94);
-  opacity: 0.3;
+  filter: blur(12px) brightness(0.9);
+  opacity: 0.45;
   transform: translateY(-2%);
   z-index: 0;
 }
 
 .mid-layer {
-  filter: blur(3px) brightness(1);
-  opacity: 0.22;
+  filter: blur(6px) brightness(1);
+  opacity: 0.35;
   transform: translateY(-1%);
   z-index: 1;
 }
 
 .foreground-layer {
-  filter: blur(0.75px) brightness(1.06);
-  opacity: 0.1;
+  filter: blur(2px) brightness(1.1);
+  opacity: 0.18;
   mix-blend-mode: screen;
   z-index: 3;
 }
@@ -364,87 +373,21 @@
   background: transparent !important;
 }
 
-.constellations-image.veil-on {
-  opacity: 0.78;
-}
-
-.constellations-image.veil-lift {
-  opacity: 0.9;
-}
-
-.constellations-image {
-  z-index: 2;
-  opacity: 0.92;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.3) 7%,
-    rgba(0, 0, 0, 0.78) 16%,
-    #000 27%,
-    #000 84%,
-    rgba(0, 0, 0, 0.72) 93%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.3) 7%,
-    rgba(0, 0, 0, 0.78) 16%,
-    #000 27%,
-    #000 84%,
-    rgba(0, 0, 0, 0.72) 93%,
-    transparent 100%
-  );
-}
-
-@media (min-width: 769px) {
-  .background-carousel {
-    height: calc(100svh + 6rem);
-  }
-
-  .constellations-image {
-    height: 100%;
-  }
-}
-
-/* The dedicated constellation asset is the desktop carousel, not another
-   decorative layer behind the legacy weather and gallery imagery. */
-.background-carousel.has-constellations .weather-image,
-.background-carousel.has-constellations .bg-image {
-  opacity: 0 !important;
-  visibility: hidden;
-}
-
-/* Veil Off means a genuinely clear image: decorative depth layers are removed. */
-.background-carousel.veil-off .bg-layer,
-.background-carousel.veil-off .seasonal-drift {
-  display: none;
-}
-
-.background-carousel.veil-off::before {
-  opacity: 0.12;
-}
-
-  .background-carousel.season-spring::after {
-  background: radial-gradient(
-    circle at 50% 60%,
-    rgba(180, 255, 200, 0.22),
-    rgba(180, 255, 200, 0.05) 60%,
-    transparent 100%
-  );
+.background-carousel.season-spring::after {
+  background: radial-gradient(circle at 50% 60%,
+      rgba(180, 255, 200, 0.22),
+      rgba(180, 255, 200, 0.05) 60%,
+      transparent 100%);
 }
 
 .background-carousel.veil-on::after {
-  opacity: 0.24;
-  filter: blur(16px);
+  opacity: 0.45;
+  filter: blur(40px);
 }
 
 .background-carousel.veil-lift::after {
-  opacity: 0.14;
-  filter: blur(8px);
+  opacity: 0.25;
+  filter: blur(20px);
 }
 
 /* PURE GLASS — disable fog layer completely when veil is off */
@@ -458,8 +401,13 @@
 
 
 @keyframes fog-drift {
-  0%   { transform: translateY(0) translateX(0); }
-  100% { transform: translateY(-4%) translateX(2%); }
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+
+  100% {
+    transform: translateY(-4%) translateX(2%);
+  }
 }
 
 /* -----------------------------------------------------------
@@ -467,6 +415,7 @@
 ----------------------------------------------------------- */
 
 @supports not (height: 100dvh) {
+
   .weather-image,
   .bg-image {
     height: 100vh;
@@ -504,10 +453,36 @@
 
 @supports not (height: 100svh) {
   @media (max-width: 768px) {
+
     .background-carousel,
     .weather-image,
     .bg-image {
       height: 100vh;
     }
   }
+}
+
+/* A lightweight visual bridge across the sky/carousel boundary.
+   This avoids the scroll cost of masking the full blurred carousel. */
+.seasonal-drift {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 18rem;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+      rgba(102, 103, 113, 0.78) 0%,
+      rgba(64, 66, 80, 0.42) 38%,
+      transparent 100%);
+}
+
+.background-carousel.veil-lift .seasonal-drift {
+  height: 12rem;
+  opacity: 0.62;
+}
+
+.background-carousel.veil-off .seasonal-drift {
+  display: none;
 }

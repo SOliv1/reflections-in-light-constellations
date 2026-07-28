@@ -4,6 +4,7 @@
  */
 
 import express from 'express';
+import { ipKeyGenerator, rateLimit } from 'express-rate-limit';
 import { connectToDb } from '../db.js';
 import { getDayByDate } from '../models/Day.js';
 import {
@@ -26,6 +27,16 @@ import {
 const router = express.Router();
 const shareLinksBySlug = new Map();
 const MAX_RECIPIENT_EMAILS = 25;
+const verifyPasswordRateLimit = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => `${String(req.params.urlSlug || '').trim().toLowerCase()}:${ipKeyGenerator(req.ip)}`,
+  message: {
+    error: 'Too many password attempts. Please try again later.',
+  },
+});
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -347,7 +358,7 @@ router.post('/create', async (req, res) => {
  * POST /api/share/:urlSlug/verify-password
  * Verify password for protected share links
  */
-router.post('/:urlSlug/verify-password', async (req, res) => {
+router.post('/:urlSlug/verify-password', verifyPasswordRateLimit, async (req, res) => {
   try {
     const { password } = req.body;
     const { urlSlug } = req.params;

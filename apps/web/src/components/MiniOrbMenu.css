@@ -5,11 +5,6 @@
   position: fixed;
   top: 16px;
   right: 16px;
-  width: max-content;
-  max-width: calc(100vw - 32px);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   z-index: 999999;
   pointer-events: auto;
 }
@@ -18,16 +13,14 @@
    MINI ORB — BASE
 ---------------------------------------------------------- */
 .mini-orb {
-  min-width: 104px;
-  height: 42px;
-  padding: 0 15px;
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  border-radius: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   background: radial-gradient(circle at 30% 30%,
       rgba(255, 255, 255, 0.95),
       rgba(255, 255, 255, 0.55),
       var(--orb-tint));
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
   box-shadow:
     0 0 12px var(--orb-tint),
     0 0 22px rgba(255, 255, 255, 0.4);
@@ -40,20 +33,6 @@
   animation-delay: 1.5s;
   position: relative;
   z-index: 10;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.96);
-  font: inherit;
-  box-sizing: border-box;
-}
-
-.mini-orb-label {
-  position: relative;
-  z-index: 2;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-shadow: 0 1px 8px rgba(15, 18, 44, 0.9);
 }
 
 /* ----------------------------------------------------------
@@ -109,7 +88,7 @@
   content: "";
   position: absolute;
   inset: -6px;
-  border-radius: inherit;
+  border-radius: 50%;
   border: 2px solid var(--orb-tint);
   opacity: 0.35;
   animation: glowRing 3.6s ease-in-out infinite;
@@ -356,7 +335,7 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(10px);
+  backdrop-filter: none;
   color: #333;
   font-size: 12px;
   animation: radialPop 0.35s ease forwards;
@@ -396,35 +375,18 @@
    DROP‑DOWN MENU
 ---------------------------------------------------------- */
 .mini-orb-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: min(280px, calc(100vw - 32px));
-  box-sizing: border-box;
-  max-height: calc(100vh - 84px);
-  max-height: calc(100dvh - 84px);
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
-  scrollbar-gutter: stable;
   margin-top: 10px;
   padding: 12px;
   border-radius: 14px;
-  background: rgba(54, 66, 122, 0.88);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 12px 36px rgba(5, 8, 28, 0.34);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   gap: 8px;
   animation: menuBloom 0.35s ease forwards;
   z-index: 30;
-}
-
-.mini-orb-menu > * {
-  flex: 0 0 auto;
 }
 
 @keyframes menuBloom {
@@ -439,8 +401,7 @@
   }
 }
 
-.mini-orb-menu button,
-.mini-orb-menu .mini-menu-link {
+.mini-orb-menu button {
   background: rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 6px 10px;
@@ -449,34 +410,10 @@
   color: #333;
   font-size: 14px;
   transition: background 0.2s ease;
-  text-align: center;
-  text-decoration: none;
 }
 
-.mini-orb-menu button,
-.mini-orb-menu .mini-menu-link {
-  color: rgba(248, 248, 255, 0.94);
-}
-
-.mini-orb-menu button:hover,
-.mini-orb-menu .mini-menu-link:hover,
-.mini-orb-menu .mini-menu-link:focus-visible {
+.mini-orb-menu button:hover {
   background: rgba(255, 255, 255, 0.4);
-}
-
-.mini-orb-menu .mini-menu-primary {
-  border-color: rgba(255, 233, 170, 0.7);
-  background: rgba(255, 233, 170, 0.3);
-  font-weight: 600;
-}
-
-.mini-menu-section {
-  padding: 5px 4px 0;
-  color: rgba(222, 226, 255, 0.78);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
 /* ----------------------------------------------------------
