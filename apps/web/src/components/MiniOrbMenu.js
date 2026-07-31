@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PortalTime from "./PortalTime";
 import { BIRTHDAY_DAY, BIRTHDAY_MONTH } from "../data/birthdayExperience";
 import { buildSpecialDateLinks, defaultSpecialDates } from "../data/specialDates";
+import { SHARE_FEATURE_ENABLED } from "../config";
 import "./MiniOrbMenu.css";
 
 export default function MiniOrbMenu({
@@ -203,7 +204,13 @@ export default function MiniOrbMenu({
         <div className="mini-orb-menu">
           <PortalTime compact />
           <Link to={`/day/${todayIso}`} className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Open Today</Link>
-          <Link to="/share-start" className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Share Album</Link>
+          {SHARE_FEATURE_ENABLED ? (
+            <Link to="/share-start" className="mini-menu-link mini-menu-primary" onClick={closeMenu}>Share Album</Link>
+          ) : (
+            <Link to="/share/test-403" className="mini-menu-link mini-menu-primary mini-menu-preview" onClick={closeMenu}>
+              Share Album
+            </Link>
+          )}
 
           <div className="mini-menu-section">Navigate</div>
           <a href="/#scene-sky" className="mini-menu-link" onClick={closeMenu}>Home</a>

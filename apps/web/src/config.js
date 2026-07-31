@@ -56,5 +56,6 @@ const configuredUrls = normalizeUrls(
 export const API_BASE_URLS = [...new Set([...configuredUrls, ...getRuntimeFallbackUrls()])];
 
 export const API_BASE_URL = API_BASE_URLS[0] || LOCAL_API_URL;
+export const SHARE_FEATURE_ENABLED = process.env.REACT_APP_SHARE_ENABLED === "true";
 
 export default API_BASE_URL;

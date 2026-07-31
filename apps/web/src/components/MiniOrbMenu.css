@@ -423,7 +423,7 @@
   z-index: 30;
 }
 
-.mini-orb-menu > * {
+.mini-orb-menu>* {
   flex: 0 0 auto;
 }
 
@@ -468,6 +468,20 @@
   border-color: rgba(255, 233, 170, 0.7);
   background: rgba(255, 233, 170, 0.3);
   font-weight: 600;
+}
+
+.mini-orb-menu .mini-menu-preview {
+  cursor: pointer;
+  opacity: 1;
+  border-color: rgba(255, 236, 194, 0.74);
+  background: linear-gradient(135deg, rgba(255, 208, 132, 0.95) 0%, rgba(242, 131, 160, 0.92) 56%, rgba(121, 189, 255, 0.92) 100%);
+  color: #1a2244;
+  box-shadow: 0 10px 22px rgba(10, 16, 38, 0.3);
+}
+
+.mini-orb-menu .mini-menu-preview:hover,
+.mini-orb-menu .mini-menu-preview:focus-visible {
+  background: linear-gradient(135deg, rgba(255, 215, 148, 0.98) 0%, rgba(247, 143, 169, 0.94) 56%, rgba(136, 198, 255, 0.94) 100%);
 }
 
 .mini-menu-section {

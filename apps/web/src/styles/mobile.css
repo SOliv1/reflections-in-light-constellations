@@ -125,6 +125,17 @@ body {
   box-shadow: 0 14px 28px rgba(11, 18, 42, 0.34);
 }
 
+.explore-share-link-preview,
+.explore-share-link-preview:hover,
+.explore-share-link-preview:focus-visible {
+  transform: translateY(-1px);
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(255, 206, 128, 0.97), rgba(244, 132, 157, 0.95) 54%, rgba(118, 191, 255, 0.95));
+  color: #1c2448;
+  border-color: rgba(255, 244, 221, 0.72);
+  box-shadow: 0 12px 24px rgba(11, 18, 42, 0.34);
+}
+
 .explore-metadata {
   display: flex;
   justify-content: center;

@@ -48,8 +48,7 @@
       rgba(4, 2, 18, 0.38) 0%,
       rgba(8, 4, 28, 0.28) 35%,
       rgba(10, 6, 32, 0.12) 65%,
-      transparent 100%
-    );
+      transparent 100%);
   opacity: 1;
 }
 
@@ -60,8 +59,7 @@
     linear-gradient(180deg,
       rgba(8, 4, 24, 0.14) 0%,
       rgba(12, 6, 32, 0.07) 50%,
-      transparent 100%
-    );
+      transparent 100%);
   opacity: 1;
 }
 
@@ -71,11 +69,13 @@
     radial-gradient(ellipse at 50% 0%, rgba(8, 16, 48, 0.42) 0%, transparent 72%),
     linear-gradient(180deg, rgba(4, 8, 28, 0.38) 0%, rgba(6, 10, 32, 0.14) 60%, transparent 100%);
 }
+
 #veil.veil-on.mood-storm .twilight-overlay {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(10, 8, 36, 0.52) 0%, transparent 68%),
     linear-gradient(180deg, rgba(4, 4, 20, 0.44) 0%, rgba(8, 6, 28, 0.16) 58%, transparent 100%);
 }
+
 #veil.veil-on.mood-sunny .twilight-overlay {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(18, 10, 42, 0.30) 0%, transparent 72%),
@@ -144,19 +144,41 @@
   z-index: 3100;
 }
 
-.App.season-spring { --app-accent: rgba(255, 210, 230, 0.26); }
-.App.season-summer { --app-accent: rgba(200, 235, 255, 0.24); }
-.App.season-autumn { --app-accent: rgba(255, 230, 190, 0.28); }
-.App.season-winter { --app-accent: rgba(220, 235, 255, 0.24); }
+.App.season-spring {
+  --app-accent: rgba(255, 210, 230, 0.26);
+}
 
-.App.mood-sunny { --app-accent: rgba(255, 220, 120, 0.36); }
-.App.mood-rain { --app-accent: rgba(120, 160, 220, 0.28); }
-.App.mood-storm { --app-accent: rgba(110, 100, 160, 0.36); }
-.App.mood-neutral { --app-accent: rgba(220, 220, 230, 0.18); }
+.App.season-summer {
+  --app-accent: rgba(200, 235, 255, 0.24);
+}
+
+.App.season-autumn {
+  --app-accent: rgba(255, 230, 190, 0.28);
+}
+
+.App.season-winter {
+  --app-accent: rgba(220, 235, 255, 0.24);
+}
+
+.App.mood-sunny {
+  --app-accent: rgba(255, 220, 120, 0.36);
+}
+
+.App.mood-rain {
+  --app-accent: rgba(120, 160, 220, 0.28);
+}
+
+.App.mood-storm {
+  --app-accent: rgba(110, 100, 160, 0.36);
+}
+
+.App.mood-neutral {
+  --app-accent: rgba(220, 220, 230, 0.18);
+}
 
 /* Small accent for top-left home orb to better reflect the mood tint */
 .App .app-home-logo {
-  box-shadow: 0 12px 34px rgba(0,0,0,0.12), 0 0 28px rgba(0,0,0,0.06);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12), 0 0 28px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.45s ease, background 0.45s ease;
 }
 
@@ -170,28 +192,28 @@
 .App.mood-sunny .photo-gallery img,
 .App.mood-sunny .photo-grid img {
   filter: saturate(1.36) brightness(1.12) contrast(1.08);
-  box-shadow: 0 28px 96px rgba(255,200,100,0.36), 0 10px 30px rgba(255,200,100,0.12) inset;
+  box-shadow: 0 28px 96px rgba(255, 200, 100, 0.36), 0 10px 30px rgba(255, 200, 100, 0.12) inset;
   transform: translateY(-3px) scale(1.01);
 }
 
 .App.mood-rain .photo-gallery img,
 .App.mood-rain .photo-grid img {
   filter: saturate(1.28) contrast(0.98) brightness(0.98);
-  box-shadow: 0 26px 88px rgba(90,130,200,0.32), 0 10px 28px rgba(90,130,200,0.10) inset;
+  box-shadow: 0 26px 88px rgba(90, 130, 200, 0.32), 0 10px 28px rgba(90, 130, 200, 0.10) inset;
   transform: translateY(-2px) scale(1.005);
 }
 
 .App.mood-storm .photo-gallery img,
 .App.mood-storm .photo-grid img {
   filter: saturate(1.30) contrast(0.90) brightness(0.90);
-  box-shadow: 0 30px 104px rgba(90,70,140,0.40), 0 12px 30px rgba(90,70,140,0.14) inset;
+  box-shadow: 0 30px 104px rgba(90, 70, 140, 0.40), 0 12px 30px rgba(90, 70, 140, 0.14) inset;
   transform: translateY(-3px) scale(1.01);
 }
 
 .App.mood-neutral .photo-gallery img,
 .App.mood-neutral .photo-grid img {
   filter: saturate(1.10) brightness(1.06);
-  box-shadow: 0 14px 40px rgba(0,0,0,0.10);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.10);
 }
 
 /* Stronger presence when veil is lifted/on */
@@ -350,6 +372,7 @@ body {
 
 /* Preserve the deployed mobile-first atmosphere when the responsive shell is active. */
 @media (max-width: 768px) {
+
   html,
   body,
   #root {
@@ -374,7 +397,9 @@ body {
 #scene-reflection,
 #scene-weather,
 #scene-calendar,
-#scene-footer { scroll-margin-top: 16px; }
+#scene-footer {
+  scroll-margin-top: 16px;
+}
 
 .desktop-constellation-showcase {
   position: relative;
@@ -634,6 +659,40 @@ body {
 .day-home-navigation .day-home-orb {
   width: 28px;
   height: 48px;
+}
+
+.day-home-navigation .day-share-preview-pill {
+  text-decoration: none;
+  color: #132234;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: linear-gradient(135deg, rgba(255, 214, 148, 0.98) 0%, rgba(243, 129, 150, 0.95) 52%, rgba(122, 174, 252, 0.96) 100%);
+  box-shadow: 0 14px 30px rgba(11, 18, 42, 0.26), 0 0 0 1px rgba(255, 247, 232, 0.32) inset;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.day-home-navigation .day-share-preview-pill:hover,
+.day-home-navigation .day-share-preview-pill:focus-visible {
+  transform: translateY(-2px);
+  filter: saturate(1.08);
+  box-shadow: 0 18px 36px rgba(11, 18, 42, 0.34), 0 0 0 1px rgba(255, 247, 232, 0.5) inset;
+}
+
+@media (max-width: 680px) {
+  .day-home-navigation {
+    flex-wrap: wrap;
+    width: min(100%, 520px);
+  }
+
+  .day-home-navigation .day-share-preview-pill {
+    width: min(100%, 260px);
+    text-align: center;
+  }
 }
 
 /* --- PHOTO GALLERY GLOBAL STYLES --- */
@@ -919,7 +978,8 @@ body {
 }
 
 
-.calendar-header, .calendar-container {
+.calendar-header,
+.calendar-container {
   /*background: url('./assets/marble-grey-white.png');*/
   background-size: cover;
   background-position: center;
@@ -1721,29 +1781,40 @@ button:hover {
 .App.mood-sunny .calendar-wrapper .calendar-tile,
 .App.mood-sunny .calendar-tile {
   filter: saturate(1.18) brightness(1.05) contrast(1.03);
-  box-shadow: 0 12px 38px rgba(255,200,100,0.18) inset, 0 8px 26px rgba(255,200,100,0.08);
+  box-shadow: 0 12px 38px rgba(255, 200, 100, 0.18) inset, 0 8px 26px rgba(255, 200, 100, 0.08);
 }
 
 .App.mood-rain .calendar-wrapper .calendar-tile,
 .App.mood-rain .calendar-tile {
   filter: saturate(1.10) brightness(0.98) contrast(0.98);
-  box-shadow: 0 12px 38px rgba(90,130,200,0.16) inset, 0 8px 26px rgba(90,130,200,0.08);
+  box-shadow: 0 12px 38px rgba(90, 130, 200, 0.16) inset, 0 8px 26px rgba(90, 130, 200, 0.08);
 }
 
 .App.mood-storm .calendar-wrapper .calendar-tile,
 .App.mood-storm .calendar-tile {
   filter: saturate(1.12) brightness(0.96) contrast(0.96);
-  box-shadow: 0 14px 44px rgba(90,70,140,0.20) inset, 0 10px 30px rgba(90,70,140,0.10);
+  box-shadow: 0 14px 44px rgba(90, 70, 140, 0.20) inset, 0 10px 30px rgba(90, 70, 140, 0.10);
 }
 
 .App.mood-neutral .calendar-wrapper .calendar-tile,
 .App.mood-neutral .calendar-tile {
   filter: saturate(1.02) brightness(1.02);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
 }
 
 /* Seasonal variant for calendar wrapper (slight tint on tile backgrounds) */
-.calendar-wrapper.season-spring .calendar-tile { background: linear-gradient(180deg, rgba(255,240,245,0.02), transparent); }
-.calendar-wrapper.season-summer .calendar-tile { background: linear-gradient(180deg, rgba(240,250,255,0.02), transparent); }
-.calendar-wrapper.season-autumn .calendar-tile { background: linear-gradient(180deg, rgba(255,245,230,0.02), transparent); }
-.calendar-wrapper.season-winter .calendar-tile { background: linear-gradient(180deg, rgba(235,245,255,0.02), transparent); }
+.calendar-wrapper.season-spring .calendar-tile {
+  background: linear-gradient(180deg, rgba(255, 240, 245, 0.02), transparent);
+}
+
+.calendar-wrapper.season-summer .calendar-tile {
+  background: linear-gradient(180deg, rgba(240, 250, 255, 0.02), transparent);
+}
+
+.calendar-wrapper.season-autumn .calendar-tile {
+  background: linear-gradient(180deg, rgba(255, 245, 230, 0.02), transparent);
+}
+
+.calendar-wrapper.season-winter .calendar-tile {
+  background: linear-gradient(180deg, rgba(235, 245, 255, 0.02), transparent);
+}
