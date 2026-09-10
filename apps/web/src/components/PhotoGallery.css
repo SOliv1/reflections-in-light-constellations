@@ -9,7 +9,7 @@
 
 .photo-gallery img:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18);
 }
 
 .photo-grid {
@@ -90,7 +90,6 @@
   filter: saturate(1.14);
   box-shadow: 0 22px 36px rgba(13, 17, 38, 0.38), 0 0 0 1px rgba(255, 248, 235, 0.56) inset;
 }
-
 /* ——— Tiles (Gallery-level hover only) ——— */
 
 .photo-tile {
@@ -104,8 +103,8 @@
 .photo-tile:hover {
   transform: scale(1.03);
   box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.25),
-    0 0 12px rgba(255, 255, 255, 0.18);
+    0 4px 12px rgba(0,0,0,0.25),
+    0 0 12px rgba(255,255,255,0.18);
 }
 
 /* ——— Favourite Button (Gallery version) ——— */
@@ -119,7 +118,7 @@
   font-size: 22px;
   cursor: pointer;
   color: gold;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 6px rgba(0,0,0,0.4);
 }
 
 /* ——— Modal Animations ——— */
@@ -129,7 +128,6 @@
     opacity: 0;
     transform: scale(0.96);
   }
-
   100% {
     opacity: 1;
     transform: scale(1);
@@ -142,8 +140,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -172,8 +169,7 @@
   background: rgba(14, 18, 35, 0.62);
   color: #fff8ef;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  backdrop-filter: none;
 }
 
 .photo-modal-light.active {
@@ -203,7 +199,6 @@
   background: linear-gradient(135deg, rgba(255, 194, 138, 0.98), rgba(240, 112, 155, 0.95) 55%, rgba(112, 178, 255, 0.95));
   color: #1c2448;
 }
-
 /* ——— Modal Image ——— */
 
 .photo-modal-frame {
@@ -286,8 +281,7 @@
   inset: 0;
   z-index: 999;
   isolation: isolate;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
 }
 
 @media (max-width: 600px) {
@@ -309,7 +303,6 @@
     font-size: 0.88rem;
     padding: 11px 16px;
   }
-
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
@@ -334,3 +327,4 @@
     max-height: calc(100vh - 84px);
   }
 }
+

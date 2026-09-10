@@ -6,22 +6,20 @@
 import crypto from 'crypto';
 
 /**
- * Hash a password using simple crypto (or use bcrypt in production)
- * For production, use: import bcrypt from 'bcrypt'
+ * Hash a password using Node's built-in scrypt KDF
  * @param {string} password - Plain text password
  * @returns {Promise<string>} Hashed password
  */
 export async function hashPassword(password) {
-  // TODO: In production, replace with bcrypt:
-  // return bcrypt.hash(password, 10);
-  
-  // Simple hash for development (NOT secure for production)
-  const hash = crypto
-    .createHash('sha256')
-    .update(password)
-    .digest('hex');
-  
-  return hash;
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hashBuffer = await new Promise((resolve, reject) => {
+    crypto.scrypt(password, salt, 64, (error, derivedKey) => {
+      if (error) reject(error);
+      else resolve(derivedKey);
+    });
+  });
+
+  return `scrypt$${salt}$${hashBuffer.toString('hex')}`;
 }
 
 /**
@@ -31,16 +29,29 @@ export async function hashPassword(password) {
  * @returns {Promise<boolean>} True if password matches
  */
 export async function verifyPassword(password, hash) {
-  // TODO: In production, replace with bcrypt:
-  // return bcrypt.compare(password, hash);
-  
-  // Simple verification for development (NOT secure for production)
-  const inputHash = crypto
-    .createHash('sha256')
-    .update(password)
-    .digest('hex');
-  
-  return inputHash === hash;
+  const parts = String(hash || '').split('$');
+  if (parts.length !== 3 || parts[0] !== 'scrypt') {
+    return false;
+  }
+
+  const [, salt, expectedHashHex] = parts;
+  const expectedHash = Buffer.from(expectedHashHex, 'hex');
+  if (expectedHash.length === 0) {
+    return false;
+  }
+
+  const actualHash = await new Promise((resolve, reject) => {
+    crypto.scrypt(password, salt, expectedHash.length, (error, derivedKey) => {
+      if (error) reject(error);
+      else resolve(derivedKey);
+    });
+  });
+
+  if (actualHash.length !== expectedHash.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(actualHash, expectedHash);
 }
 
 /**
