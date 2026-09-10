@@ -21,6 +21,6 @@
         "express-rate-limit": "^8.6.1",
         "mongodb": "^7.1.0",
         "mongoose": "^9.3.3",
-        "multer": "^2.2.0"
+        "multer": "^2.3.0"
     }
 }
