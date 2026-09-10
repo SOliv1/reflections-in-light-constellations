@@ -145,7 +145,6 @@
 .App.season-winter {
   --app-accent: rgba(220, 235, 255, 0.24);
 }
-
 .App.mood-sunny {
   --app-accent: rgba(255, 220, 120, 0.36);
 }
@@ -514,7 +513,10 @@ body {
 
 .scene-anchor-section,
 #scene-sky,
-#scene-reflection {
+#scene-reflection,
+#scene-weather,
+#scene-calendar,
+#scene-footer {
   scroll-margin-top: 16px;
 }
 
@@ -785,6 +787,40 @@ body {
   .day-home-navigation::before {
     top: -22px;
     font-size: 0.61rem;
+  }
+}
+
+.day-home-navigation .day-share-preview-pill {
+  text-decoration: none;
+  color: #132234;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: linear-gradient(135deg, rgba(255, 214, 148, 0.98) 0%, rgba(243, 129, 150, 0.95) 52%, rgba(122, 174, 252, 0.96) 100%);
+  box-shadow: 0 14px 30px rgba(11, 18, 42, 0.26), 0 0 0 1px rgba(255, 247, 232, 0.32) inset;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.day-home-navigation .day-share-preview-pill:hover,
+.day-home-navigation .day-share-preview-pill:focus-visible {
+  transform: translateY(-2px);
+  filter: saturate(1.08);
+  box-shadow: 0 18px 36px rgba(11, 18, 42, 0.34), 0 0 0 1px rgba(255, 247, 232, 0.5) inset;
+}
+
+@media (max-width: 680px) {
+  .day-home-navigation {
+    flex-wrap: wrap;
+    width: min(100%, 520px);
+  }
+
+  .day-home-navigation .day-share-preview-pill {
+    width: min(100%, 260px);
+    text-align: center;
   }
 }
 
@@ -1071,6 +1107,15 @@ body {
 }
 
 
+.calendar-header,
+.calendar-container {
+  /*background: url('./assets/marble-grey-white.png');*/
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 60;
+}
 /*
 .mode-architectural {
   --mode-shadow: rgba(255, 255, 255, 0.2);

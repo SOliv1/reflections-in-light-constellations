@@ -15,7 +15,7 @@ export default function ShareModal({
   defaultMood = 'mood-soft-dawn',
   seasons = ['spring', 'summer', 'autumn', 'winter']
 }) {
-  const [shareType, setShareType] = useState('public'); // 'public' | 'friends' | 'password'
+  const [shareType, setShareType] = useState('public'); // Internal value remains 'public' for API compatibility.
   const [friendEmails, setFriendEmails] = useState('');
   const [password, setPassword] = useState('');
   const [passwordHint, setPasswordHint] = useState('');
@@ -40,8 +40,8 @@ export default function ShareModal({
   const modeMeta = {
     public: {
       color: '#7FD6D6',
-      text: 'Public',
-      description: 'This link is open.',
+      text: 'Private Share Link',
+      description: 'Access is limited to people you share the link with.',
       successText: 'Your link is active.',
     },
     private: {
@@ -147,7 +147,7 @@ export default function ShareModal({
     e.preventDefault();
     const nextMode = shareType === 'password' ? 'private' : shareType;
     if (shareType === 'friends' && !invitesEnabled) {
-      setSubmitError('Friends invite sending is disabled until email provider configuration is complete. Use Public link for manual sharing.');
+      setSubmitError('Friends invite sending is disabled until email provider configuration is complete. Use Private Share Link for manual sharing.');
       return;
     }
 
@@ -239,8 +239,8 @@ export default function ShareModal({
                   onChange={(e) => setShareType(e.target.value)}
                 />
                 <div className="share-option-content">
-                  <strong>Public link</strong>
-                  <span>Create a link you can copy and share manually</span>
+                  <strong>Private Share Link</strong>
+                  <span>Create a private link and share it only with people you trust</span>
                 </div>
               </label>
 
@@ -273,7 +273,7 @@ export default function ShareModal({
             </div>
             {!invitesEnabled && !inviteCapabilities.loading && (
               <p className="share-mode-note" role="status" aria-live="polite">
-                Friend invites are currently disabled. Use Public link to copy and share manually.
+                Friend invites are currently disabled. Use Private Share Link to copy and share manually.
               </p>
             )}
           </section>

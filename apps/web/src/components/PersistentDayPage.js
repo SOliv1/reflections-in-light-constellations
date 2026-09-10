@@ -5,6 +5,7 @@ import Portal from "./portal/Portal";
 
 import PhotoGallery from "./PhotoGallery";
 import { fetchFromApi } from "../api";
+import { SHARE_FEATURE_ENABLED } from "../config";
 import BirthdayStageExperience from "./BirthdayStageExperience";
 import moodLogo from "../assets/logos/moodLogo.png";
 import Constellation from "./Constellation";
@@ -373,6 +374,15 @@ export default function PersistentDayPage({
             className="crescent-portal app-home-orb day-home-orb"
             aria-label="Return home through the light"
           />
+          {!SHARE_FEATURE_ENABLED ? (
+            <Link
+              to="/share/test-403"
+              className="day-share-preview-pill"
+              aria-label="Open share collection route"
+            >
+              Share Collection
+            </Link>
+          ) : null}
         </nav>
 
         {isLoading ? (

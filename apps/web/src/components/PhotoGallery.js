@@ -14,6 +14,7 @@ const PhotoGallery = ({
   onDelete,
   onApproachPortal,
   onCreateShare,
+  sharingEnabled = false,
   collectionShareTarget = null,
   shareButtonLabel = "Share Collection",
   autoOpenCollectionShare = false,
@@ -72,26 +73,48 @@ const moodImageOverlay = {
     return await onCreateShare?.(payload);
   };
 
+  function openSharePreviewRoute(event) {
+    event?.stopPropagation?.();
+    window.location.assign("/share/test-403");
+  }
+
   useEffect(() => {
-    if (!autoOpenCollectionShare || hasAutoOpenedShare.current) {
+    if (!sharingEnabled || !autoOpenCollectionShare || hasAutoOpenedShare.current) {
       return;
     }
 
     hasAutoOpenedShare.current = true;
     openShareForCollection();
-  }, [autoOpenCollectionShare, openShareForCollection]);
+  }, [sharingEnabled, autoOpenCollectionShare, openShareForCollection]);
 
   return (
     <>
+      {sharingEnabled ? (
+        <div className="photo-gallery-share-hero">
+          <button
+            type="button"
+            className="gallery-share-btn"
+            onClick={openShareForCollection}
+          >
+            ✨ {shareButtonLabel}
+          </button>
+          <p className="photo-gallery-share-note">Invite someone into today&apos;s reflections</p>
+        </div>
+      ) : (
+        <div className="photo-gallery-share-hero is-disabled" role="status" aria-live="polite">
+          <button
+            type="button"
+            className="gallery-share-btn gallery-share-btn-preview"
+            onClick={openSharePreviewRoute}
+          >
+            Share Collection
+          </button>
+          <p className="photo-gallery-share-note">Sharing is paused. Tap to open the secure route and return home.</p>
+        </div>
+      )}
+
       <div className="photo-gallery-header">
         <h3>Captured reflections</h3>
-        <button
-          type="button"
-          className="gallery-share-btn"
-          onClick={openShareForCollection}
-        >
-          {shareButtonLabel}
-        </button>
       </div>
 
       <div className="photo-grid">
@@ -106,7 +129,7 @@ const moodImageOverlay = {
             season={season}
             onDelete={() => onDelete(image.id)}
             onApproachPortal={onApproachPortal}
-            onShare={() => openShareForPhoto(image)}
+            onShare={sharingEnabled ? () => openShareForPhoto(image) : undefined}
 
           />
         ))}
@@ -129,17 +152,28 @@ const moodImageOverlay = {
                 {preset.label}
               </button>
             ))}
-            <button
-              type="button"
-              className="photo-modal-share"
-              onClick={(event) => {
-                event.stopPropagation();
-                const expandedImage = images.find((image) => image.src === expandedPhoto) || null;
-                openShareForPhoto(expandedImage);
-              }}
-            >
-              Share photo
-            </button>
+            {sharingEnabled ? (
+              <button
+                type="button"
+                className="photo-modal-share"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  const expandedImage = images.find((image) => image.src === expandedPhoto) || null;
+                  openShareForPhoto(expandedImage);
+                }}
+              >
+                Share photo
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="photo-modal-share photo-modal-share-preview"
+                onClick={openSharePreviewRoute}
+                title="Open paused sharing route"
+              >
+                Share photo
+              </button>
+            )}
           </div>
         ) : null}
         <div
@@ -161,7 +195,7 @@ const moodImageOverlay = {
       </div>
      )}
 
-      {showShareModal && (
+      {sharingEnabled && showShareModal && (
         <ShareModal
           photo={shareTarget?.type === "collection" ? null : shareTarget}
           album={shareTarget?.type === "collection" ? shareTarget : null}
